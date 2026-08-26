@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dữ liệu học phí và khoản thu — Kết quả kiểm tra import</title>
+<meta name="description" content="Hệ thống quản trị học phí nội bộ — Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội"/>
+<link rel="stylesheet" href="../css/styles.css"/>
+
+<style>
+  html,
+  body {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow: auto !important;
+  }
+
+  #app {
+    min-height: 100vh !important;
+    height: auto !important;
+  }
+
+  #main {
+    min-height: 100vh !important;
+    height: auto !important;
+  }
+
+  #content {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .page-body {
+    padding-bottom: 72px !important;
+  }
+</style>
+</head>
+
+<body>
+<div id="toast-container"></div>
+
+<!-- ===================== SESSION EXPIRED MODAL ===================== -->
+<div class="overlay" id="modal-session-expired">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2>Phiên đăng nhập hết hạn</h2>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:24px 18px;">
+      <div class="confirm-icon" style="margin:0 auto 12px;background:var(--warn-bg);">
+        <svg width="18" height="18" fill="none" viewBox="0 0 20 20" stroke="var(--warning)" stroke-width="1.8">
+          <path d="M10 2L2 17h16L10 2zM10 8v4M10 14v1.5"/>
+        </svg>
+      </div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">Phiên đăng nhập đã hết hạn</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Vui lòng đăng nhập lại để tiếp tục sử dụng hệ thống.</div>
+      <button class="btn btn-primary" onclick="location.href='../index.html'">Đăng nhập lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONFIRM: XÁC NHẬN NHẬP DỮ LIỆU ===================== -->
+<div class="overlay" id="modal-confirm-import">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2>Xác nhận nhập dữ liệu</h2>
+      <button class="btn-x" onclick="closeModal('modal-confirm-import')">
+        <svg viewBox="0 0 20 20">
+          <path d="M5 5l10 10M15 5L5 15"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div style="font-size:12.5px;color:var(--text);margin-bottom:8px;">
+        Xác nhận nhập các dòng hợp lệ và sinh khoản phải thu tương ứng?
+      </div>
+      <div class="sys-warn-bar" style="margin-bottom:0;">
+        Chỉ các dòng hợp lệ, khớp cấu hình và chưa trùng khoản phải thu mới được ghi nhận.
+      </div>
+    </div>
+
+    <div class="modal-ft">
+      <button class="btn btn-secondary" onclick="closeModal('modal-confirm-import')">Hủy</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-confirm-import');showToast('Đã nhập dữ liệu và sinh khoản phải thu.','success')">
+        Xác nhận nhập
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="../assets/ulis-logo.png" alt="ULIS" style="height:36px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'"/>
+        <div>
+          <div class="brand-inst" style="font-size:11.5px;font-weight:600;">Trường Đại học Ngoại ngữ</div>
+          <div class="brand-vnu">Đại học Quốc gia Hà Nội</div>
+        </div>
+      </div>
+      <div class="brand-sep" style="margin:10px 0 0;"></div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="sidebar-group-label">Nghiệp vụ</div>
+
+      <a class="nav-item" href="overview.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/>
+          <rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/>
+          <rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/>
+          <rect x="9" y="9" width="5.5" height="5.5" rx="1"/>
+        </svg>
+        Tổng quan
+      </a>
+
+      <a class="nav-item" href="tuition-config.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 4h12M2 8h8M2 12h10"/>
+        </svg>
+        Cấu hình học phí
+      </a>
+
+      <a class="nav-item active" href="student-tuition.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M9 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V7M9 2l5 5M9 2v5h5"/>
+        </svg>
+        Dữ liệu học phí
+      </a>
+
+      <a class="nav-item" href="receivables.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M13 5H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1zM11 5V3a2 2 0 00-4 0v2"/>
+        </svg>
+        Khoản phải thu
+      </a>
+
+      <a class="nav-item" href="payment-requests.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <rect x="1.5" y="3.5" width="13" height="9" rx="1"/>
+          <path d="M1.5 6.5h13"/>
+        </svg>
+        Yêu cầu thanh toán
+      </a>
+
+      <a class="nav-item" href="transactions.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 8h12M10 4l4 4-4 4M6 4L2 8l4 4"/>
+        </svg>
+        Giao dịch
+      </a>
+
+      <a class="nav-item" href="reconciliation.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 3h5v10H2zM9 3h5v10H9M5 8h6"/>
+        </svg>
+        Đối soát BIDV
+      </a>
+
+      <a class="nav-item" href="exceptions.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M8 2L1 14h14L8 2zM8 6v4M8 11v1.5"/>
+        </svg>
+        Ngoại lệ
+      </a>
+
+      <div class="sidebar-group-label">Quản lý</div>
+
+      <a class="nav-item" href="reports.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M3 2h10v12H3zM6 6h4M6 9h4M6 12h2"/>
+        </svg>
+        Báo cáo
+      </a>
+
+      <a class="nav-item" href="reminders.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M8 1a5 5 0 015 5c0 4 2 5 2 5H1s2-1 2-5a5 5 0 015-5zM6.5 13.5a1.5 1.5 0 003 0"/>
+        </svg>
+        Nhắc hạn
+      </a>
+
+      <div class="sidebar-group-label">Cấu hình</div>
+
+      <a class="nav-item" href="system-config.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <circle cx="8" cy="8" r="2.5"/>
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4"/>
+        </svg>
+        Cấu hình hệ thống
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN ===================== -->
+  <div id="main">
+
+    <!-- ===================== TOPBAR ===================== -->
+    <header id="topbar">
+      <div class="topbar-crumb" style="display:flex;flex-direction:column;gap:1px;">
+        <div style="font-size:10px;font-weight:500;color:var(--muted-lt);letter-spacing:.2px;">Hệ thống quản lý thu học phí</div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span class="crumb-root">Nghiệp vụ</span>
+          <span class="crumb-sep"> / </span>
+          <span class="crumb-page">Dữ liệu học phí</span>
+        </div>
+      </div>
+
+      <div class="topbar-user topbar-user-wrap">
+        <div class="user-menu-trigger" id="userMenuTrigger" onclick="toggleUserMenu()">
+          <div class="topbar-user-info">
+            <div class="topbar-user-dept">Phòng Kế hoạch Tài chính</div>
+            <div class="topbar-user-role">Cán bộ KHTC &nbsp;&bull;&nbsp; Nguyễn Thị Hương</div>
+          </div>
+          <div class="topbar-avatar">NH</div>
+        </div>
+
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-dropdown-header">
+            <div class="udh-name">Nguyễn Thị Hương</div>
+            <div class="udh-role">Phòng KHTC — Cán bộ quản trị</div>
+          </div>
+
+          <div class="user-menu-item" onclick="closeUserMenu();showToast('Đã mở thông tin tài khoản.','info')">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <circle cx="8" cy="5" r="3"/>
+              <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+            </svg>
+            Thông tin tài khoản
+          </div>
+
+          <div class="user-menu-item" onclick="closeUserMenu();showToast('Đã mở chức năng đổi mật khẩu.','info')">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="7" width="12" height="8" rx="1"/>
+              <path d="M5 7V5a3 3 0 016 0v2"/>
+            </svg>
+            Đổi mật khẩu
+          </div>
+
+          <hr class="user-menu-sep"/>
+
+          <div class="user-menu-item danger" onclick="location.href='../index.html'">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 11l4-3-4-3M5 8h9M6 3H3a1 1 0 00-1 1v8a1 1 0 001 1h3"/>
+            </svg>
+            Đăng xuất
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== CONTENT ===================== -->
+    <div id="content">
+      <div class="page-body">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <div>
+            <h1>Dữ liệu học phí và khoản thu sinh viên</h1>
+            <div class="page-header-sub">Nhập, kiểm tra và xác nhận dữ liệu để sinh khoản phải thu theo cấu hình học phí/khoản thu đang hiệu lực</div>
+          </div>
+
+          <div class="page-header-actions">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Đã tải file mẫu nhập dữ liệu.','success')">
+              <svg viewBox="0 0 14 14">
+                <path d="M7 9V1M3 7l4 4 4-4M2 12h10"/>
+              </svg>
+              Tải file mẫu
+            </button>
+
+            <button class="btn btn-primary btn-sm" onclick="showToast('Đã chọn file nhập dữ liệu.','info')">
+              <svg viewBox="0 0 14 14">
+                <path d="M7 5V1M3 3l4-2 4 2M2 7h10v6H2z"/>
+              </svg>
+              Nhập Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-card-label">Dòng dữ liệu gần nhất</div>
+            <div class="stat-card-value">2.019</div>
+            <div class="stat-card-sub">học phí, BHYT và khoản thu khác</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-label">Hợp lệ</div>
+            <div class="stat-card-value c-success">1.976</div>
+            <div class="stat-card-sub">đủ điều kiện sinh khoản phải thu</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-label">Cần kiểm tra</div>
+            <div class="stat-card-value c-warning">31</div>
+            <div class="stat-card-sub">trùng khoản hoặc lệch cấu hình</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-label">Lỗi dữ liệu</div>
+            <div class="stat-card-value c-error">12</div>
+            <div class="stat-card-sub">thiếu cấu hình, sai mã SV, thiếu mức thu</div>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-bar">
+          <div class="tab-item active" id="tab-import-new">Nhập dữ liệu</div>
+          <div class="tab-item" id="tab-import-history">Lịch sử nhập</div>
+        </div>
+
+        <!-- ===================== TAB: IMPORT NEW ===================== -->
+        <div class="tab-pane active" id="pane-import-new">
+
+          <!-- IMPORT CONTEXT -->
+          <div class="filter-bar">
+            <div class="filter-field">
+              <label>Năm học</label>
+              <select>
+                <option selected>2025–2026</option>
+                <option>2026–2027</option>
+                <option>2024–2025</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Học kỳ / Đợt thu</label>
+              <select>
+                <option selected>HK1</option>
+                <option>Đợt 1</option>
+                <option>HK2</option>
+                <option>HK phụ</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Khoản mục</label>
+              <select>
+                <option selected>Tất cả khoản mục</option>
+                <option>Học phí</option>
+                <option>Bảo hiểm y tế</option>
+                <option>Khoản thu khác</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Nguồn dữ liệu</label>
+              <select style="min-width:220px;">
+                <option selected>Import Excel tổng hợp</option>
+                <option>Import học phí ĐHCQ</option>
+                <option>Import BRT</option>
+                <option>Import BHYT</option>
+                <option>Import khoản thu khác</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Văn bản căn cứ</label>
+              <select style="min-width:260px;">
+                <option selected>TB thu học phí ĐHCQ HK1 2025–2026</option>
+                <option>TB thu HP ĐHCQ khóa 2025 CT BRT đợt 1</option>
+                <option>Danh sách BHYT năm học 2025–2026</option>
+                <option>Danh sách khoản thu khác đã phê duyệt</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Thời gian trích</label>
+              <input type="text" value="29/10/2025–06/11/2025"/>
+            </div>
+          </div>
+
+          <!-- IMPORT RESULT -->
+          <div id="import-result">
+
+            <div class="section-block mb-8">
+              <div class="section-head">
+                <span class="section-title">Kết quả kiểm tra — ULIS_KHOANTHU_HK1_2025_2026.xlsx</span>
+                <span class="badge bg-info">2.019 dòng</span>
+              </div>
+
+              <div class="section-body" style="padding-bottom:6px;">
+                <div class="vs-row">
+                  <div class="vs-card">
+                    <div class="vs-card-lbl">Tổng số dòng</div>
+                    <div class="vs-card-val">2.019</div>
+                  </div>
+
+                  <div class="vs-card ok">
+                    <div class="vs-card-lbl">Hợp lệ</div>
+                    <div class="vs-card-val">1.976</div>
+                  </div>
+
+                  <div class="vs-card warn">
+                    <div class="vs-card-lbl">Cần kiểm tra</div>
+                    <div class="vs-card-val">31</div>
+                  </div>
+
+                  <div class="vs-card err">
+                    <div class="vs-card-lbl">Có lỗi</div>
+                    <div class="vs-card-val">12</div>
+                  </div>
+                </div>
+
+                <div class="table-wrap mb-0" style="margin-top:10px;">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nhóm dữ liệu</th>
+                        <th class="r">Số dòng</th>
+                        <th class="r">Hợp lệ</th>
+                        <th class="r">Cần kiểm tra</th>
+                        <th class="r">Lỗi</th>
+                        <th class="r">Tổng phải nộp (đ)</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>Học phí ĐHCQ</td>
+                        <td class="r">1.843</td>
+                        <td class="r c-success fw600">1.804</td>
+                        <td class="r c-warning">31</td>
+                        <td class="r c-error">8</td>
+                        <td class="r fw600">122.619.600</td>
+                      </tr>
+
+                      <tr>
+                        <td>Bảo hiểm y tế</td>
+                        <td class="r">176</td>
+                        <td class="r c-success fw600">172</td>
+                        <td class="r">0</td>
+                        <td class="r c-error">4</td>
+                        <td class="r fw600">1.516.320</td>
+                      </tr>
+
+                      <tr>
+                        <td>Khoản thu khác</td>
+                        <td class="r">0</td>
+                        <td class="r">0</td>
+                        <td class="r">0</td>
+                        <td class="r">0</td>
+                        <td class="r">0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style="font-size:11.5px;color:var(--muted);margin-top:8px;">
+                  Dòng hợp lệ sẽ sinh khoản phải thu theo mã cấu hình đang áp dụng. Dòng lỗi không được ghi nhận cho đến khi được sửa và kiểm tra lại.
+                </div>
+              </div>
+            </div>
+
+            <!-- PREVIEW TABLE -->
+            <div class="table-wrap table-xwide">
+              <div class="table-toolbar">
+                <span class="table-title">Xem trước dữ liệu trước khi sinh khoản phải thu</span>
+                <span class="table-count">Hiển thị 10 dòng đầu tiên</span>
+
+                <div class="table-toolbar-r">
+                  <button class="btn btn-ghost btn-sm">Xem tất cả lỗi</button>
+                </div>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th class="nowrap">Dòng</th>
+                    <th class="col-student-code">Mã SV</th>
+                    <th class="col-name">Họ tên</th>
+                    <th class="col-status">Khoản mục</th>
+                    <th class="col-code">Mã cấu hình</th>
+                    <th class="col-code">Mã KPT dự kiến</th>
+                    <th class="col-content">Chương trình đào tạo</th>
+                    <th class="nowrap">Kỳ thu</th>
+                    <th class="nowrap">Loại đăng ký</th>
+                    <th class="r col-money">Phải nộp (đ)</th>
+                    <th class="col-status">Tạo KPT</th>
+                    <th class="col-status">Yêu cầu TT</th>
+                    <th class="col-status">Khớp cấu hình</th>
+                    <th class="col-status">Kết quả kiểm tra</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td class="dim">1</td>
+                    <td class="fw600 nowrap">22041542</td>
+                    <td>Nguyễn Thị Ánh Tuyết</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-001</td>
+                    <td class="td-a nowrap">RCV-2025-08421</td>
+                    <td>Ngôn ngữ Anh</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">17.500.000</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-success">Hợp lệ</span></td>
+                  </tr>
+
+                  <tr>
+                    <td class="dim">2</td>
+                    <td class="fw600 nowrap">22041542</td>
+                    <td>Nguyễn Thị Ánh Tuyết</td>
+                    <td><span class="badge bg-neutral">BHYT</span></td>
+                    <td class="td-a nowrap">FEE-2025-BHYT12</td>
+                    <td class="td-a nowrap">RCV-2025-08601</td>
+                    <td>Tất cả chương trình</td>
+                    <td>2025–2026</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">631.800</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-success">Hợp lệ</span></td>
+                  </tr>
+
+                  <tr>
+                    <td class="dim">3</td>
+                    <td class="fw600 nowrap">22040231</td>
+                    <td>Trần Minh Anh</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-002</td>
+                    <td class="td-a nowrap">RCV-2025-08430</td>
+                    <td>Ngôn ngữ Nga</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">8.450.000</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-success">Hợp lệ</span></td>
+                  </tr>
+
+                  <tr>
+                    <td class="dim">4</td>
+                    <td class="fw600 nowrap">23011208</td>
+                    <td>Phạm Gia Bảo</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-005</td>
+                    <td class="td-a nowrap">RCV-2025-08422</td>
+                    <td>Ngôn ngữ Anh</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">19.000.000</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-success">Hợp lệ</span></td>
+                  </tr>
+
+                  <tr>
+                    <td class="dim">5</td>
+                    <td class="fw600 nowrap">24031876</td>
+                    <td>Lê Đức Huy</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-004</td>
+                    <td class="td-a nowrap">RCV-2025-08436</td>
+                    <td>Ngôn ngữ Nga</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">10.500.000</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-warning">Trùng khoản phải thu</span></td>
+                  </tr>
+
+                  <tr>
+                    <td class="dim">6</td>
+                    <td class="fw600 nowrap">25010782</td>
+                    <td>Đỗ Khánh Linh</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-BRT-DOT1</td>
+                    <td class="td-a nowrap">RCV-2025-08501</td>
+                    <td>Chương trình BRT — Làn Xanh</td>
+                    <td>Đợt 1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">25.000.000</td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Có</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-success">Hợp lệ</span></td>
+                  </tr>
+
+                  <tr style="background:#FFF8F8;">
+                    <td class="dim">7</td>
+                    <td class="fw600 nowrap">25011890</td>
+                    <td>Nguyễn Hoàng Nam</td>
+                    <td><span class="badge bg-neutral">Khác</span></td>
+                    <td class="c-error nowrap">OTHER-2025-LAB</td>
+                    <td class="dim c-align">—</td>
+                    <td class="dim c-align">—</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">450.000</td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-error">Không tìm thấy</span></td>
+                    <td><span class="badge bg-error">Thiếu cấu hình</span></td>
+                  </tr>
+
+                  <tr style="background:#FFF8F8;">
+                    <td class="dim">8</td>
+                    <td class="c-error nowrap">99999999</td>
+                    <td class="dim" style="font-style:italic;">Không tìm thấy sinh viên</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-005</td>
+                    <td class="dim c-align">—</td>
+                    <td>Ngôn ngữ Anh</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r fw600">19.000.000</td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-error">Mã SV không tồn tại</span></td>
+                  </tr>
+
+                  <tr style="background:#FFF8F8;">
+                    <td class="dim">9</td>
+                    <td class="fw600 nowrap">24040961</td>
+                    <td>Hoàng Minh Tuấn</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-003</td>
+                    <td class="dim c-align">—</td>
+                    <td>Tiếng Việt và Văn hóa Việt Nam</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r c-error">—</td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-success">Khớp</span></td>
+                    <td><span class="badge bg-error">Thiếu mức phải nộp</span></td>
+                  </tr>
+
+                  <tr style="background:#FFF8F8;">
+                    <td class="dim">10</td>
+                    <td class="fw600 nowrap">23022108</td>
+                    <td>Vũ Thị Mai Liên</td>
+                    <td><span class="badge bg-info">Học phí</span></td>
+                    <td class="td-a nowrap">FEE-2025-HK1-DHCQ-001</td>
+                    <td class="dim c-align">—</td>
+                    <td>Ngôn ngữ Anh</td>
+                    <td>HK1/25–26</td>
+                    <td>Lần đầu</td>
+                    <td class="r c-error fw600">18.000.000</td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-neutral">Không</span></td>
+                    <td><span class="badge bg-warning">Lệch mức thu</span></td>
+                    <td><span class="badge bg-error">Sai mức phải nộp</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- ERROR DETAIL -->
+            <div class="table-wrap table-xwide" style="margin-top:12px;">
+              <div class="table-toolbar">
+                <span class="table-title">Nhóm lỗi cần xử lý</span>
+                <span class="table-count">12 lỗi dữ liệu</span>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nhóm lỗi</th>
+                    <th class="r">Số dòng</th>
+                    <th>Nguyên nhân</th>
+                    <th>Hướng xử lý</th>
+                    <th>Ảnh hưởng</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td class="fw600">Thiếu cấu hình khoản thu</td>
+                    <td class="r c-error fw600">4</td>
+                    <td>Mã cấu hình trong file chưa tồn tại hoặc đã ngừng hiệu lực</td>
+                    <td>Bổ sung cấu hình khoản thu hoặc sửa mã cấu hình trong file</td>
+                    <td>Không sinh khoản phải thu</td>
+                  </tr>
+
+                  <tr>
+                    <td class="fw600">Mã sinh viên không tồn tại</td>
+                    <td class="r c-error fw600">3</td>
+                    <td>Mã sinh viên không khớp dữ liệu sinh viên hiện có</td>
+                    <td>Kiểm tra lại mã sinh viên trước khi nhập lại</td>
+                    <td>Không ghi nhận khoản phải nộp</td>
+                  </tr>
+
+                  <tr>
+                    <td class="fw600">Thiếu mức phải nộp</td>
+                    <td class="r c-error fw600">2</td>
+                    <td>File không có số tiền hoặc số tiền để trống</td>
+                    <td>Bổ sung mức phải nộp theo cấu hình</td>
+                    <td>Không sinh khoản phải thu</td>
+                  </tr>
+
+                  <tr>
+                    <td class="fw600">Sai mức phải nộp</td>
+                    <td class="r c-error fw600">3</td>
+                    <td>Số tiền trong file lệch so với cấu hình đang áp dụng</td>
+                    <td>Điều chỉnh file hoặc xác nhận cấu hình mức thu</td>
+                    <td>Không tự động ghi nhận</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display:flex;gap:7px;margin-top:8px;flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Đã tải file lỗi.','success')">Tải file lỗi (.xlsx)</button>
+              <button class="btn btn-secondary btn-sm" onclick="location.href='student-tuition.html'">Huỷ</button>
+              <button class="btn btn-primary btn-sm" onclick="openModal('modal-confirm-import')">Xác nhận nhập 1.976 dòng hợp lệ</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================== TAB: IMPORT HISTORY ===================== -->
+        <div class="tab-pane" id="pane-import-history">
+          <div class="filter-bar">
+            <div class="filter-field">
+              <label>Từ khóa</label>
+              <input type="text" placeholder="Tên file, người thực hiện..." style="min-width:220px;"/>
+            </div>
+
+            <div class="filter-field">
+              <label>Năm học</label>
+              <select>
+                <option>Tất cả</option>
+                <option selected>2025–2026</option>
+                <option>2024–2025</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Khoản mục</label>
+              <select>
+                <option>Tất cả</option>
+                <option>Học phí</option>
+                <option>Bảo hiểm y tế</option>
+                <option>Khoản thu khác</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label>Trạng thái</label>
+              <select>
+                <option>Tất cả</option>
+                <option>Hoàn thành</option>
+                <option>Có lỗi</option>
+                <option>Đã hủy</option>
+              </select>
+            </div>
+
+            <div class="filter-actions">
+              <button class="btn btn-primary btn-sm">Lọc</button>
+              <button class="btn btn-secondary btn-sm">Đặt lại</button>
+            </div>
+          </div>
+
+          <div class="table-wrap table-xwide">
+            <div class="table-toolbar">
+              <span class="table-title">Lịch sử nhập dữ liệu học phí và khoản thu</span>
+              <span class="table-count">12 lần nhập</span>
+
+              <div class="table-toolbar-r">
+                <span class="c-muted fs-11">Hiển thị</span>
+                <select class="page-size-select">
+                  <option selected>20 dòng</option>
+                  <option>50 dòng</option>
+                  <option>100 dòng</option>
+                </select>
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-content">Tên file</th>
+                  <th class="nowrap">Kỳ thu</th>
+                  <th class="col-status">Khoản mục</th>
+                  <th class="r nowrap">Số dòng</th>
+                  <th class="r nowrap">Hợp lệ</th>
+                  <th class="r nowrap">Cần kiểm tra</th>
+                  <th class="r nowrap">Lỗi</th>
+                  <th class="r nowrap">KPT đã tạo</th>
+                  <th class="col-name">Người thực hiện</th>
+                  <th class="col-date">Thời gian</th>
+                  <th class="col-status">Trạng thái</th>
+                  <th class="col-actions">Thao tác</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>ULIS_KHOANTHU_HK1_2025_2026.xlsx</td>
+                  <td>HK1/2025–2026</td>
+                  <td>Tổng hợp</td>
+                  <td class="r">2.019</td>
+                  <td class="r c-success fw600">1.976</td>
+                  <td class="r c-warning">31</td>
+                  <td class="r c-error">12</td>
+                  <td class="r c-success fw600">1.976</td>
+                  <td>Nguyễn Văn Khoa</td>
+                  <td class="dim nowrap">21/10/2025 14:32</td>
+                  <td><span class="badge bg-warning">Có lỗi</span></td>
+                  <td class="td-actions">
+                    <button class="btn btn-ghost btn-xs">Chi tiết</button>
+                    <button class="btn btn-ghost btn-xs">Tải lỗi</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>ULIS_DHCQ_HK1_2025_2026.xlsx</td>
+                  <td>HK1/2025–2026</td>
+                  <td>Học phí</td>
+                  <td class="r">1.843</td>
+                  <td class="r c-success fw600">1.804</td>
+                  <td class="r c-warning">31</td>
+                  <td class="r c-error">8</td>
+                  <td class="r c-success fw600">1.804</td>
+                  <td>Nguyễn Văn Khoa</td>
+                  <td class="dim nowrap">21/10/2025 14:32</td>
+                  <td><span class="badge bg-warning">Có lỗi</span></td>
+                  <td class="td-actions">
+                    <button class="btn btn-ghost btn-xs">Chi tiết</button>
+                    <button class="btn btn-ghost btn-xs">Tải lỗi</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>ULIS_BHYT_2025_2026.xlsx</td>
+                  <td>2025–2026</td>
+                  <td>Bảo hiểm y tế</td>
+                  <td class="r">176</td>
+                  <td class="r c-success fw600">172</td>
+                  <td class="r">0</td>
+                  <td class="r c-error">4</td>
+                  <td class="r c-success fw600">172</td>
+                  <td>Nguyễn Văn Khoa</td>
+                  <td class="dim nowrap">21/10/2025 15:05</td>
+                  <td><span class="badge bg-warning">Có lỗi</span></td>
+                  <td class="td-actions">
+                    <button class="btn btn-ghost btn-xs">Chi tiết</button>
+                    <button class="btn btn-ghost btn-xs">Tải lỗi</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>ULIS_BRT_QH2025_dot1_2025_2026.xlsx</td>
+                  <td>Đợt 1/2025–2026</td>
+                  <td>Học phí</td>
+                  <td class="r">128</td>
+                  <td class="r c-success fw600">128</td>
+                  <td class="r">0</td>
+                  <td class="r">0</td>
+                  <td class="r c-success fw600">128</td>
+                  <td>Nguyễn Văn Khoa</td>
+                  <td class="dim nowrap">21/10/2025 15:10</td>
+                  <td><span class="badge bg-success">Hoàn thành</span></td>
+                  <td class="td-actions">
+                    <button class="btn btn-ghost btn-xs">Chi tiết</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>ULIS_DHCQ_HK2_2024_2025.xlsx</td>
+                  <td>HK2/2024–2025</td>
+                  <td>Học phí</td>
+                  <td class="r">1.706</td>
+                  <td class="r c-success fw600">1.706</td>
+                  <td class="r">0</td>
+                  <td class="r">0</td>
+                  <td class="r c-success fw600">1.706</td>
+                  <td>Trần Thị Hoa</td>
+                  <td class="dim nowrap">25/03/2025 11:20</td>
+                  <td><span class="badge bg-success">Hoàn thành</span></td>
+                  <td class="td-actions">
+                    <button class="btn btn-ghost btn-xs">Chi tiết</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="tbl-pagination">
+              <span>Hiển thị 1–5 / 12 lần nhập</span>
+
+              <div class="pg-nav">
+                <button class="pg-btn" disabled>&laquo;</button>
+                <button class="pg-btn active">1</button>
+                <button class="pg-btn">2</button>
+                <button class="pg-btn">3</button>
+                <button class="pg-btn">&raquo;</button>
+              </div>
+
+              <div class="pg-goto">
+                <span>Trang</span>
+                <input type="number" min="1" value="1"/>
+                <button class="btn btn-secondary btn-xs">Đi</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/common.js"></script>
+</body>
+</html>

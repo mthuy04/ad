@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Đăng nhập — Hệ thống quản lý thu học phí ULIS</title>
+<meta name="description" content="Hệ thống quản trị học phí nội bộ — Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội"/>
+<link rel="stylesheet" href="css/styles.css"/>
+<style>
+  html, body {
+    height: 100%; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #F0F2F5;
+  }
+</style>
+</head>
+<body>
+<div id="toast-container"></div>
+<div class="login-card">
+  <div class="login-logo-row">
+    <img src="assets/ulis-logo.png" alt="ULIS" onerror="this.style.display='none'"/>
+  </div>
+  <div class="login-title">Hệ thống quản lý thu học phí</div>
+  <div class="login-subtitle">Trường Đại học Ngoại ngữ &mdash; Đại học Quốc gia Hà Nội</div>
+  <hr class="login-sep"/>
+  <div class="login-field">
+    <label>Tên đăng nhập / Email công vụ</label>
+    <input type="text" id="login-username" placeholder="Nhập email công vụ"/>
+  </div>
+  <div class="login-field">
+    <label>Mật khẩu</label>
+    <input type="password" id="login-password" placeholder="Nhập mật khẩu"/>
+  </div>
+  <button class="login-btn" onclick="location.href='pages/overview.html'">Đăng nhập</button>
+  <div class="login-footer">
+    <div class="login-notice">Hệ thống dành cho cán bộ được phân quyền</div>
+    <span class="login-link" onclick="showToast('Vui lòng liên hệ quản trị viên để được hỗ trợ.','info')">Quên mật khẩu?</span>
+  </div>
+</div>
+<script src="js/common.js"></script>
+<script>
+  /* Allow pressing Enter to submit */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') location.href = 'pages/overview.html';
+  });
+</script>
+</body>
+</html>

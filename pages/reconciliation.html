@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Đối soát BIDV — Hệ thống quản lý thu học phí ULIS</title>
+<meta name="description" content="Hệ thống quản trị học phí nội bộ — Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội"/>
+<link rel="stylesheet" href="../css/styles.css"/>
+<style>
+:root{--rc-blue:#2f6fed;--rc-navy:#123f69;--rc-text:#0f172a;--rc-muted:#64748b;--rc-border:#dbe5ef;--rc-green:#07845c;--rc-amber:#b85b08;--rc-red:#b91c1c;--rc-purple:#6d4ad8}
+*{box-sizing:border-box}.hidden{display:none!important}.recon-page{font-size:13px;line-height:1.45;color:var(--rc-text)}.recon-header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:16px}.recon-page h1{margin:0 0 5px;font-size:24px;font-weight:800}.recon-sub{color:var(--rc-muted);max-width:850px}.recon-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.recon-btn{height:40px;border:1px solid #cbd8e6;border-radius:12px;background:#fff;color:#334155;padding:0 15px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}.recon-btn:hover{background:#f8fafc}.recon-btn.primary{background:var(--rc-blue);border-color:var(--rc-blue);color:#fff}.recon-btn.sm{height:32px;padding:0 10px;font-size:12px}.recon-btn:disabled{opacity:.45;cursor:not-allowed}.recon-card{background:#fff;border:1px solid var(--rc-border);border-radius:12px;box-shadow:0 2px 9px rgba(15,23,42,.035)}
+.recon-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}.recon-kpi{text-align:left;border:1px solid var(--rc-border);border-radius:12px;background:#fff;padding:14px 16px;min-height:105px;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.03)}.recon-kpi:hover{border-color:#bfd0e1}.rk-label{font-size:11.5px;font-weight:750;color:#64748b}.rk-value{font-size:23px;font-weight:850;margin:6px 0 3px;color:#0f172a}.rk-value.blue{color:#2563eb}.rk-value.green{color:#07845c}.rk-value.amber{color:#b85b08}.rk-value.red{color:#b91c1c}.rk-sub{font-size:11.5px;color:#8a9cb2}
+.batch-filter-card{padding:13px 14px;margin-bottom:13px}.batch-filter-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1.15fr 1.1fr 1.1fr .9fr .9fr auto;gap:9px;align-items:end}.rfield label{display:block;font-size:11px;color:#64748b;font-weight:700;margin-bottom:5px}.rinput,.rselect,.rtextarea{width:100%;border:1px solid #d7e2ed;border-radius:9px;background:#fff;color:#334155;font-size:12.5px;font-family:inherit;outline:none}.rinput,.rselect{height:36px;padding:0 10px}.rtextarea{padding:9px 10px;resize:vertical}.rinput:focus,.rselect:focus,.rtextarea:focus{border-color:#93b8e7;box-shadow:0 0 0 3px #eaf2ff}.rfilter-actions{display:flex;gap:6px}.rfilter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.rfilter-chip{display:inline-flex;gap:5px;align-items:center;border:1px solid #d7e3ef;background:#f8fbff;border-radius:999px;padding:4px 8px;font-size:10.5px;color:#475569}
+.table-card{overflow:hidden}.table-toolbar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #e8eef5;gap:12px}.table-title{font-size:14px;font-weight:800}.table-count{font-size:11.5px;color:#94a3b8;margin-left:6px}.table-tools{display:flex;gap:7px;align-items:center}.rselect.small{width:auto;min-width:130px;height:32px}.scroll-x{overflow:auto}.recon-table{width:100%;border-collapse:collapse}.recon-table th{position:sticky;top:0;background:#f8fafc;color:#64748b;font-size:11px;font-weight:800;text-align:left;padding:10px 9px;border-bottom:1px solid #e5edf5;white-space:nowrap;z-index:2}.recon-table td{font-size:12.5px;color:#334155;padding:11px 9px;border-bottom:1px solid #edf2f7;vertical-align:middle;line-height:1.42}.recon-table tbody tr:hover{background:#fbfdff}.batch-table{min-width:1900px}.source-table{min-width:1650px}.result-table{min-width:2900px}.exception-table{min-width:2200px}.evidence-table{min-width:2100px}.diff-table{min-width:2300px}.money{text-align:right!important;white-space:nowrap;font-weight:700}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#1d5f9c;white-space:nowrap}.cell-sub{display:block;color:#94a3b8;font-size:10.5px;margin-top:2px}.link,.link-btn{color:#1d5f9c;font-weight:700;cursor:pointer}.link-btn{border:0;background:transparent;padding:0;font-size:12px}.rbadge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:10.5px;font-weight:750;white-space:nowrap}.rbadge.green{background:#ecfdf5;color:#047857}.rbadge.amber{background:#fff7ed;color:#b45309}.rbadge.red{background:#fef2f2;color:#b91c1c}.rbadge.blue{background:#eff6ff;color:#1d4ed8}.rbadge.gray{background:#f1f5f9;color:#475569}.rbadge.purple{background:#f5f3ff;color:#6d28d9}.pagination{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;font-size:11.5px;color:#64748b}.pager{display:flex;gap:5px}.page-btn{height:30px;min-width:30px;border:1px solid #dbe5ef;background:#fff;border-radius:7px}.page-btn.active{background:var(--rc-blue);border-color:var(--rc-blue);color:#fff}
+.batch-detail-view{display:none}.batch-detail-view.active{display:block}.recon-list-view.hidden{display:none}.detail-back{border:0;background:transparent;color:#2563eb;font-weight:700;cursor:pointer;padding:0;margin-bottom:10px}.batch-detail-head{background:#fff;border:1px solid var(--rc-border);border-radius:12px;padding:15px 17px;margin-bottom:12px}.detail-head-main{display:flex;justify-content:space-between;gap:18px}.detail-eyebrow{font-size:10.5px;color:#94a3b8;font-weight:700;text-transform:uppercase}.detail-title{font-size:20px;font-weight:850;margin-top:2px}.detail-meta{font-size:11.5px;color:#64748b;margin-top:4px}.detail-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.batch-meta-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:13px;padding-top:12px;border-top:1px solid #edf2f7}.batch-meta-grid span{display:block;font-size:10.5px;color:#94a3b8}.batch-meta-grid strong{display:block;font-size:11.5px;color:#334155;margin-top:2px;font-weight:700}
+.recon-stepper{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:13px}.rs-step{position:relative;background:#fff;border:1px solid #e1e9f1;border-radius:10px;padding:10px 11px;min-height:83px}.rs-step span{font-size:10px;color:#94a3b8;font-weight:800}.rs-step b{display:block;font-size:11.5px;margin-top:4px}.rs-step small{display:block;font-size:10.5px;color:#94a3b8;margin-top:4px}.rs-step.done{border-color:#c8e8dc}.rs-step.done b{color:#047857}.rs-step.warning{border-color:#f4d39b}.rs-step.warning b{color:#b45309}.rs-step.blocked{border-color:#f3c6c6}.rs-step.blocked b{color:#b91c1c}.rs-step.waiting b{color:#64748b}
+.detail-tabs{display:flex;gap:15px;border-bottom:1px solid #dce5ee;margin-bottom:13px;overflow:auto}.detail-tab{border:0;background:transparent;padding:10px 1px 9px;color:#64748b;font-weight:700;font-size:12.5px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}.detail-tab.active{color:#1f5f9d;border-color:#1f5f9d}.tab-count{display:inline-flex;min-width:18px;height:18px;align-items:center;justify-content:center;border-radius:999px;background:#edf3f8;color:#64748b;font-size:10px;margin-left:4px}.tab-count.danger{background:#fef2f2;color:#b91c1c}.detail-panel{display:none}.detail-panel.active{display:block}.detail-kpis{display:grid;gap:9px;margin-bottom:12px}.detail-kpis.six{grid-template-columns:repeat(6,1fr)}.detail-kpi{background:#fff;border:1px solid var(--rc-border);border-radius:11px;padding:13px 14px;min-height:106px}.dk-label{font-size:11px;color:#64748b;font-weight:750}.dk-value{font-size:22px;font-weight:850;margin:5px 0 3px}.dk-value.green{color:#07845c}.dk-value.blue{color:#2563eb}.dk-value.amber{color:#b85b08}.dk-value.red{color:#b91c1c}.dk-sub{font-size:10.8px;color:#8a9cb2;line-height:1.4}.classification-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.classification-chips button{border:1px solid #dce6f0;background:#fff;border-radius:999px;padding:6px 9px;color:#475569;font-size:10.8px;cursor:pointer}.classification-chips button:hover{background:#f8fbff}.overview-two-col{display:grid;grid-template-columns:1fr 1fr;gap:11px}.control-card,.close-card{padding:14px 15px}.section-title{font-size:14px;font-weight:800;margin-bottom:11px}.control-group{border-top:1px solid #edf2f7;padding-top:9px;margin-top:9px}.control-group:first-of-type{border-top:0;padding-top:0;margin-top:0}.control-group h3{font-size:11.5px;color:#64748b;margin:0 0 6px}.control-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:11.5px}.control-row.ok b,.ok-text{color:#047857}.bad-text{color:#b91c1c}.check-list{display:flex;flex-direction:column;gap:8px}.check-row{display:flex;gap:9px;border:1px solid #edf2f7;border-radius:9px;padding:8px 9px}.check-row>span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:0 0 auto}.check-row.pass>span{background:#ecfdf5;color:#047857}.check-row.fail>span{background:#fef2f2;color:#b91c1c}.check-row b{font-size:11.5px}.check-row small{display:block;font-size:10.5px;color:#94a3b8;margin-top:2px}.close-reason{margin-top:11px;border:1px solid #f3c6c6;background:#fff8f8;color:#991b1b;border-radius:9px;padding:9px 10px;font-size:11.5px}
+.panel-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:11px}.panel-head h2{font-size:16px;margin:0}.panel-head p{font-size:11.5px;color:#64748b;margin:3px 0 0}.validation-report{padding:14px 15px;margin-top:11px}.validation-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.validation-grid>div{border:1px solid #edf2f7;border-radius:9px;padding:9px}.validation-grid span{display:block;font-size:10.5px;color:#94a3b8}.validation-grid b{display:block;margin-top:3px}.error-sample{margin-top:10px;border:1px solid #f3d39f;background:#fffaf3;border-radius:9px;padding:9px 10px;font-size:11.5px;color:#8a4b09}.result-filter{padding:12px 13px;margin-bottom:11px}.result-filter-grid{display:grid;grid-template-columns:1.1fr 1.7fr 1fr 1fr 1fr auto;gap:9px;align-items:end}.mini-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-bottom:11px}.mini-kpi{background:#fff;border:1px solid var(--rc-border);border-radius:10px;padding:11px 12px}.mini-kpi span{display:block;font-size:10.8px;color:#64748b;font-weight:700}.mini-kpi b{display:block;font-size:19px;margin-top:3px}.mini-kpi b.red{color:#b91c1c}.section-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #e8eef5}.top-gap{margin-top:11px}.business-note{border:1px solid #cfe0f5;background:#f8fbff;color:#405a75;border-radius:9px;padding:9px 10px;font-size:11.5px;margin-top:10px}.business-note.error{border-color:#f2c5c5;background:#fff8f8;color:#991b1b}.audit-card{padding:15px}.audit-timeline{border-left:2px solid #e2e8f0;margin-left:5px;padding-left:16px}.audit-item{position:relative;padding:0 0 14px}.audit-dot{position:absolute;left:-21px;top:4px;width:9px;height:9px;border-radius:50%;background:#3b82f6;border:2px solid #fff}.audit-item.warn .audit-dot{background:#f59e0b}.audit-item b{font-size:12.5px}.audit-item small{display:block;font-size:10.8px;color:#94a3b8;margin-top:2px}
+.rmodal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.38);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}.rmodal-overlay.open{display:flex}.rmodal{width:min(560px,100%);background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(15,23,42,.2);overflow:hidden}.rmodal.wide{width:min(760px,100%)}.rmodal-head{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid #e8eef5}.rmodal-head h2{margin:0;font-size:17px}.rmodal-head button{border:0;background:#f1f5f9;width:30px;height:30px;border-radius:8px;font-size:18px;cursor:pointer}.rmodal-body{padding:16px 17px}.rmodal-foot{display:flex;justify-content:flex-end;gap:8px;padding:13px 17px;border-top:1px solid #e8eef5}.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.span2{grid-column:span 2}.date-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}.upload-zone{border:1.5px dashed #b9cbe0;background:#fbfdff;border-radius:11px;padding:26px;text-align:center;color:#475569}.upload-zone small{display:block;color:#94a3b8;margin-top:5px}
+@media(max-width:1300px){.batch-filter-grid{grid-template-columns:repeat(4,1fr)}.batch-meta-grid{grid-template-columns:repeat(4,1fr)}.recon-kpis{grid-template-columns:repeat(3,1fr)}.detail-kpis.six{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.recon-header,.detail-head-main{flex-direction:column}.recon-kpis,.detail-kpis.six,.mini-kpis{grid-template-columns:repeat(2,1fr)}.overview-two-col{grid-template-columns:1fr}.batch-filter-grid,.result-filter-grid,.batch-meta-grid,.validation-grid{grid-template-columns:1fr 1fr}.recon-stepper{grid-template-columns:1fr}.modal-grid{grid-template-columns:1fr}.span2{grid-column:span 1}}
+</style>
+</head>
+
+<body>
+<div id="toast-container"></div>
+
+<!-- ===================== SESSION EXPIRED MODAL ===================== -->
+<div class="overlay" id="modal-session-expired">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2>Phiên đăng nhập hết hạn</h2>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:24px 18px;">
+      <div class="confirm-icon" style="margin:0 auto 12px;background:var(--warn-bg);">
+        <svg width="18" height="18" fill="none" viewBox="0 0 20 20" stroke="var(--warning)" stroke-width="1.8">
+          <path d="M10 2L2 17h16L10 2zM10 8v4M10 14v1.5"/>
+        </svg>
+      </div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">Phiên đăng nhập đã hết hạn</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Vui lòng đăng nhập lại để tiếp tục sử dụng hệ thống.</div>
+      <button class="btn btn-primary" onclick="location.href='../index.html'">Đăng nhập lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONFIRM: ĐÓNG SỔ ĐỐI SOÁT ===================== -->
+<div class="overlay" id="modal-confirm-close-recon">
+  <div class="modal modal-sm">
+    <div class="modal-hd">
+      <h2>Xác nhận đóng sổ đối soát</h2>
+      <button class="btn-x" onclick="closeModal('modal-confirm-close-recon')">
+        <svg viewBox="0 0 20 20">
+          <path d="M5 5l10 10M15 5L5 15"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div style="font-size:12.5px;color:var(--text);margin-bottom:8px;">
+        Xác nhận <strong>đóng sổ</strong> đối soát ngày 29/10/2025?
+      </div>
+      <div class="sys-error-bar">
+        Còn 3 ngoại lệ chưa xử lý (Lệch/Mồ côi/Ghi khống) trong kết quả đối soát.
+      </div>
+      <div class="sys-warn-bar" style="margin-bottom:0;">
+        Sau khi đóng sổ, kết quả đối soát sẽ được khóa, biên bản đối soát sẽ được sinh theo dữ liệu hiện tại.
+      </div>
+    </div>
+
+    <div class="modal-ft">
+      <button class="btn btn-secondary" onclick="closeModal('modal-confirm-close-recon')">Hủy</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-confirm-close-recon');showToast('Đã đóng sổ đối soát ngày 29/10/2025.','success')">
+        Đóng sổ
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="../assets/ulis-logo.png" alt="ULIS" style="height:36px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'"/>
+        <div>
+          <div class="brand-inst" style="font-size:11.5px;font-weight:600;">Trường Đại học Ngoại ngữ</div>
+          <div class="brand-vnu">Đại học Quốc gia Hà Nội</div>
+        </div>
+      </div>
+      <div class="brand-sep" style="margin:10px 0 0;"></div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="sidebar-group-label">Nghiệp vụ</div>
+
+      <a class="nav-item" href="overview.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/>
+          <rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/>
+          <rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/>
+          <rect x="9" y="9" width="5.5" height="5.5" rx="1"/>
+        </svg>
+        Tổng quan
+      </a>
+
+      <a class="nav-item" href="tuition-config.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 4h12M2 8h8M2 12h10"/>
+        </svg>
+        Cấu hình học phí
+      </a>
+
+      <a class="nav-item" href="student-tuition.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M9 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V7M9 2l5 5M9 2v5h5"/>
+        </svg>
+        Dữ liệu học phí
+      </a>
+
+      <a class="nav-item" href="receivables.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M13 5H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1zM11 5V3a2 2 0 00-4 0v2"/>
+        </svg>
+        Khoản phải thu
+      </a>
+
+      <a class="nav-item" href="payment-requests.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <rect x="1.5" y="3.5" width="13" height="9" rx="1"/>
+          <path d="M1.5 6.5h13"/>
+        </svg>
+        Yêu cầu thanh toán
+      </a>
+
+      <a class="nav-item" href="transactions.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 8h12M10 4l4 4-4 4M6 4L2 8l4 4"/>
+        </svg>
+        Giao dịch
+      </a>
+
+      <a class="nav-item active" href="reconciliation.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M2 3h5v10H2zM9 3h5v10H9M5 8h6"/>
+        </svg>
+        Đối soát BIDV
+      </a>
+
+      <a class="nav-item" href="exceptions.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M8 2L1 14h14L8 2zM8 6v4M8 11v1.5"/>
+        </svg>
+        Ngoại lệ
+      </a>
+
+      <div class="sidebar-group-label">Quản lý</div>
+
+      <a class="nav-item" href="reports.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M3 2h10v12H3zM6 6h4M6 9h4M6 12h2"/>
+        </svg>
+        Báo cáo
+      </a>
+
+      <a class="nav-item" href="reminders.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <path d="M8 1a5 5 0 015 5c0 4 2 5 2 5H1s2-1 2-5a5 5 0 015-5zM6.5 13.5a1.5 1.5 0 003 0"/>
+        </svg>
+        Nhắc hạn
+      </a>
+
+      <div class="sidebar-group-label">Cấu hình</div>
+
+      <a class="nav-item" href="system-config.html">
+        <svg class="nav-icon" viewBox="0 0 16 16">
+          <circle cx="8" cy="8" r="2.5"/>
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4"/>
+        </svg>
+        Cấu hình hệ thống
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN ===================== -->
+  <div id="main">
+
+    <!-- ===================== TOPBAR ===================== -->
+    <header id="topbar">
+      <div class="topbar-crumb" style="display:flex;flex-direction:column;gap:1px;">
+        <div style="font-size:10px;font-weight:500;color:var(--muted-lt);letter-spacing:.2px;">Hệ thống quản lý thu học phí</div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span class="crumb-root">Nghiệp vụ</span>
+          <span class="crumb-sep"> / </span>
+          <span class="crumb-page">Đối soát BIDV</span>
+        </div>
+      </div>
+
+      <div class="topbar-user topbar-user-wrap">
+        <div class="user-menu-trigger" id="userMenuTrigger" onclick="toggleUserMenu()">
+          <div class="topbar-user-info">
+            <div class="topbar-user-dept">Phòng Kế hoạch Tài chính</div>
+            <div class="topbar-user-role">Cán bộ KHTC &nbsp;&bull;&nbsp; Nguyễn Thị Hương</div>
+          </div>
+          <div class="topbar-avatar">NH</div>
+        </div>
+
+        <div class="user-dropdown" id="userDropdown">
+          <div class="user-dropdown-header">
+            <div class="udh-name">Nguyễn Thị Hương</div>
+            <div class="udh-role">Phòng KHTC — Cán bộ quản trị</div>
+          </div>
+
+          <div class="user-menu-item" onclick="closeUserMenu();showToast('Vui lòng liên hệ quản trị viên để được hỗ trợ.','info')">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <circle cx="8" cy="5" r="3"/>
+              <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+            </svg>
+            Thông tin tài khoản
+          </div>
+
+          <div class="user-menu-item" onclick="closeUserMenu();showToast('Vui lòng liên hệ quản trị viên để được hỗ trợ.','info')">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="7" width="12" height="8" rx="1"/>
+              <path d="M5 7V5a3 3 0 016 0v2"/>
+            </svg>
+            Đổi mật khẩu
+          </div>
+
+          <hr class="user-menu-sep"/>
+
+          <div class="user-menu-item danger" onclick="location.href='../index.html'">
+            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 11l4-3-4-3M5 8h9M6 3H3a1 1 0 00-1 1v8a1 1 0 001 1h3"/>
+            </svg>
+            Đăng xuất
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <!-- ===================== CONTENT ===================== -->
+    <div id="content">
+      <div class="page-body recon-page">
+        <div id="reconList" class="recon-list-view">
+          <div class="recon-header">
+            <div>
+              <h1>Đối soát BIDV</h1>
+              <div class="recon-sub">Theo dõi việc tiếp nhận dữ liệu cuối ngày từ BIDV, so khớp với giao dịch trên hệ thống, xử lý chênh lệch và đóng sổ từng đợt đối soát.</div>
+            </div>
+            <div class="recon-actions">
+              <button class="recon-btn" onclick="openReconModal('modal-create-batch')">+ Tạo đợt đối soát</button>
+              <button class="recon-btn" onclick="openReconModal('modal-upload-source')">⇧ Tiếp nhận dữ liệu BIDV</button>
+              <button class="recon-btn primary" onclick="reconToast('Đang tạo tệp xuất theo bộ lọc hiện tại.','success')">⇩ Xuất danh sách</button>
+            </div>
+          </div>
+
+          <div class="recon-kpis">
+            <button class="recon-kpi" onclick="filterBatchQuick('WAITING_SOURCE')"><div class="rk-label">Chờ dữ liệu nguồn</div><div class="rk-value blue">2</div><div class="rk-sub">1 đợt đã quá thời điểm dự kiến</div></button>
+            <button class="recon-kpi" onclick="filterBatchQuick('ACTIVE')"><div class="rk-label">Sẵn sàng / Đang đối soát</div><div class="rk-value amber">3</div><div class="rk-sub">2 sẵn sàng · 1 đang chạy</div></button>
+            <button class="recon-kpi" onclick="filterBatchQuick('COMPLETED_WITH_EXCEPTIONS')"><div class="rk-label">Còn ngoại lệ</div><div class="rk-value red">2</div><div class="rk-sub">3 ngoại lệ chặn · 1 quá SLA</div></button>
+            <button class="recon-kpi" onclick="filterBatchQuick('COMPLETED_WITH_PENDING')"><div class="rk-label">Còn dữ liệu chờ</div><div class="rk-value amber">1</div><div class="rk-sub">4 giao dịch còn trong cửa sổ chờ</div></button>
+            <button class="recon-kpi" onclick="filterBatchQuick('CLOSED')"><div class="rk-label">Đã đóng sổ</div><div class="rk-value green">18</div><div class="rk-sub">2 đợt từng được mở lại</div></button>
+          </div>
+
+          <div class="recon-card batch-filter-card">
+            <div class="batch-filter-grid">
+              <div class="rfield"><label>Hệ nguồn</label><select id="bfSource" class="rselect"><option>BIDV</option></select></div>
+              <div class="rfield"><label>Từ ngày nghiệp vụ</label><input id="bfFrom" class="rinput" type="date" value="2026-08-10"></div>
+              <div class="rfield"><label>Đến ngày nghiệp vụ</label><input id="bfTo" class="rinput" type="date" value="2026-08-18"></div>
+              <div class="rfield"><label>Trạng thái đợt</label><select id="bfStatus" class="rselect"><option value="">Tất cả</option><option>Chờ dữ liệu nguồn</option><option>Sẵn sàng đối soát</option><option>Đang đối soát</option><option>Đã hoàn tất</option><option>Hoàn tất, còn dữ liệu chờ</option><option>Hoàn tất, còn ngoại lệ</option><option>Đã đóng sổ</option><option>Đã mở lại</option><option>Lỗi xử lý</option></select></div>
+              <div class="rfield"><label>Dữ liệu nguồn</label><select id="bfSourceStatus" class="rselect"><option value="">Tất cả</option><option>Chưa nhận</option><option>Đang kiểm tra</option><option>Hợp lệ</option><option>Không hợp lệ</option><option>Đã nạp</option></select></div>
+              <div class="rfield"><label>Điều kiện đóng sổ</label><select id="bfClose" class="rselect"><option value="">Tất cả</option><option>Đủ điều kiện</option><option>Chưa đủ điều kiện</option><option>Đã đóng</option><option>Đã mở lại</option></select></div>
+              <div class="rfield"><label>Ngoại lệ chặn</label><select id="bfBlocking" class="rselect"><option value="">Tất cả</option><option>Có</option><option>Không</option></select></div>
+              <div class="rfield"><label>Phiên bản nguồn</label><input id="bfVersion" class="rinput" placeholder="VD: v2"></div>
+              <div class="rfilter-actions"><button class="recon-btn primary sm" onclick="applyBatchFilters()">Lọc</button><button class="recon-btn sm" onclick="resetBatchFilters()">Đặt lại</button></div>
+            </div>
+            <div class="rfilter-chips" id="batchFilterChips"></div>
+          </div>
+
+          <div class="recon-card table-card">
+            <div class="table-toolbar"><div><span class="table-title">Danh sách đợt đối soát</span><span class="table-count" id="batchCount">8 đợt</span></div><div class="table-tools"><button class="recon-btn sm" onclick="reconToast('Đã mở tùy chỉnh cột.','info')">Cột ▾</button><select class="rselect small"><option>20 dòng/trang</option><option>50 dòng/trang</option><option>100 dòng/trang</option></select></div></div>
+            <div class="scroll-x"><table class="recon-table batch-table"><thead><tr><th>Ngày nghiệp vụ</th><th>Cửa sổ đối soát</th><th>Hệ nguồn</th><th>Trạng thái đợt</th><th>Dữ liệu nguồn</th><th>Lượt chạy hiện hành</th><th>Kết quả</th><th>Ngoại lệ</th><th>Tiến trình liên hệ thống</th><th>Điều kiện đóng sổ</th><th>Đóng / Mở lại</th><th>Thao tác</th></tr></thead><tbody id="batchBody"></tbody></table></div>
+            <div class="pagination"><span>Hiển thị 1–8 / 8 đợt</span><div class="pager"><button class="page-btn active">1</button></div></div>
+          </div>
+        </div>
+
+        <div id="batchDetail" class="batch-detail-view">
+          <button class="detail-back" onclick="closeBatchDetail()">← Danh sách đợt đối soát</button>
+          <div class="batch-detail-head">
+            <div class="detail-head-main">
+              <div><div class="detail-eyebrow">Đợt đối soát BIDV</div><div class="detail-title" id="batchDetailTitle">Ngày nghiệp vụ 18/08/2026</div><div class="detail-meta">Cửa sổ 18/08/2026 00:00 – 18/08/2026 23:59 · Batch BIDV-20260818 · Dữ liệu hiện hành v2</div></div>
+              <div class="detail-actions"><button class="recon-btn" id="btnReceiveCorrection" onclick="openReconModal('modal-upload-source')">Tiếp nhận bản hiệu chỉnh</button><button class="recon-btn" id="btnNewRun" onclick="reconToast('Đã tạo lượt đối soát mới.','success')">Tạo lượt đối soát mới</button><button class="recon-btn" id="btnDiffFile" onclick="switchDetailTab('difference',document.querySelector('[data-dtab=difference]'))">Tạo file chênh lệch</button><button class="recon-btn primary" id="btnCloseBatch" disabled onclick="openReconModal('modal-close-batch')">Đóng sổ</button><button class="recon-btn hidden" id="btnReopenBatch" onclick="openReconModal('modal-reopen-batch')">Mở lại đợt</button></div>
+            </div>
+            <div class="batch-meta-grid"><div><span>Hệ nguồn</span><strong>BIDV · Thu hộ học phí</strong></div><div><span>Trạng thái</span><strong><span class="rbadge amber">Hoàn tất, còn ngoại lệ</span></strong></div><div><span>Lượt chạy hiện hành</span><strong>Run 03 · hoàn tất 10:45</strong></div><div><span>Thời điểm chụp hệ thống</span><strong>18/08/2026 23:30</strong></div><div><span>Dự kiến nhận nguồn</span><strong>19/08/2026 07:30</strong></div><div><span>Bao phủ nguồn</span><strong>Đủ dữ liệu ngày nghiệp vụ</strong></div><div><span>Cập nhật số liệu</span><strong>19/08/2026 10:48</strong></div></div>
+          </div>
+
+          <div class="recon-stepper">
+            <div class="rs-step done"><span>01</span><b>Khởi tạo đợt</b><small>18/08 00:05</small></div><div class="rs-step done"><span>02</span><b>Tiếp nhận nguồn</b><small>19/08 07:42</small></div><div class="rs-step done"><span>03</span><b>Kiểm tra dữ liệu</b><small>19/08 07:44</small></div><div class="rs-step done"><span>04</span><b>Chạy đối soát</b><small>19/08 10:45</small></div><div class="rs-step warning"><span>05</span><b>Xử lý kết quả</b><small>Còn 3 ngoại lệ chặn</small></div><div class="rs-step waiting"><span>06</span><b>Gửi chênh lệch / bằng chứng</b><small>Chờ xử lý</small></div><div class="rs-step blocked"><span>07</span><b>Đóng sổ</b><small>Chưa đủ điều kiện</small></div>
+          </div>
+
+          <div class="detail-tabs">
+            <button class="detail-tab active" data-dtab="overview" onclick="switchDetailTab('overview',this)">Tổng quan</button>
+            <button class="detail-tab" data-dtab="source" onclick="switchDetailTab('source',this)">Dữ liệu nguồn BIDV</button>
+            <button class="detail-tab" data-dtab="results" onclick="switchDetailTab('results',this)">Kết quả đối soát <span class="tab-count">9</span></button>
+            <button class="detail-tab" data-dtab="exceptions" onclick="switchDetailTab('exceptions',this)">Ngoại lệ <span class="tab-count danger">3</span></button>
+            <button class="detail-tab" data-dtab="evidence" onclick="switchDetailTab('evidence',this)">Backfill & bằng chứng <span class="tab-count">4</span></button>
+            <button class="detail-tab" data-dtab="difference" onclick="switchDetailTab('difference',this)">File chênh lệch BIDV</button>
+            <button class="detail-tab" data-dtab="audit" onclick="switchDetailTab('audit',this)">Lịch sử & kiểm toán</button>
+          </div>
+
+          <section id="dtab-overview" class="detail-panel active">
+            <div class="detail-kpis six">
+              <div class="detail-kpi"><div class="dk-label">Dữ liệu BIDV</div><div class="dk-value">138</div><div class="dk-sub">421.540.000 ₫ ghi Có · 2 dòng ghi Nợ/đảo · v2</div></div>
+              <div class="detail-kpi"><div class="dk-label">Dữ liệu hệ thống</div><div class="dk-value">136</div><div class="dk-sub">418.600.000 ₫ · chụp lúc 18/08/2026 23:30</div></div>
+              <div class="detail-kpi"><div class="dk-label">Khớp chính xác</div><div class="dk-value green">127</div><div class="dk-sub">397.640.000 ₫ · đã chứng minh cùng giao dịch</div></div>
+              <div class="detail-kpi"><div class="dk-label">Chỉ có phía BIDV</div><div class="dk-value blue">3</div><div class="dk-sub">2 đủ điều kiện bổ sung · 1 bị chặn</div></div>
+              <div class="detail-kpi"><div class="dk-label">Chỉ có phía hệ thống</div><div class="dk-value amber">4</div><div class="dk-sub">3 còn trong thời gian chờ · 1 đã xác nhận thiếu</div></div>
+              <div class="detail-kpi"><div class="dk-label">Lệch / Cần xử lý</div><div class="dk-value red">4</div><div class="dk-sub">3 ngoại lệ chặn đóng sổ</div></div>
+            </div>
+            <div class="classification-chips"><button onclick="quickResult('Khớp chính xác')">Khớp chính xác <b>127</b></button><button onclick="quickResult('Có tại BIDV')">BIDV có, hệ thống chưa có <b>3</b></button><button onclick="quickResult('Còn trong thời gian chờ')">Hệ thống có, còn trong thời gian chờ <b>3</b></button><button onclick="quickResult('BIDV xác nhận không có')">Hệ thống có, BIDV xác nhận không có <b>1</b></button><button onclick="quickResult('Lệch số tiền')">Lệch số tiền <b>1</b></button><button>Ghi sổ chưa hoàn tất <b>1</b></button><button>Bút toán đảo sau ghi sổ <b>1</b></button><button>Xung đột dữ liệu <b>1</b></button></div>
+            <div class="overview-two-col">
+              <div class="recon-card control-card"><div class="section-title">Kiểm soát tổng nguồn</div><div class="control-group"><h3>Số lượng</h3><div class="control-row"><span>BIDV khai báo</span><b>141 dòng</b></div><div class="control-row"><span>Dòng hợp lệ duy nhất</span><b>138</b></div><div class="control-row"><span>Trùng bị bỏ qua</span><b>2</b></div><div class="control-row"><span>Dòng bị từ chối</span><b>1</b></div><div class="control-row ok"><span>Chênh lệch chưa giải thích</span><b>0</b></div></div><div class="control-group"><h3>Tiền ghi Có</h3><div class="control-row"><span>BIDV khai báo</span><b>421.540.000 ₫</b></div><div class="control-row"><span>Dòng hợp lệ</span><b>421.540.000 ₫</b></div><div class="control-row ok"><span>Chênh lệch chưa giải thích</span><b>0 ₫</b></div></div><div class="control-group"><h3>Tiền ghi Nợ / đảo</h3><div class="control-row"><span>BIDV khai báo</span><b>1.500.000 ₫</b></div><div class="control-row"><span>Dòng hợp lệ</span><b>1.500.000 ₫</b></div><div class="control-row ok"><span>Chênh lệch chưa giải thích</span><b>0 ₫</b></div></div></div>
+              <div class="recon-card close-card"><div class="section-title">Điều kiện đóng sổ <span class="rbadge red">3 điều kiện chưa đạt</span></div><div class="check-list"><div class="check-row pass"><span>✓</span><div><b>Đã nhận đủ dữ liệu nguồn</b><small>Dữ liệu ngày 18/08/2026 đã được tiếp nhận</small></div></div><div class="check-row pass"><span>✓</span><div><b>Dữ liệu nguồn hợp lệ</b><small>Phiên bản v2 đã qua kiểm tra</small></div></div><div class="check-row pass"><span>✓</span><div><b>Chênh lệch tổng nguồn bằng 0</b><small>Số dòng và số tiền đã cân</small></div></div><div class="check-row fail"><span>!</span><div><b>Ngoại lệ chặn phải bằng 0</b><small>Còn 3 ngoại lệ chặn đóng sổ</small></div></div><div class="check-row fail"><span>!</span><div><b>Không còn bổ sung giao dịch đang xử lý</b><small>Còn 1 giao dịch đang bổ sung vào hệ thống</small></div></div><div class="check-row fail"><span>!</span><div><b>File chênh lệch bắt buộc đã hoàn tất gửi</b><small>Phiên bản 01 đang ở trạng thái Sẵn sàng</small></div></div><div class="check-row pass"><span>✓</span><div><b>Dữ liệu chờ được phép chuyển tiếp</b><small>3 giao dịch còn trong cửa sổ chờ được phép chuyển sang đợt sau</small></div></div></div><div class="close-reason">Chưa thể đóng sổ: còn ngoại lệ chặn, bổ sung giao dịch đang xử lý và file chênh lệch chưa hoàn tất.</div></div>
+            </div>
+          </section>
+
+          <section id="dtab-source" class="detail-panel">
+            <div class="panel-head"><div><h2>Dữ liệu nguồn BIDV</h2><p>Mỗi bản hiệu chỉnh được lưu thành một phiên bản mới; phiên bản cũ vẫn được giữ để đối chiếu lịch sử.</p></div><button class="recon-btn" onclick="openReconModal('modal-upload-source')">+ Tiếp nhận bản hiệu chỉnh</button></div>
+            <div class="recon-card table-card"><div class="scroll-x"><table class="recon-table source-table"><thead><tr><th>Phiên bản</th><th>Tệp nguồn</th><th>Ngày nghiệp vụ</th><th>Thời điểm nhận</th><th>Hình thức nhận</th><th>Chuẩn dữ liệu</th><th>Mã kiểm tra toàn vẹn</th><th>Nguồn gốc</th><th>Trạng thái kiểm tra</th><th>Tổng khai báo</th><th>Kết quả đọc</th><th>Thao tác</th></tr></thead><tbody><tr><td><b>v2</b><span class="cell-sub">Hiện hành</span></td><td class="code">BIDV_EOD_20260818_R1.txt</td><td>18/08/2026</td><td>19/08/2026 07:42</td><td>Tải tệp</td><td>Profile 3.1 · 22+3 trường</td><td class="code">SHA256…8F21</td><td>Bản hiệu chỉnh của v1</td><td><span class="rbadge green">Đã nạp</span></td><td>141 dòng<span class="cell-sub">Có: 421,54 triệu · Nợ: 1,5 triệu</span></td><td>138 hợp lệ · 1 lỗi · 2 trùng</td><td><button class="link-btn">Xem báo cáo lỗi</button></td></tr><tr><td>v1</td><td class="code">BIDV_EOD_20260818.txt</td><td>18/08/2026</td><td>19/08/2026 07:31</td><td>Tải tệp</td><td>Profile 3.1 · 22+3 trường</td><td class="code">SHA256…1C04</td><td>Tệp đầu tiên</td><td><span class="rbadge amber">Không còn hiện hành</span></td><td>139 dòng<span class="cell-sub">Có: 420,04 triệu</span></td><td>136 hợp lệ · 1 lỗi · 2 trùng</td><td><button class="link-btn">Xem</button></td></tr></tbody></table></div></div>
+            <div class="recon-card validation-report"><div class="section-title">Báo cáo kiểm tra phiên bản v2</div><div class="validation-grid"><div><span>22 trường chi tiết</span><b class="ok-text">Đạt</b></div><div><span>3 trường tổng cuối tệp</span><b class="ok-text">Đạt</b></div><div><span>Định dạng phân cách</span><b class="ok-text">Đạt</b></div><div><span>Mã hóa dữ liệu</span><b class="ok-text">Đạt</b></div><div><span>Dòng đã đọc</span><b>141</b></div><div><span>Dòng hợp lệ</span><b>138</b></div><div><span>Dòng bị từ chối</span><b class="bad-text">1</b></div><div><span>Dòng trùng</span><b>2</b></div></div><div class="error-sample"><b>Dòng 97:</b> Sai định dạng thời gian giao dịch. Dòng này không được đưa vào đối soát và đã được ghi trong báo cáo lỗi.</div></div>
+          </section>
+
+          <section id="dtab-results" class="detail-panel">
+            <div class="recon-card result-filter"><div class="result-filter-grid"><div class="rfield"><label>Loại kết quả</label><select id="rfType" class="rselect"><option value="">Tất cả</option><option>Khớp chính xác</option><option>Có tại BIDV, chưa có trên hệ thống</option><option>Hệ thống có, còn trong thời gian chờ</option><option>Hệ thống có, BIDV xác nhận không có</option><option>Lệch số tiền</option><option>Ghi sổ chưa hoàn tất</option><option>Bút toán đảo sau ghi sổ</option><option>Xung đột dữ liệu</option></select></div><div class="rfield"><label>Tìm kiếm</label><input id="rfSearch" class="rinput" placeholder="Mã giao dịch, yêu cầu, Bill ID, mã SV"></div><div class="rfield"><label>Liên kết xuyên kênh</label><select class="rselect"><option>Tất cả</option><option>Đã chứng minh</option><option>Chưa chứng minh</option><option>Xung đột</option></select></div><div class="rfield"><label>Điều kiện bổ sung</label><select class="rselect"><option>Tất cả</option><option>Đủ điều kiện</option><option>Bị chặn</option></select></div><div class="rfield"><label>Ngoại lệ</label><select class="rselect"><option>Tất cả</option><option>Có hồ sơ mở</option><option>Không có</option></select></div><div class="rfilter-actions"><button class="recon-btn primary sm" onclick="filterResults()">Lọc</button><button class="recon-btn sm" onclick="resetResults()">Đặt lại</button></div></div></div>
+            <div class="recon-card table-card"><div class="table-toolbar"><div><span class="table-title">Kết quả đối soát</span><span class="table-count" id="resultCount">9 dòng mẫu</span></div><div class="table-tools"><button class="recon-btn sm">Cột ▾</button><select class="rselect small"><option>20 dòng/trang</option><option>50 dòng/trang</option></select></div></div><div class="scroll-x"><table class="recon-table result-table"><thead><tr><th>Mã giao dịch BIDV</th><th>Mã giao dịch hệ thống</th><th>Sinh viên</th><th>Yêu cầu thanh toán</th><th>Khoản phải thu</th><th>Thời gian giao dịch</th><th>Kết quả BIDV</th><th>Kết quả hệ thống</th><th class="money">Số tiền BIDV</th><th class="money">Số tiền hệ thống</th><th class="money">Chênh lệch</th><th>Liên kết xuyên kênh</th><th>Kết quả đối soát</th><th>Bổ sung</th><th>Bằng chứng ngân hàng</th><th>Ngoại lệ</th><th>Hướng xử lý</th><th>Thao tác</th></tr></thead><tbody id="resultBody"></tbody></table></div></div>
+          </section>
+
+          <section id="dtab-exceptions" class="detail-panel">
+            <div class="mini-kpis"><div class="mini-kpi"><span>Tổng hồ sơ mở</span><b>4</b></div><div class="mini-kpi"><span>Chặn đóng sổ</span><b class="red">3</b></div><div class="mini-kpi"><span>Quá SLA</span><b class="red">1</b></div><div class="mini-kpi"><span>Chưa phân công</span><b>1</b></div><div class="mini-kpi"><span>Chờ bên ngoài</span><b>1</b></div><div class="mini-kpi"><span>Chờ phê duyệt</span><b>1</b></div></div>
+            <div class="recon-card table-card"><div class="table-toolbar"><div><span class="table-title">Ngoại lệ của đợt đối soát</span><span class="table-count">4 hồ sơ mở</span></div><button class="recon-btn sm" onclick="location.href='exceptions.html'">Mở màn Ngoại lệ</button></div><div class="scroll-x"><table class="recon-table exception-table"><thead><tr><th>Mã hồ sơ</th><th>Loại ngoại lệ</th><th>Mức độ</th><th>Giao dịch liên quan</th><th>Sinh viên / Yêu cầu</th><th class="money">Số tiền</th><th>Trạng thái</th><th>Người xử lý</th><th>Thời điểm mở</th><th>Hạn xử lý</th><th>Tuổi hồ sơ</th><th>Bằng chứng</th><th>Phương án</th><th>Người duyệt</th><th>Thao tác</th></tr></thead><tbody><tr><td class="link">EX-2026-0041</td><td>Lệch số tiền</td><td><span class="rbadge red">Cao</span></td><td class="code">FT26081800338</td><td>22040231 · PR-260818-0061</td><td class="money">8.700.000 ₫</td><td><span class="rbadge amber">Đang điều tra</span></td><td>Nguyễn Thị Hương</td><td>19/08 10:46</td><td>24/08</td><td>1 giờ</td><td>Đủ</td><td>Xác minh phần chênh lệch</td><td>—</td><td><button class="link-btn">Xem</button></td></tr><tr><td class="link">EX-2026-0038</td><td>Chưa xác định liên kết</td><td><span class="rbadge red">Cao</span></td><td class="code">FT26081700882</td><td>24031876 · Chưa có yêu cầu</td><td class="money">10.500.000 ₫</td><td><span class="rbadge amber">Chờ bên ngoài</span></td><td>Tinktalk / BIDV</td><td>18/08 09:12</td><td>23/08</td><td>1 ngày</td><td>Thiếu</td><td>Đối chiếu nội dung chuyển khoản</td><td>—</td><td><button class="link-btn">Xem</button></td></tr><tr><td class="link">REC-2026-0017</td><td>Hệ thống có, ngân hàng xác nhận thiếu</td><td><span class="rbadge amber">Trung bình</span></td><td class="code">TXN-260817-0126</td><td>23040218 · PR-260817-0126</td><td class="money">17.500.000 ₫</td><td><span class="rbadge purple">Chờ duyệt phương án</span></td><td>Phòng KHTC</td><td>18/08 08:05</td><td>22/08</td><td class="bad-text">Quá SLA</td><td>Mâu thuẫn</td><td>Yêu cầu BIDV xác nhận</td><td>Trần Thoan</td><td><button class="link-btn">Xem</button></td></tr></tbody></table></div></div>
+          </section>
+
+          <section id="dtab-evidence" class="detail-panel">
+            <div class="panel-head"><div><h2>Bổ sung giao dịch và bằng chứng ngân hàng</h2><p>Chỉ các trường hợp đủ điều kiện mới được đưa vào luồng bổ sung; bằng chứng xác nhận chỉ được gửi khi liên kết giao dịch đã được chứng minh.</p></div></div>
+            <div class="recon-card table-card"><div class="section-head"><div><span class="table-title">Bổ sung giao dịch vào hệ thống</span><span class="table-count">3 trường hợp</span></div></div><div class="scroll-x"><table class="recon-table evidence-table"><thead><tr><th>Kết quả đối soát</th><th>Mã giao dịch BIDV</th><th>Điều kiện bổ sung</th><th>Lý do bị chặn</th><th>Mã xử lý</th><th>Giao dịch hệ thống</th><th>Trạng thái</th><th>Số lần thử</th><th>Bước đang xử lý</th><th>Bước tiếp tục</th><th>Người xử lý</th><th>Lần thử gần nhất</th><th>Thao tác</th></tr></thead><tbody><tr><td>Có tại BIDV, chưa có trên hệ thống</td><td class="code">FT26081800991</td><td><span class="rbadge green">Đủ điều kiện</span></td><td>—</td><td class="code">BF-260819-004</td><td class="code">TXN-260819-0004</td><td><span class="rbadge amber">Đang xử lý</span></td><td>1</td><td>Phân bổ công nợ</td><td>Hoàn tất yêu cầu</td><td>Hệ thống</td><td>19/08 10:47</td><td><button class="link-btn">Xem</button></td></tr><tr><td>Có tại BIDV, chưa có trên hệ thống</td><td class="code">FT26081800992</td><td><span class="rbadge red">Bị chặn</span></td><td>Chưa chứng minh được liên kết yêu cầu</td><td>—</td><td>—</td><td><span class="rbadge gray">Chưa gửi</span></td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="link-btn">Chi tiết</button></td></tr></tbody></table></div></div>
+            <div class="recon-card table-card top-gap"><div class="section-head"><div><span class="table-title">Bằng chứng xác nhận gửi sang hệ thống giao dịch</span><span class="table-count">4 bản ghi</span></div></div><div class="scroll-x"><table class="recon-table evidence-table"><thead><tr><th>Giao dịch / Kết quả</th><th>Loại bằng chứng</th><th>Trạng thái xác nhận đích</th><th>Dữ liệu nguồn</th><th>Liên kết giao dịch</th><th>Phiên bản bằng chứng</th><th>Trạng thái gửi</th><th>Tham chiếu hệ thống</th><th>Số lần thử</th><th>Lần gửi gần nhất</th><th>Lần thử tiếp theo</th><th>Xung đột</th></tr></thead><tbody><tr><td class="code">TXN-260818-0065</td><td>Dữ liệu cuối ngày xác nhận ghi Có</td><td><span class="rbadge green">Ngân hàng đã xác nhận</span></td><td>v2 · dòng 34</td><td><span class="rbadge green">Đã chứng minh</span></td><td>EV-2</td><td><span class="rbadge green">Đã nhận</span></td><td class="code">SET-260819-065</td><td>1</td><td>10:46</td><td>—</td><td>Không</td></tr><tr><td class="code">TXN-260817-0126</td><td>Không xuất hiện trong dữ liệu cuối ngày</td><td><span class="rbadge amber">Không xuất hiện cuối ngày</span></td><td>v2 · đối chiếu toàn tệp</td><td><span class="rbadge green">Đã chứng minh</span></td><td>EV-1</td><td><span class="rbadge amber">Đang chờ xử lý</span></td><td class="code">SET-260819-126</td><td>2</td><td>10:41</td><td>10:56</td><td>Có hồ sơ REC-2026-0017</td></tr></tbody></table></div></div>
+          </section>
+
+          <section id="dtab-difference" class="detail-panel">
+            <div class="panel-head"><div><h2>File chênh lệch gửi BIDV</h2><p>File chênh lệch, xác nhận tiếp nhận kỹ thuật và bằng chứng xử lý thực tế được theo dõi riêng.</p></div><button class="recon-btn primary" onclick="reconToast('Đã tạo phiên bản file chênh lệch mới.','success')">+ Tạo phiên bản mới</button></div>
+            <div class="recon-card table-card"><div class="scroll-x"><table class="recon-table diff-table"><thead><tr><th>Mã xuất</th><th>Phiên bản</th><th>Chuẩn file</th><th>Ngày nghiệp vụ</th><th>Loại file</th><th>Số dòng</th><th>Tổng kiểm soát</th><th>Mã chênh lệch</th><th>Hướng đề xuất</th><th>Người lập / duyệt</th><th>Trạng thái</th><th>Mã kiểm tra toàn vẹn</th><th>Số lần gửi</th><th>Xác nhận tiếp nhận</th><th>Tham chiếu BIDV</th><th>Thao tác</th></tr></thead><tbody><tr><td class="code">EXP-260819-002</td><td>02</td><td>Profile 3.1</td><td>18/08/2026</td><td>type=2</td><td>3</td><td>36.700.000 ₫</td><td>004 / 005</td><td>01 / 02</td><td>Nguyễn Hương / Trần Thoan</td><td><span class="rbadge blue">Sẵn sàng</span></td><td class="code">SHA256…F421</td><td>0</td><td>Chưa gửi</td><td>—</td><td><button class="link-btn">Xem</button></td></tr><tr><td class="code">EXP-260819-001</td><td>01</td><td>Profile 3.1</td><td>18/08/2026</td><td>type=2</td><td>2</td><td>19.200.000 ₫</td><td>004</td><td>01</td><td>Nguyễn Hương / Trần Thoan</td><td><span class="rbadge gray">Đã hủy trước gửi</span></td><td class="code">SHA256…012F</td><td>0</td><td>Không áp dụng</td><td>—</td><td><button class="link-btn">Xem</button></td></tr></tbody></table></div></div>
+            <div class="business-note"><b>Lưu ý:</b> Xác nhận tiếp nhận chỉ cho biết BIDV đã nhận được file về mặt kỹ thuật; việc hoàn tiền hoặc truy thu chỉ được coi là hoàn tất khi có bằng chứng nghiệp vụ tương ứng.</div>
+          </section>
+
+          <section id="dtab-audit" class="detail-panel">
+            <div class="recon-card audit-card"><div class="section-title">Lịch sử đợt đối soát</div><div class="audit-timeline"><div class="audit-item"><span class="audit-dot"></span><div><b>Tạo đợt đối soát tự động</b><small>18/08/2026 00:05 · Hệ thống · Ngày nghiệp vụ 18/08/2026</small></div></div><div class="audit-item"><span class="audit-dot"></span><div><b>Tiếp nhận dữ liệu BIDV phiên bản v1</b><small>19/08/2026 07:31 · Nguyễn Thị Hương</small></div></div><div class="audit-item"><span class="audit-dot"></span><div><b>Tiếp nhận bản hiệu chỉnh v2</b><small>19/08/2026 07:42 · Nguyễn Thị Hương · thay thế phiên bản v1</small></div></div><div class="audit-item"><span class="audit-dot"></span><div><b>Kiểm tra dữ liệu nguồn hoàn tất</b><small>19/08/2026 07:44 · 138 dòng hợp lệ, 1 dòng bị từ chối, 2 dòng trùng</small></div></div><div class="audit-item"><span class="audit-dot"></span><div><b>Chạy lượt đối soát 03</b><small>19/08/2026 10:42 – 10:45 · Snapshot hệ thống lúc 18/08/2026 23:30</small></div></div><div class="audit-item warn"><span class="audit-dot"></span><div><b>Phát sinh 3 ngoại lệ chặn đóng sổ</b><small>19/08/2026 10:46 · Đã tạo hoặc hợp nhất hồ sơ xử lý liên quan</small></div></div><div class="audit-item"><span class="audit-dot"></span><div><b>Tạo file chênh lệch phiên bản 02</b><small>19/08/2026 10:50 · Nguyễn Thị Hương · đang chờ gửi BIDV</small></div></div></div></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rmodal-overlay" id="modal-create-batch"><div class="rmodal"><div class="rmodal-head"><h2>Tạo đợt đối soát</h2><button onclick="closeReconModal('modal-create-batch')">×</button></div><div class="rmodal-body"><div class="modal-grid"><div class="rfield"><label>Ngày nghiệp vụ</label><input class="rinput" type="date" value="2026-08-19"></div><div class="rfield"><label>Hệ nguồn</label><select class="rselect"><option>BIDV</option></select></div><div class="rfield span2"><label>Cửa sổ đối soát</label><div class="date-pair"><input class="rinput" type="datetime-local" value="2026-08-19T00:00"><input class="rinput" type="datetime-local" value="2026-08-19T23:59"></div></div></div><div class="business-note">Thông thường đợt đối soát được hệ thống tạo tự động theo lịch. Chỉ tạo thủ công khi có quyền và có lý do nghiệp vụ.</div></div><div class="rmodal-foot"><button class="recon-btn" onclick="closeReconModal('modal-create-batch')">Hủy</button><button class="recon-btn primary" onclick="closeReconModal('modal-create-batch');reconToast('Đã tạo đợt đối soát mới.','success')">Tạo đợt</button></div></div></div>
+<div class="rmodal-overlay" id="modal-upload-source"><div class="rmodal wide"><div class="rmodal-head"><h2>Tiếp nhận dữ liệu BIDV</h2><button onclick="closeReconModal('modal-upload-source')">×</button></div><div class="rmodal-body"><div class="upload-zone">Kéo tệp dữ liệu BIDV vào đây hoặc <b>chọn tệp</b><small>Tệp mới hoặc bản hiệu chỉnh sẽ được lưu thành một phiên bản riêng.</small></div><div class="modal-grid top-gap"><div class="rfield"><label>Ngày nghiệp vụ</label><input class="rinput" type="date" value="2026-08-18"></div><div class="rfield"><label>Loại tiếp nhận</label><select class="rselect"><option>Bản hiệu chỉnh</option><option>Tệp đầu tiên</option></select></div><div class="rfield"><label>Phiên bản dự kiến</label><input class="rinput" value="v3" readonly></div><div class="rfield"><label>Ghi chú</label><input class="rinput" placeholder="Lý do tiếp nhận bản hiệu chỉnh"></div></div></div><div class="rmodal-foot"><button class="recon-btn" onclick="closeReconModal('modal-upload-source')">Hủy</button><button class="recon-btn primary" onclick="closeReconModal('modal-upload-source');reconToast('Đã tiếp nhận tệp và bắt đầu kiểm tra.','success')">Tiếp nhận và kiểm tra</button></div></div></div>
+<div class="rmodal-overlay" id="modal-close-batch"><div class="rmodal"><div class="rmodal-head"><h2>Xác nhận đóng sổ</h2><button onclick="closeReconModal('modal-close-batch')">×</button></div><div class="rmodal-body"><p>Đợt đối soát chỉ được đóng khi toàn bộ điều kiện bắt buộc đã đạt.</p><div class="business-note error">Hiện còn 3 điều kiện chưa đạt nên thao tác đóng sổ đang bị khóa.</div></div><div class="rmodal-foot"><button class="recon-btn" onclick="closeReconModal('modal-close-batch')">Đóng</button></div></div></div>
+<div class="rmodal-overlay" id="modal-reopen-batch"><div class="rmodal"><div class="rmodal-head"><h2>Mở lại đợt đối soát</h2><button onclick="closeReconModal('modal-reopen-batch')">×</button></div><div class="rmodal-body"><div class="rfield"><label>Lý do mở lại</label><textarea class="rtextarea" rows="4" placeholder="Nhập lý do và căn cứ mở lại đợt đối soát"></textarea></div><div class="business-note">Hệ thống giữ nguyên ảnh chụp đóng sổ cũ và tạo lượt đối soát mới sau khi mở lại.</div></div><div class="rmodal-foot"><button class="recon-btn" onclick="closeReconModal('modal-reopen-batch')">Hủy</button><button class="recon-btn primary" onclick="closeReconModal('modal-reopen-batch');reconToast('Đã mở lại đợt đối soát.','success')">Xác nhận mở lại</button></div></div></div>
+
+
+
+<script>
+const batchRows=[
+ {date:'18/08/2026',window:'18/08/2026 00:00 – 23:59',source:'BIDV',status:'Hoàn tất, còn ngoại lệ',sourceData:'v2 · Đã nạp',run:'Run 03 · Hoàn tất 10:45',result:'127 khớp · 3 BIDV-only · 4 System-only · 4 lệch',exceptions:'4 tổng · 3 chặn · 1 quá SLA',downstream:'1 bổ sung đang xử lý · 1 file chênh lệch sẵn sàng',close:'Chưa đủ · 3 điều kiện',closed:'Chưa đóng · mở lại 0',key:'COMPLETED_WITH_EXCEPTIONS'},
+ {date:'17/08/2026',window:'17/08/2026 00:00 – 23:59',source:'BIDV',status:'Đã đóng sổ',sourceData:'v1 · Đã nạp',run:'Run 01 · Hoàn tất 09:05',result:'132 khớp · 0 BIDV-only · 1 System-only · 0 lệch',exceptions:'0',downstream:'Hoàn tất',close:'Đã đạt',closed:'Đóng 18/08 10:12 · mở lại 0',key:'CLOSED'},
+ {date:'16/08/2026',window:'16/08/2026 00:00 – 23:59',source:'BIDV',status:'Hoàn tất, còn dữ liệu chờ',sourceData:'v1 · Đã nạp',run:'Run 02 · Hoàn tất 08:42',result:'118 khớp · 0 BIDV-only · 4 còn trong cửa sổ chờ',exceptions:'0',downstream:'4 giao dịch chuyển tiếp đợt sau',close:'Đủ theo chính sách chờ',closed:'Chưa đóng · mở lại 0',key:'COMPLETED_WITH_PENDING'},
+ {date:'15/08/2026',window:'15/08/2026 00:00 – 23:59',source:'BIDV',status:'Đang đối soát',sourceData:'v1 · Đã nạp',run:'Run 02 · Đang chạy từ 11:22',result:'Đang tính',exceptions:'—',downstream:'Đang xử lý',close:'Chưa đánh giá',closed:'Chưa đóng',key:'ACTIVE'},
+ {date:'14/08/2026',window:'14/08/2026 00:00 – 23:59',source:'BIDV',status:'Sẵn sàng đối soát',sourceData:'v1 · Đã nạp',run:'Chưa chạy',result:'—',exceptions:'—',downstream:'—',close:'Chưa đánh giá',closed:'Chưa đóng',key:'ACTIVE'},
+ {date:'13/08/2026',window:'13/08/2026 00:00 – 23:59',source:'BIDV',status:'Chờ dữ liệu nguồn',sourceData:'Chưa nhận',run:'—',result:'—',exceptions:'—',downstream:'—',close:'Chưa đủ',closed:'Chưa đóng',key:'WAITING_SOURCE'},
+ {date:'03/09/2026',window:'31/08/2026 00:00 – 02/09/2026 23:59',source:'BIDV',status:'Chờ dữ liệu nguồn',sourceData:'Chưa nhận · quá dự kiến',run:'—',result:'—',exceptions:'—',downstream:'—',close:'Chưa đủ',closed:'Chưa đóng',key:'WAITING_SOURCE'},
+ {date:'12/08/2026',window:'12/08/2026 00:00 – 23:59',source:'BIDV',status:'Đã mở lại',sourceData:'v2 · Đã nạp',run:'Run 02 · Sẵn sàng',result:'125 khớp · 1 lệch',exceptions:'1 chặn',downstream:'Chờ run mới',close:'Chưa đủ',closed:'Đã đóng 13/08 · mở lại 1',key:'REOPENED'}
+];
+const results=[
+ {bank:'FT26081800341',sys:'TXN-260818-0065',student:'23040218 · Nguyễn Minh Anh',request:'PR-260818-0065 · BILL2608180065',rcv:'RCV-2026-00124 · Học phí HK1',time:'18/08 10:22',bankRes:'Đã quyết toán',sysRes:'Đã ghi sổ',bankAmt:17500000,sysAmt:17500000,identity:'Đã chứng minh',type:'Khớp chính xác',backfill:'Không áp dụng',evidence:'Đã nhận',exception:'—',action:'Không cần xử lý'},
+ {bank:'FT26081800991',sys:'—',student:'24031876 · Lê Đức Huy',request:'PR-260818-0071 · BILL2608180071',rcv:'RCV-2026-00131 · Học phí HK1',time:'18/08 16:22',bankRes:'Đã quyết toán',sysRes:'Chưa có giao dịch',bankAmt:10500000,sysAmt:0,identity:'Đã chứng minh',type:'Có tại BIDV, chưa có trên hệ thống',backfill:'Đủ điều kiện · đang xử lý',evidence:'Chờ gửi',exception:'BF-260819-004',action:'Theo dõi bổ sung giao dịch'},
+ {bank:'FT26081800992',sys:'—',student:'—',request:'—',rcv:'—',time:'18/08 17:05',bankRes:'Đã quyết toán',sysRes:'Chưa có giao dịch',bankAmt:1500000,sysAmt:0,identity:'Chưa chứng minh',type:'Có tại BIDV, chưa có trên hệ thống',backfill:'Bị chặn',evidence:'Chưa gửi',exception:'EX-2026-0038',action:'Xác minh liên kết trước khi bổ sung'},
+ {bank:'—',sys:'TXN-260818-0063',student:'23011208 · Phạm Gia Bảo',request:'PR-260818-0063 · BILL2608180063',rcv:'RCV-2026-00126 · Học phí HK1',time:'18/08 09:15',bankRes:'Chưa có bằng chứng cuối ngày',sysRes:'Đã ghi sổ',bankAmt:0,sysAmt:8450000,identity:'Đã chứng minh',type:'Hệ thống có, còn trong thời gian chờ',backfill:'Không áp dụng',evidence:'Chờ kỳ dữ liệu tiếp theo',exception:'—',action:'Tiếp tục theo dõi'},
+ {bank:'—',sys:'TXN-260817-0126',student:'23040218 · Nguyễn Minh Anh',request:'PR-260817-0126 · BILL2608170126',rcv:'RCV-2026-00129 · Học phí HK1',time:'17/08 15:42',bankRes:'Xác nhận không có',sysRes:'Đã ghi sổ',bankAmt:0,sysAmt:17500000,identity:'Đã chứng minh',type:'Hệ thống có, BIDV xác nhận không có',backfill:'Không áp dụng',evidence:'Đã gửi',exception:'REC-2026-0017',action:'Chờ BIDV xác minh'},
+ {bank:'FT26081800338',sys:'TXN-260818-0061',student:'22040231 · Trần Minh Anh',request:'PR-260818-0061 · BILL2608180061',rcv:'RCV-2026-00128 · Học phí HK1',time:'18/08 08:14',bankRes:'Đã quyết toán',sysRes:'Ngoại lệ',bankAmt:8700000,sysAmt:8450000,identity:'Đã chứng minh',type:'Lệch số tiền',backfill:'Không áp dụng',evidence:'Đã nhận',exception:'EX-2026-0041',action:'Xác minh phần chênh lệch 250.000 ₫'},
+ {bank:'FT26081800401',sys:'TXN-260818-0064',student:'22041542 · Nguyễn Thị Ánh Tuyết',request:'PR-260818-0064 · BILL2608180064',rcv:'RCV-2026-00125 · Học phí HK1',time:'18/08 09:41',bankRes:'Đã quyết toán',sysRes:'Đang ghi sổ',bankAmt:19000000,sysAmt:19000000,identity:'Đã chứng minh',type:'Ghi sổ chưa hoàn tất',backfill:'Không áp dụng',evidence:'Đã nhận',exception:'CASE-2026-0041',action:'Kiểm tra và tiếp tục từ bước phân bổ'},
+ {bank:'FT26081800418',sys:'TXN-260818-0058',student:'25010782 · Đỗ Khánh Linh',request:'PR-260818-0058 · BILL2608180058',rcv:'RCV-2026-00133 · Chương trình BRT',time:'18/08 08:04',bankRes:'Đã có bút toán đảo',sysRes:'Đã ghi sổ',bankAmt:-25000000,sysAmt:25000000,identity:'Đã chứng minh',type:'Bút toán đảo sau ghi sổ',backfill:'Không áp dụng',evidence:'Đã nhận',exception:'EX-2026-0044',action:'Xử lý theo quy trình bút toán đảo'},
+ {bank:'FT26081800502',sys:'TXN-260818-0052',student:'24051243 · Trần Thu Hà',request:'PR-260818-0052 · BILL2608180052',rcv:'RCV-2026-00135 · Học phí HK1',time:'18/08 07:35',bankRes:'Đã quyết toán',sysRes:'Đã ghi sổ',bankAmt:17500000,sysAmt:17500000,identity:'Xung đột',type:'Xung đột dữ liệu',backfill:'Bị chặn',evidence:'Xung đột',exception:'EX-2026-0045',action:'Kiểm tra dữ liệu nguồn và liên kết'}
+];
+function money(v){if(v===0)return '0 ₫';return new Intl.NumberFormat('vi-VN').format(v)+' ₫'}
+function statusClass(s){if(['Đã đóng sổ','Đã nạp','Khớp chính xác','Đã chứng minh','Đã nhận','Đủ điều kiện','Đã đạt'].some(x=>s.includes(x)))return'green';if(['Hoàn tất, còn ngoại lệ','Chưa đủ','Bị chặn','Ngoại lệ','Xung đột'].some(x=>s.includes(x)))return'red';if(['Đang','Sẵn sàng','còn dữ liệu chờ','Chờ'].some(x=>s.includes(x)))return'amber';if(['Đã mở lại'].some(x=>s.includes(x)))return'purple';return'blue'}
+function renderBatches(list=batchRows){document.getElementById('batchBody').innerHTML=list.map(r=>`<tr><td><button class="link-btn" onclick="openBatchDetail('${r.date}')"><b>${r.date}</b></button></td><td>${r.window}</td><td>${r.source}<span class="cell-sub">Profile 3.1</span></td><td><span class="rbadge ${statusClass(r.status)}">${r.status}</span></td><td>${r.sourceData}</td><td>${r.run}</td><td>${r.result}</td><td>${r.exceptions}</td><td>${r.downstream}</td><td><span class="rbadge ${statusClass(r.close)}">${r.close}</span></td><td>${r.closed}</td><td><button class="recon-btn sm" onclick="openBatchDetail('${r.date}')">Xem chi tiết</button></td></tr>`).join('');document.getElementById('batchCount').textContent=list.length+' đợt'}
+function filterBatchQuick(key){if(key==='ACTIVE')renderBatches(batchRows.filter(x=>x.key==='ACTIVE'));else renderBatches(batchRows.filter(x=>x.key===key))}
+function applyBatchFilters(){const s=document.getElementById('bfStatus').value;const ss=document.getElementById('bfSourceStatus').value;const c=document.getElementById('bfClose').value;const b=document.getElementById('bfBlocking').value;let list=batchRows.filter(r=>(!s||r.status===s)&&(!ss||r.sourceData.includes(ss))&&(!c||r.close.includes(c==='Đã đóng'?'Đã đạt':c))&&(!b||(b==='Có'?r.exceptions.includes('chặn'):!r.exceptions.includes('chặn'))));renderBatches(list);const chips=[];if(s)chips.push('Trạng thái: '+s);if(ss)chips.push('Dữ liệu: '+ss);if(c)chips.push('Đóng sổ: '+c);if(b)chips.push('Ngoại lệ chặn: '+b);document.getElementById('batchFilterChips').innerHTML=chips.map(x=>`<span class="rfilter-chip">${x} ×</span>`).join('')}
+function resetBatchFilters(){['bfStatus','bfSourceStatus','bfClose','bfBlocking','bfVersion'].forEach(id=>document.getElementById(id).value='');renderBatches();document.getElementById('batchFilterChips').innerHTML=''}
+function openBatchDetail(date){document.getElementById('reconList').classList.add('hidden');document.getElementById('batchDetail').classList.add('active');document.getElementById('batchDetailTitle').textContent='Ngày nghiệp vụ '+date;window.scrollTo({top:0,behavior:'smooth'})}
+function closeBatchDetail(){document.getElementById('batchDetail').classList.remove('active');document.getElementById('reconList').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function switchDetailTab(name,btn){document.querySelectorAll('.detail-panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.detail-tab').forEach(x=>x.classList.remove('active'));document.getElementById('dtab-'+name).classList.add('active');btn.classList.add('active')}
+function renderResults(list=results){document.getElementById('resultBody').innerHTML=list.map(r=>`<tr><td class="code">${r.bank}</td><td class="code">${r.sys}</td><td>${r.student}</td><td>${r.request}</td><td>${r.rcv}</td><td>${r.time}</td><td>${r.bankRes}</td><td>${r.sysRes}</td><td class="money">${money(r.bankAmt)}</td><td class="money">${money(r.sysAmt)}</td><td class="money ${r.bankAmt-r.sysAmt!==0?'bad-text':''}">${money(r.bankAmt-r.sysAmt)}</td><td><span class="rbadge ${statusClass(r.identity)}">${r.identity}</span></td><td><span class="rbadge ${statusClass(r.type)}">${r.type}</span></td><td>${r.backfill}</td><td>${r.evidence}</td><td>${r.exception}</td><td>${r.action}</td><td><button class="link-btn">Chi tiết</button></td></tr>`).join('');document.getElementById('resultCount').textContent=list.length+' dòng mẫu'}
+function filterResults(){const q=document.getElementById('rfSearch').value.trim().toLowerCase();const t=document.getElementById('rfType').value;renderResults(results.filter(r=>(!q||Object.values(r).join(' ').toLowerCase().includes(q))&&(!t||r.type===t)))}
+function resetResults(){document.getElementById('rfSearch').value='';document.getElementById('rfType').value='';renderResults()}
+function quickResult(type){switchDetailTab('results',document.querySelector('[data-dtab=results]'));document.getElementById('rfType').value=type;filterResults()}
+function openReconModal(id){document.getElementById(id).classList.add('open')}
+function closeReconModal(id){document.getElementById(id).classList.remove('open')}
+function reconToast(msg,type='info'){if(typeof showToast==='function')showToast(msg,type);else alert(msg)}
+renderBatches();renderResults();
+</script>
+<script src="../js/common.js"></script>
+</body></html>
