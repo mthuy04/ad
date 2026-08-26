@@ -49,10 +49,10 @@
 .tc-scope .field-hint{font-size:10.5px;color:var(--muted-lt);margin-top:3px}
 .tc-scope .tw{overflow-x:auto}
 .tc-scope table{width:100%;border-collapse:collapse}
-.tc-scope th{text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--surface)}
-.tc-scope td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tc-scope th{padding:8px 12px;text-align:left;font-size:10.8px;font-weight:750;color:#475569;text-transform:uppercase;letter-spacing:.35px;white-space:nowrap;border-bottom:1px solid var(--border);background:var(--surface)}
+.tc-scope td{padding:9px 12px;font-size:12.4px;color:var(--text);vertical-align:middle;line-height:1.45;border-bottom:1px solid var(--border)}
 .tc-scope tbody tr:last-child td{border-bottom:none}
-.tc-scope tbody tr:hover{background:var(--bg)}
+.tc-scope tbody tr:hover{background:#F8FBFF}
 .tc-scope .t-name{font-weight:600;color:var(--text)}
 .tc-scope .t-sub{display:block;font-size:11px;color:var(--muted);margin-top:2px;font-weight:400}
 .tc-scope .tc-r{text-align:right}

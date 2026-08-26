@@ -134,43 +134,8 @@
     }
   }
 
-  if (page === 'tuition-config') {
-    var title = document.querySelector('.cf-title,h1');
-    var subtitle = document.querySelector('.cf-subtitle,.cf-head-sub');
-    if (title) title.textContent = 'Khung học phí';
-    if (subtitle) subtitle.textContent = 'Thiết lập phạm vi áp dụng và mức thu trước khi tạo khoản phải thu.';
-    hideTabByText('.main-tab,.cf-tab', ['văn bản căn cứ', 'nhật ký thay đổi', 'kiểm toán', 'tham chiếu']);
-    all('#mainTabs .cf-tab').forEach(function (tab) {
-      var target = tab.getAttribute('data-tab');
-      if (target === 'versions') tab.textContent = 'Khung học phí';
-      if (target === 'rules') tab.textContent = 'Quy tắc tính';
-      if (target === 'calculator') tab.textContent = 'Thử tính nhanh';
-    });
-    hide(document.querySelector('#panel-versions .cf-summary'));
-    hideExcept('#panel-versions .cf-filters > *', [0, 1, 3]);
-    hideExcept('.cf-head-actions > *', [1]);
-    hideAfter('.cf-toolbar-left > *', 1);
-    all('#versionTable tbody .cf-actions').forEach(function (group) { hideAfter(':scope > *', 1, group); });
-    hideAll('#panel-versions .cf-card-head > button');
-
-    var toolbar = document.querySelector('#panel-versions .cf-toolbar');
-    if (toolbar && !document.querySelector('.demo-config-status')) {
-      var status = document.createElement('div');
-      status.className = 'demo-config-status';
-      status.innerHTML = '<span><b>3</b> đang soạn</span><span><b>2</b> chờ duyệt</span><span class="active"><b>2</b> có hiệu lực</span>';
-      toolbar.insertAdjacentElement('beforebegin', status);
-    }
-    compactStaticTable('#versionTable', [0, 1, 2, 3, 6, 8, 11], ['Khung học phí', 'Năm học', 'Học kỳ', 'Hiệu lực', 'Số quy tắc', 'Trạng thái', 'Thao tác'], 5);
-
-    hideExcept('#panel-rules .cf-filters > *', [0, 3, 15]);
-    hideAll('#panel-rules .cf-card-head .cf-head-actions,#panel-rules .cf-card-head .cf-actions,#panel-rules .cf-card-head > button');
-    compactStaticTable('#panel-rules table.cf-table', [0, 1, 2, 5, 6, 8, 10], ['Quy tắc', 'Phiên bản', 'Phạm vi', 'Cách tính', 'Đơn giá', 'Trạng thái', 'Thao tác'], 5);
-
-    var calculatorFields = all('#panel-calculator .cf-card:first-child .cf-card-body > .cf-grid2 > *');
-    calculatorFields.forEach(function (field, index) {
-      if ([1, 2, 7, 11, 12].indexOf(index) === -1) hide(field);
-    });
-  }
+  // Trang tuition-config đã được thay bằng mô-đun riêng (.tc-scope) có markup mới.
+  // Khối tuỳ biến cũ nhắm vào .cf-* / #versionTable đã bỏ vì không còn phần tử tương ứng.
 
   if (page === 'student-tuition') {
     hideTabByText('.td-tab,.main-tab', ['lịch sử nhập']);

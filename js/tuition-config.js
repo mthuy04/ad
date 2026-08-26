@@ -288,8 +288,6 @@ function viewVersion() {
   el('pageSub').textContent = 'Mỗi khung học phí có thể có nhiều phiên bản theo từng thời kỳ.';
   el('headActions').innerHTML = '';
 
-  const replaced = v.thay ? `<div class="note"><strong>Phiên bản điều chỉnh:</strong>
-      thay ${esc(v.thay)} từ ngày ${dmy(v.tu)}. Bản cũ vẫn được giữ để tra cứu lịch sử.</div>` : '';
 
   el('view').innerHTML = `
     <div class="ws-head">
@@ -311,7 +309,6 @@ function viewVersion() {
         <div><span>Văn bản căn cứ</span><strong class="num">${v.docs.length ? esc(DOC(v.docs[0]).so) + (v.docs.length > 1 ? ` +${v.docs.length - 1}` : '') : '—'}</strong></div>
       </div>
     </div>
-    ${replaced}
     <div class="steps">
       ${[[1,'Thông tin và căn cứ','Phiên bản này là gì?'],
          [2,'Nhóm phạm vi','Ai được áp dụng?'],
