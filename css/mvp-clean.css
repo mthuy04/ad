@@ -322,14 +322,16 @@ body.demo-transactions #tab-ledger .tx-table th:nth-child(2),
 body.demo-transactions #tab-ledger .tx-table td:nth-child(2),
 body.demo-transactions #tab-ledger .tx-table th:nth-child(5),
 body.demo-transactions #tab-ledger .tx-table td:nth-child(5),
-body.demo-transactions #tab-ledger .tx-table th:nth-child(9),
-body.demo-transactions #tab-ledger .tx-table td:nth-child(9),
-body.demo-transactions #tab-ledger .tx-table th:nth-child(10),
-body.demo-transactions #tab-ledger .tx-table td:nth-child(10),
+body.demo-transactions #tab-ledger .tx-table th:nth-child(6),
+body.demo-transactions #tab-ledger .tx-table td:nth-child(6),
 body.demo-transactions #tab-ledger .tx-table th:nth-child(11),
 body.demo-transactions #tab-ledger .tx-table td:nth-child(11),
+body.demo-transactions #tab-ledger .tx-table th:nth-child(12),
+body.demo-transactions #tab-ledger .tx-table td:nth-child(12),
 body.demo-transactions #tab-ledger .tx-table th:nth-child(13),
-body.demo-transactions #tab-ledger .tx-table td:nth-child(13) { display: none !important; }
+body.demo-transactions #tab-ledger .tx-table td:nth-child(13),
+body.demo-transactions #tab-ledger .tx-table th:nth-child(14),
+body.demo-transactions #tab-ledger .tx-table td:nth-child(14) { display: none !important; }
 body.demo-transactions #tab-ledger .sticky-id,
 body.demo-transactions #tab-ledger .sticky-action { position: static !important; left: auto !important; right: auto !important; box-shadow: none !important; }
 
