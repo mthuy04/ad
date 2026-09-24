@@ -1,5 +1,5 @@
 /* =========================================================
-   ULIS — Hệ thống quản lý thu học phí
+   ULIS - Hệ thống quản lý thu học phí
    Mã dùng chung: dựng khung trang, ngăn chi tiết, hộp thoại,
    thông báo, tab và bộ lọc nhanh.
    Bản mô phỏng giao diện, dữ liệu là dữ liệu mẫu.
@@ -50,7 +50,7 @@
           '<img src="../assets/ulis-logo.png" alt="ULIS" onerror="this.style.display=\'none\'"/>' +
           '<div><div class="sb-inst">Trường Đại học Ngoại ngữ</div>' +
           '<div class="sb-vnu">Đại học Quốc gia Hà Nội</div></div>' +
-        '</div><div class="sb-product">Quản lý thu học phí</div></div>' +
+        '</div></div>' +
         '<div class="sb-nav">' + nav + '</div>';
     }
 

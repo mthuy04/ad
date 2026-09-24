@@ -28,9 +28,11 @@
 
         <div class="srcbar">
           <span class="dot"></span>
-          <span>Kỳ thu <b>Học phí chính quy — HK1 2026-2027</b></span>
+          <span>Kỳ thu <b>Học phí chính quy học kỳ 1, năm học 2026-2027</b></span>
           <span class="sep"></span>
-          <span>Hạn nộp <b>31/10/2026</b> · còn 36 ngày</span>
+          <span>Thu <b>5 tháng</b></span>
+          <span class="sep"></span>
+          <span>Hạn nộp <b>31/10/2026</b>, còn 36 ngày</span>
           <span class="sep"></span>
           <span>Số liệu tính đến <b>25/09/2026 08:16</b></span>
         </div>
@@ -44,13 +46,13 @@
           <div class="field">
             <label>Kỳ thu</label>
             <select class="sel">
-              <option>Học phí chính quy — HK1 2026-2027</option>
-              <option>Học lại và học cải thiện — HK1 2026-2027</option>
+              <option>Học phí chính quy học kỳ 1, năm học 2026-2027</option>
+              <option>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</option>
             </select>
           </div>
           <div class="field">
-            <label>Khoa / Bộ môn</label>
-            <select class="sel"><option>Tất cả khoa</option><option>Khoa NN&amp;VH Anh</option><option>Khoa NN&amp;VH Nhật Bản</option><option>Khoa NN&amp;VH Hàn Quốc</option></select>
+            <label>Khoa</label>
+            <select class="sel"><option>Tất cả khoa</option><option>Khoa Sư phạm tiếng Anh</option><option>Khoa NN và VH Anh</option><option>Khoa NN và VH Nhật Bản</option><option>Khoa NN và VH Hàn Quốc</option><option>Khoa NN và VH Nga</option></select>
           </div>
           <div class="field">
             <label>Hạn nộp</label>
@@ -58,31 +60,20 @@
           </div>
         </div>
 
-        <div class="kpis">
-          <div class="kpi">
-            <div class="kpi-l">Tổng phải thu</div>
-            <div class="kpi-v">142,8 tỷ đ</div>
-            <div class="kpi-s">8.196 khoản của kỳ thu này</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-l">Đã thu</div>
-            <div class="kpi-v ok">98,4 tỷ đ</div>
-            <div class="kpi-s">Đạt 68,9% · 5.612 sinh viên đã nộp</div>
-          </div>
-          <div class="kpi clickable" onclick="pickChip(document.querySelector('[data-filter=unpaid]'))">
-            <div class="kpi-l">Còn phải thu</div>
-            <div class="kpi-v warn">44,4 tỷ đ</div>
-            <div class="kpi-s">2.584 sinh viên chưa nộp đủ</div>
-          </div>
+        <!-- Ba số tiền tổng hợp theo đúng bộ lọc đang chọn ở trên -->
+        <div class="sumrow">
+          <div class="it"><div class="l">Tổng phải thu</div><div class="v">142,8 tỷ đ</div><div class="s">8.196 khoản trong bộ lọc</div></div>
+          <div class="it"><div class="l">Đã thu</div><div class="v ok">98,4 tỷ đ</div><div class="s">68,9%, có 5.612 sinh viên đã nộp</div></div>
+          <div class="it"><div class="l">Còn phải thu</div><div class="v warn">44,4 tỷ đ</div><div class="s">2.584 sinh viên chưa nộp đủ</div></div>
         </div>
 
         <div class="chips" data-target="tbl-rv">
           <button class="chip on" data-filter="all"     onclick="pickChip(this)">Tất cả <span class="n">8.196</span></button>
-          <button class="chip"    data-filter="unpaid"  onclick="pickChip(this)">Chưa thu <span class="n">2.301</span></button>
-          <button class="chip"    data-filter="partial" onclick="pickChip(this)">Thu một phần <span class="n">283</span></button>
-          <button class="chip"    data-filter="paid"    onclick="pickChip(this)">Đã thu đủ <span class="n">5.578</span></button>
-          <button class="chip"    data-filter="over"    onclick="pickChip(this)">Nộp thừa <span class="n">34</span></button>
-          <button class="chip"    data-filter="blocked" onclick="pickChip(this)">Tạm khóa thanh toán <span class="n">12</span></button>
+          <button class="chip"    data-filter="unpaid"  onclick="pickChip(this)">Chưa nộp <span class="n">2.301</span></button>
+          <button class="chip"    data-filter="partial" onclick="pickChip(this)">Nộp thiếu <span class="n">283</span></button>
+          <button class="chip"    data-filter="paid"    onclick="pickChip(this)">Đã nộp đủ <span class="n">5.578</span></button>
+          <button class="chip"    data-filter="over"    onclick="pickChip(this)">Có tiền thừa <span class="n">34</span></button>
+          <button class="chip"    data-filter="blocked" onclick="pickChip(this)">Chưa nộp được <span class="n">12</span></button>
         </div>
 
         <div class="card">
@@ -92,103 +83,103 @@
           </div>
           <div class="card-bd flush">
             <div class="tbl-wrap">
-              <table class="tbl" id="tbl-rv" style="min-width:1040px">
+              <table class="tbl" id="tbl-rv" style="min-width:1050px">
                 <thead><tr>
-                  <th style="min-width:174px">Sinh viên</th>
-                  <th style="min-width:168px">Khoản thu</th>
-                  <th class="r" style="min-width:115px">Phải thu</th>
-                  <th class="r" style="min-width:115px">Đã thu</th>
-                  <th class="r" style="min-width:128px">Còn phải thu</th>
-                  <th style="min-width:125px">Hạn nộp</th>
-                  <th style="min-width:140px">Tình trạng</th>
+                  <th style="min-width:180px">Sinh viên</th>
+                  <th style="min-width:160px">Nội dung thu</th>
+                  <th class="r" style="min-width:115px">Phải nộp</th>
+                  <th class="r" style="min-width:115px">Đã nộp</th>
+                  <th class="r" style="min-width:130px">Còn phải nộp</th>
+                  <th style="min-width:120px">Hạn nộp</th>
+                  <th style="min-width:145px">Tình trạng</th>
                   <th class="r" style="min-width:86px">Thao tác</th>
                 </tr></thead>
                 <tbody>
                   <tr data-tags="unpaid">
                     <td><div class="t-main">Nguyễn Minh Anh</div><div class="t-sub">23041205 · Ngôn ngữ Anh</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">17.500.000</td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td class="money">17.500.000</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Còn 36 ngày</div></td>
-                    <td><span class="bg warn">Chưa thu</span></td>
+                    <td><span class="bg warn">Chưa nộp</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r1')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="paid">
                     <td><div class="t-main">Lê Hoàng Nam</div><div class="t-sub">22041877 · Ngôn ngữ Nhật</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">17.500.000</td>
                     <td class="money" style="color:var(--ok)">17.500.000</td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Đã nộp 20/09</div></td>
-                    <td><span class="bg ok">Đã thu đủ</span></td>
+                    <td><span class="bg ok">Đã nộp đủ</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r2')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="partial">
                     <td><div class="t-main">Phạm Thu Hà</div><div class="t-sub">23040912 · Ngôn ngữ Hàn Quốc</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">17.500.000</td>
                     <td class="money" style="color:var(--ok)">10.000.000</td>
                     <td class="money" style="color:var(--warn)">7.500.000</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Còn 36 ngày</div></td>
-                    <td><span class="bg info">Thu một phần</span></td>
+                    <td><span class="bg info">Nộp thiếu</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r3')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="over">
-                    <td><div class="t-main">Nguyễn Hải Yến</div><div class="t-sub">22041002 · Ngôn ngữ Anh — bằng kép</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027</div></td>
-                    <td class="money">18.020.000</td>
-                    <td class="money" style="color:var(--ok)">18.700.000</td>
-                    <td class="money" style="color:var(--primary)">Thừa 680.000</td>
+                    <td><div class="t-main">Nguyễn Hải Yến</div><div class="t-sub">22041002 · Sư phạm tiếng Anh</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, đã miễn giảm</div></td>
+                    <td class="money">5.775.000</td>
+                    <td class="money" style="color:var(--ok)">11.550.000</td>
+                    <td class="money" style="color:var(--primary)">Thừa 5.775.000</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Đã nộp 18/09</div></td>
-                    <td><span class="bg info">Nộp thừa</span></td>
+                    <td><span class="bg info">Có tiền thừa</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r4')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="blocked">
                     <td><div class="t-main">Vũ Khánh Linh</div><div class="t-sub">24041530 · Ngôn ngữ Trung Quốc</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">19.000.000</td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td class="money">19.000.000</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Còn 36 ngày</div></td>
-                    <td><span class="bg mute">Đang chờ thanh toán</span></td>
+                    <td><span class="bg mute">Sinh viên đang nộp</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r5')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="unpaid">
                     <td><div class="t-main">Trần Quốc Việt</div><div class="t-sub">25040211 · Ngôn ngữ Đức</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">19.000.000</td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td class="money">19.000.000</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Còn 36 ngày</div></td>
-                    <td><span class="bg warn">Chưa thu</span></td>
+                    <td><span class="bg warn">Chưa nộp</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r1')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="paid">
                     <td><div class="t-main">Đinh Thùy Dương</div><div class="t-sub">23041766 · Ngôn ngữ Nga</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money">11.550.000</td>
                     <td class="money" style="color:var(--ok)">11.550.000</td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Đã nộp 22/09</div></td>
-                    <td><span class="bg ok">Đã thu đủ</span></td>
-                    <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r2')">Chi tiết</button></td>
+                    <td><span class="bg ok">Đã nộp đủ</span></td>
+                    <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r6')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="blocked">
                     <td><div class="t-main">Hoàng Đức Trung</div><div class="t-sub">25040677 · Ngôn ngữ Pháp</div></td>
-                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">HK1 2026-2027 · 5 tháng</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, 5 tháng</div></td>
                     <td class="money" style="color:var(--muted)">Chưa tính</td>
                     <td class="money" style="color:var(--muted)">0</td>
-                    <td class="money" style="color:var(--muted)">—</td>
+                    <td class="money" style="color:var(--muted)">Chưa có</td>
                     <td><div class="t-main">31/10/2026</div><div class="t-sub">Còn 36 ngày</div></td>
-                    <td><span class="bg warn">Tạm khóa · chờ bổ sung</span></td>
-                    <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r6')">Chi tiết</button></td>
+                    <td><span class="bg warn">Chờ bổ sung thông tin</span></td>
+                    <td class="t-act"><button class="btn btn-sm" onclick="openRcv('r7')">Chi tiết</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="tfoot">
-              <div>Hiển thị 1–8 trong 8.196 khoản</div>
+              <div>Hiển thị 1 đến 8 trong 8.196 khoản</div>
               <div class="pager">
                 <button class="pg" disabled>‹</button>
                 <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
@@ -197,6 +188,15 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="note info">
+          <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+          <div><span class="nt">Khi nào phát sinh nộp thiếu và tiền thừa</span>
+          Sinh viên nộp bằng mã thanh toán trên cổng thì số tiền cố định đúng bằng số còn phải nộp, không thừa không thiếu.
+          Hai tình huống dưới đây mới sinh ra chênh lệch:
+          <b>nộp thiếu</b> khi sinh viên tự chuyển khoản không đúng số, và
+          <b>tiền thừa</b> khi Nhà trường duyệt miễn giảm hoặc điều chỉnh giảm sau lúc sinh viên đã nộp.</div>
         </div>
 
       </div>
@@ -210,35 +210,31 @@
   <div class="drw-hd">
     <div>
       <h2 id="rv-name">Nguyễn Minh Anh</h2>
-      <div class="sub" id="rv-sub">23041205 · Học phí chính quy — HK1 2026-2027</div>
+      <div class="sub" id="rv-sub">23041205 · Học phí chính quy học kỳ 1, năm học 2026-2027</div>
     </div>
     <button class="x" onclick="closeDrawer('d-rv')">✕</button>
   </div>
   <div class="drw-bd">
 
-    <div class="sec">
-      <div class="sec-t">Tình trạng</div>
-      <div class="axes">
-        <div class="axis-row"><span class="axis-k">Thanh toán</span><span id="rv-ax1" class="bg warn">Chưa thu</span></div>
-        <div class="axis-row"><span class="axis-k">Khả năng nộp</span><span id="rv-ax2" class="bg ok">Sinh viên nộp được</span></div>
-        <div class="axis-row"><span class="axis-k">Hạn nộp</span><span id="rv-ax3" class="bg mute">31/10/2026 · còn 36 ngày</span></div>
-      </div>
+    <div class="sec" id="rv-problem" style="display:none">
+      <div class="sec-t">Việc cần làm</div>
+      <div id="rv-problem-body"></div>
     </div>
 
     <div class="sec">
       <div class="sec-t">Số tiền</div>
       <div class="money3">
-        <div class="m-box"><div class="m-l">Phải thu</div><div class="m-v" id="rv-m1">17.500.000</div></div>
-        <div class="m-box ok"><div class="m-l">Đã thu</div><div class="m-v" id="rv-m2">0</div></div>
-        <div class="m-box hl"><div class="m-l" id="rv-m3l">Còn phải thu</div><div class="m-v" id="rv-m3">17.500.000</div></div>
+        <div class="m-box"><div class="m-l">Phải nộp</div><div class="m-v" id="rv-m1">17.500.000</div></div>
+        <div class="m-box ok"><div class="m-l">Đã nộp</div><div class="m-v" id="rv-m2">0</div></div>
+        <div class="m-box hl"><div class="m-l" id="rv-m3l">Còn phải nộp</div><div class="m-v" id="rv-m3">17.500.000</div></div>
       </div>
       <div id="rv-over" style="display:none;margin-top:10px">
         <div class="mini-wrap">
           <table class="mini">
             <tbody>
-              <tr><td>Tiền nộp thừa</td><td class="r" id="rv-o1">680.000 đ</td></tr>
+              <tr><td>Tiền sinh viên nộp thừa</td><td class="r" id="rv-o1">5.775.000 đ</td></tr>
               <tr><td>Đang giữ cho đề nghị hoàn</td><td class="r" id="rv-o2">0 đ</td></tr>
-              <tr><td><b>Còn dùng được</b></td><td class="r" id="rv-o3"><b>680.000 đ</b></td></tr>
+              <tr><td><b>Còn dùng được</b></td><td class="r" id="rv-o3"><b>5.775.000 đ</b></td></tr>
             </tbody>
           </table>
         </div>
@@ -246,27 +242,35 @@
       </div>
     </div>
 
-    <div class="sec" id="rv-problem" style="display:none">
-      <div class="sec-t">Cần lưu ý</div>
-      <div id="rv-problem-body"></div>
+    <div class="sec">
+      <div class="sec-t">Tình trạng</div>
+      <div class="axes">
+        <div class="axis-row"><span class="axis-k">Việc nộp tiền</span><span id="rv-ax1" class="bg warn">Chưa nộp</span></div>
+        <div class="axis-row"><span class="axis-k">Trên cổng sinh viên</span><span id="rv-ax2" class="bg ok">Nộp được ngay</span></div>
+        <div class="axis-row"><span class="axis-k">Hạn nộp</span><span id="rv-ax3" class="bg mute">31/10/2026, còn 36 ngày</span></div>
+      </div>
     </div>
 
     <div class="sec">
       <div class="sec-t">Căn cứ tính số tiền</div>
       <div class="mini-wrap" id="rv-basis"></div>
+      <p class="hint" id="rv-hint"></p>
     </div>
 
     <div class="sec">
-      <div class="sec-t">Lịch sử thu tiền và điều chỉnh</div>
+      <div class="sec-t">Lịch sử nộp tiền và điều chỉnh</div>
       <div id="rv-paid"></div>
     </div>
 
     <div class="sec">
-      <div class="sec-t">Nguồn dữ liệu</div>
+      <div class="sec-t">Xem thêm</div>
       <dl class="dl">
-        <dt>Khung học phí</dt><dd>Khung học phí năm 2026 – 2027</dd>
+        <dt>Khung học phí</dt><dd>Khung học phí năm 2026-2027</dd>
         <dt>Ngày chốt mức thu</dt><dd>01/09/2026</dd>
-        <dt>Dữ liệu học phí</dt><dd><button class="btn-link" onclick="location.href='student-tuition.html'">Xem dữ liệu học phí của sinh viên</button></dd>
+        <dt>Liên kết</dt><dd>
+          <button class="btn-link" onclick="location.href='student-tuition.html'">Dữ liệu học phí của sinh viên</button><br>
+          <button class="btn-link" onclick="location.href='transactions.html'">Các giao dịch liên quan</button>
+        </dd>
       </dl>
     </div>
 
@@ -278,74 +282,78 @@
 <div class="mov" id="m-adjust">
   <div class="mdl">
     <div class="mdl-hd">
-      <div><h2>Điều chỉnh khoản phải thu</h2>
-      <div class="sub">Dùng khi số tiền hệ thống tính chưa đúng với quyết định của Nhà trường</div></div>
+      <div><h2>Điều chỉnh số phải nộp</h2>
+      <div class="sub">Dùng khi số hệ thống tính chưa đúng với quyết định của Nhà trường</div></div>
       <button class="x" onclick="closeModal('m-adjust')">✕</button>
     </div>
     <div class="mdl-bd">
       <div class="grid2">
         <div class="field">
           <label>Kiểu điều chỉnh <span class="req">*</span></label>
-          <select class="sel"><option>Giảm số phải thu</option><option>Tăng số phải thu</option></select>
+          <select class="sel"><option>Giảm số phải nộp</option><option>Tăng số phải nộp</option></select>
         </div>
         <div class="field">
           <label>Số tiền điều chỉnh (đồng) <span class="req">*</span></label>
-          <input class="inp" placeholder="Ví dụ: 680.000">
+          <input class="inp" placeholder="Ví dụ: 5.775.000">
         </div>
       </div>
       <div class="field" style="margin-top:13px">
         <label>Lý do <span class="req">*</span></label>
         <select class="sel">
-          <option>Miễn giảm theo chính sách</option>
-          <option>Sinh viên bỏ học phần sau khi đã tính</option>
+          <option>Miễn giảm theo diện chính sách</option>
+          <option>Sinh viên bảo lưu giữa kỳ</option>
           <option>Sai sót dữ liệu nguồn</option>
           <option>Lý do khác</option>
         </select>
       </div>
       <div class="field" style="margin-top:13px">
         <label>Căn cứ <span class="req">*</span></label>
-        <textarea class="inp" rows="2" placeholder="Số và tên văn bản, hoặc nội dung trao đổi đã được duyệt"></textarea>
+        <textarea class="inp" rows="2" placeholder="Số và tên văn bản, hoặc nội dung đã được duyệt"></textarea>
       </div>
       <div class="note warn" style="margin-top:14px">
         <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
         <div><span class="nt">Điều chỉnh được ghi lại vĩnh viễn</span>
         Tên người thực hiện, thời điểm và căn cứ sẽ hiện trong lịch sử của khoản thu.
-        Nếu sinh viên đã nộp nhiều hơn số mới, phần chênh thành tiền nộp thừa.</div>
+        Nếu sinh viên đã nộp nhiều hơn số mới thì phần chênh thành tiền thừa, xử lý ở bước sau.</div>
       </div>
     </div>
     <div class="mdl-ft">
       <button class="btn" onclick="closeModal('m-adjust')">Hủy</button>
-      <button class="btn btn-primary" onclick="closeModal('m-adjust');toast('Đã lưu điều chỉnh khoản phải thu.','ok')">Lưu điều chỉnh</button>
+      <button class="btn btn-primary" onclick="closeModal('m-adjust');toast('Đã lưu điều chỉnh số phải nộp.','ok')">Lưu điều chỉnh</button>
     </div>
   </div>
 </div>
 
-<!-- ======================= HỘP THOẠI XỬ LÝ NỘP THỪA ======================= -->
+<!-- ======================= HỘP THOẠI XỬ LÝ TIỀN THỪA ======================= -->
 <div class="mov" id="m-over">
   <div class="mdl">
     <div class="mdl-hd">
-      <div><h2>Xử lý tiền nộp thừa</h2>
-      <div class="sub">Nguyễn Hải Yến · 22041002 · còn dùng được 680.000 đ</div></div>
+      <div><h2>Xử lý tiền thừa</h2>
+      <div class="sub">Nguyễn Hải Yến · 22041002 · còn dùng được 5.775.000 đ</div></div>
       <button class="x" onclick="closeModal('m-over')">✕</button>
     </div>
     <div class="mdl-bd">
       <div class="field" style="margin-bottom:13px">
         <label>Cách xử lý <span class="req">*</span></label>
-        <select class="sel" id="ov-way" onchange="document.getElementById('ov-next').style.display=this.value==='next'?'':'none'">
+        <select class="sel" id="ov-way" onchange="switchOver()">
           <option value="next">Chuyển sang kỳ thu sau</option>
           <option value="refund">Lập đề nghị hoàn tiền cho sinh viên</option>
         </select>
       </div>
       <div class="grid2" id="ov-next">
         <div class="field"><label>Kỳ thu nhận tiền</label>
-          <select class="sel"><option>Học phí chính quy — HK2 2026-2027</option></select></div>
-        <div class="field"><label>Số tiền chuyển (đồng)</label><input class="inp" value="680.000"></div>
+          <select class="sel"><option>Học phí chính quy học kỳ 2, năm học 2026-2027</option></select></div>
+        <div class="field"><label>Số tiền chuyển (đồng)</label><input class="inp" value="5.775.000"></div>
+      </div>
+      <div class="grid2" id="ov-refund" style="display:none">
+        <div class="field"><label>Số tiền đề nghị hoàn (đồng)</label><input class="inp" value="5.775.000"></div>
+        <div class="field"><label>Hình thức nhận</label><select class="sel"><option>Chuyển vào tài khoản sinh viên</option><option>Nhận tại Phòng Kế hoạch Tài chính</option></select></div>
       </div>
       <div class="field" style="margin-top:13px">
         <label>Lý do <span class="req">*</span></label>
         <textarea class="inp" rows="2" placeholder="Ví dụ: sinh viên đề nghị giữ lại cho kỳ sau"></textarea>
       </div>
-      <div class="note info" style="margin-top:14px">
+      <div class="note info" style="margin-top:14px" id="ov-note">
         <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
         <div><span class="nt">Chuyển kỳ được ghi thành một cặp bút toán</span>
         Trừ ở kỳ này và cộng vào kỳ sau trong cùng một lần, không có trường hợp trừ rồi mà chưa cộng.</div>
@@ -353,7 +361,7 @@
     </div>
     <div class="mdl-ft">
       <button class="btn" onclick="closeModal('m-over')">Hủy</button>
-      <button class="btn btn-primary" onclick="closeModal('m-over');toast('Đã chuyển 680.000 đ sang kỳ thu HK2 2026-2027.','ok')">Xác nhận</button>
+      <button class="btn btn-primary" onclick="closeModal('m-over');toast('Đã chuyển 5.775.000 đ sang kỳ thu học kỳ 2.','ok')">Xác nhận</button>
     </div>
   </div>
 </div>
@@ -361,65 +369,82 @@
 <script src="../js/ulis.js"></script>
 <script>
 var RCV = {
-  r1:{ name:'Nguyễn Minh Anh', sub:'23041205 · Học phí chính quy — HK1 2026-2027',
-       ax:[['warn','Chưa thu'],['ok','Sinh viên nộp được'],['mute','31/10/2026 · còn 36 ngày']],
-       m:['17.500.000','0','17.500.000'], m3l:'Còn phải thu',
-       basis:[['Học phí chính quy','3.500.000 đ/tháng × 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
-       paid:'<div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">Sinh viên chưa nộp tiền cho khoản này.</div>',
-       ft:'adjust' },
+  r1:{ name:'Nguyễn Minh Anh', code:'23041205',
+       ax:[['warn','Chưa nộp'],['ok','Nộp được ngay'],['mute','31/10/2026, còn 36 ngày']],
+       m:['17.500.000','0','17.500.000'], m3l:'Còn phải nộp',
+       basis:[['Học phí chính quy','3.500.000 đ mỗi tháng, thu 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+       hint:'Mức thu áp cho khóa QH.2022 và QH.2023, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
+       paid:'Sinh viên chưa nộp tiền cho khoản này.',
+       ft:'remind' },
 
-  r2:{ name:'Lê Hoàng Nam', sub:'22041877 · Học phí chính quy — HK1 2026-2027',
-       ax:[['ok','Đã thu đủ'],['mute','Không còn nợ'],['mute','Đã nộp 20/09/2026']],
-       m:['17.500.000','17.500.000','0'], m3l:'Còn phải thu',
-       basis:[['Học phí chính quy','3.500.000 đ/tháng × 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
-       paid:[['20/09/2026 14:22','Sinh viên nộp qua mã thanh toán trên cổng','17.500.000 đ']],
-       ft:'adjust' },
+  r2:{ name:'Lê Hoàng Nam', code:'22041877',
+       ax:[['ok','Đã nộp đủ'],['mute','Đã hết nợ, không cần nộp'],['mute','Đã nộp 20/09/2026']],
+       m:['17.500.000','17.500.000','0'], m3l:'Còn phải nộp',
+       basis:[['Học phí chính quy','3.500.000 đ mỗi tháng, thu 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+       hint:'Mức thu áp cho khóa QH.2022 và QH.2023, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
+       paid:[['20/09/2026 14:22','Sinh viên nộp bằng mã thanh toán trên cổng sinh viên','17.500.000 đ']],
+       ft:'plain' },
 
-  r3:{ name:'Phạm Thu Hà', sub:'23040912 · Học phí chính quy — HK1 2026-2027',
-       ax:[['info','Thu một phần'],['ok','Sinh viên nộp tiếp được'],['mute','31/10/2026 · còn 36 ngày']],
-       m:['17.500.000','10.000.000','7.500.000'], m3l:'Còn phải thu',
-       basis:[['Học phí chính quy','3.500.000 đ/tháng × 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+  r3:{ name:'Phạm Thu Hà', code:'23040912',
+       ax:[['info','Nộp thiếu'],['ok','Nộp tiếp được phần còn thiếu'],['mute','31/10/2026, còn 36 ngày']],
+       m:['17.500.000','10.000.000','7.500.000'], m3l:'Còn phải nộp',
+       problem:{ type:'info', title:'Sinh viên tự chuyển khoản nên nộp thiếu',
+         body:'Sinh viên chuyển khoản trực tiếp 10.000.000 đ thay vì nộp bằng mã thanh toán trên cổng. Hệ thống ghi đúng số ngân hàng báo nên còn thiếu 7.500.000 đ.',
+         todo:'Không cần xử lý gì. Nhắc sinh viên vào cổng sinh viên nộp nốt phần còn lại bằng mã thanh toán để không bị lệch số lần nữa.' },
+       basis:[['Học phí chính quy','3.500.000 đ mỗi tháng, thu 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+       hint:'Mức thu áp cho khóa QH.2022 và QH.2023, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
        paid:[['15/09/2026 09:10','Sinh viên chuyển khoản trực tiếp','10.000.000 đ']],
-       ft:'adjust' },
+       ft:'remind' },
 
-  r4:{ name:'Nguyễn Hải Yến', sub:'22041002 · Học phí chính quy — HK1 2026-2027',
-       ax:[['info','Nộp thừa'],['mute','Không còn nợ'],['mute','Đã nộp 18/09/2026']],
-       m:['18.020.000','18.700.000','680.000'], m3l:'Nộp thừa', over:['680.000 đ','0 đ','680.000 đ'],
-       problem:{ type:'info', title:'Có tiền nộp thừa cần xử lý',
-         body:'Sinh viên nộp theo số cũ là 18.700.000 đ. Sau khi bỏ một học phần, số phải thu còn 18.020.000 đ.',
-         todo:'Chọn <b>Xử lý tiền nộp thừa</b> để chuyển sang kỳ sau hoặc lập đề nghị hoàn cho sinh viên.' },
-       basis:[['6 học phần bằng kép','17 tín × 1.100.000 đ','18.700.000 đ'],
-              ['Điều chỉnh giảm do bỏ 1 học phần','Theo đề nghị của khoa ngày 20/09','− 680.000 đ']],
-       total:'18.020.000 đ',
-       paid:[['18/09/2026 10:31','Sinh viên nộp qua mã thanh toán trên cổng','18.700.000 đ'],
-             ['20/09/2026 15:40','Điều chỉnh giảm · Trần Văn Bình','− 680.000 đ']],
+  r4:{ name:'Nguyễn Hải Yến', code:'22041002',
+       ax:[['info','Có tiền thừa'],['mute','Đã hết nợ, không cần nộp'],['mute','Đã nộp 18/09/2026']],
+       m:['5.775.000','11.550.000','5.775.000'], m3l:'Tiền thừa', over:['5.775.000 đ','0 đ','5.775.000 đ'],
+       problem:{ type:'info', title:'Tiền thừa do miễn giảm được duyệt sau khi sinh viên đã nộp',
+         body:'Sinh viên nộp đủ 11.550.000 đ ngày 18/09. Ngày 22/09 Nhà trường duyệt miễn giảm 50% diện chính sách, số phải nộp còn 5.775.000 đ.',
+         todo:'Hỏi sinh viên muốn giữ lại cho kỳ sau hay nhận lại tiền, rồi bấm <b>Xử lý tiền thừa</b>.' },
+       basis:[['Học phí chính quy','2.310.000 đ mỗi tháng, thu 5 tháng','11.550.000 đ'],
+              ['Miễn giảm 50% diện chính sách','Quyết định miễn giảm ngày 22/09/2026','trừ 5.775.000 đ']],
+       total:'5.775.000 đ',
+       hint:'Miễn giảm duyệt sau khi đã thu tiền nên hệ thống không sửa số đã nộp, phần chênh thành tiền thừa.',
+       paid:[['18/09/2026 10:31','Sinh viên nộp bằng mã thanh toán trên cổng sinh viên','11.550.000 đ'],
+             ['22/09/2026 15:40','Điều chỉnh giảm do miễn giảm · Trần Văn Bình','trừ 5.775.000 đ']],
        ft:'over' },
 
-  r5:{ name:'Vũ Khánh Linh', sub:'24041530 · Học phí chính quy — HK1 2026-2027',
-       ax:[['warn','Chưa thu'],['mute','Đang chờ thanh toán'],['mute','31/10/2026 · còn 36 ngày']],
-       m:['19.000.000','0','19.000.000'], m3l:'Còn phải thu',
-       problem:{ type:'info', title:'Sinh viên đang thanh toán',
-         body:'Sinh viên vừa tạo mã thanh toán trên cổng, hệ thống tạm giữ số tiền này để tránh thu hai lần.',
+  r5:{ name:'Vũ Khánh Linh', code:'24041530',
+       ax:[['warn','Chưa nộp'],['mute','Đang có mã chờ nộp'],['mute','31/10/2026, còn 36 ngày']],
+       m:['19.000.000','0','19.000.000'], m3l:'Còn phải nộp',
+       problem:{ type:'info', title:'Sinh viên đang thao tác nộp tiền',
+         body:'Sinh viên vừa tạo mã thanh toán trên cổng. Hệ thống tạm giữ số tiền này để tránh sinh viên nộp hai lần hoặc nộp sai số.',
          todo:'Không cần làm gì. Mã hết hiệu lực sau 15 phút nếu sinh viên không nộp.' },
-       basis:[['Học phí chính quy','3.800.000 đ/tháng × 5 tháng','19.000.000 đ']], total:'19.000.000 đ',
-       paid:'<div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">Chưa ghi nhận khoản tiền nào.</div>',
-       ft:'none' },
+       basis:[['Học phí chính quy','3.800.000 đ mỗi tháng, thu 5 tháng','19.000.000 đ']], total:'19.000.000 đ',
+       hint:'Mức thu áp cho khóa QH.2024 và QH.2025, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
+       paid:'Chưa ghi nhận khoản tiền nào.',
+       ft:'pr' },
 
-  r6:{ name:'Hoàng Đức Trung', sub:'25040677 · Học phí chính quy — HK1 2026-2027',
-       ax:[['mute','Chưa tính được'],['warn','Tạm khóa · chờ bổ sung'],['mute','31/10/2026 · còn 36 ngày']],
-       m:['Chưa tính','0','—'], m3l:'Còn phải thu',
-       problem:{ type:'warn', title:'Chưa tính được vì thiếu thông tin',
-         body:'Chưa biết sinh viên đang học hay bảo lưu trong kỳ này. Học phí theo tháng phụ thuộc việc sinh viên còn học, nên hệ thống dừng lại thay vì tính tạm.',
-         todo:'Mở <b>Dữ liệu học phí</b> để xác nhận tình trạng học tập. Sau khi xác nhận, khoản thu sẽ được tính ngay.' },
-       basis:null, total:'—',
-       paid:'<div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">Chưa ghi nhận khoản tiền nào.</div>',
+  r6:{ name:'Đinh Thùy Dương', code:'23041766',
+       ax:[['ok','Đã nộp đủ'],['mute','Đã hết nợ, không cần nộp'],['mute','Đã nộp 22/09/2026']],
+       m:['11.550.000','11.550.000','0'], m3l:'Còn phải nộp',
+       basis:[['Học phí chính quy','2.310.000 đ mỗi tháng, thu 5 tháng','11.550.000 đ']], total:'11.550.000 đ',
+       hint:'Nhóm ngành Nga, Ả Rập và Văn hóa truyền thông xuyên quốc gia có mức thu riêng.',
+       paid:[['22/09/2026 08:13','Sinh viên nộp bằng mã thanh toán trên cổng sinh viên','11.550.000 đ']],
+       ft:'plain' },
+
+  r7:{ name:'Hoàng Đức Trung', code:'25040677',
+       ax:[['mute','Chưa tính được'],['warn','Chưa nộp được, đang chờ bổ sung'],['mute','31/10/2026, còn 36 ngày']],
+       m:['Chưa tính','0','Chưa có'], m3l:'Còn phải nộp',
+       problem:{ type:'warn', title:'Chưa tính được vì thiếu thông tin sinh viên',
+         body:'Chưa biết sinh viên đang học hay bảo lưu trong kỳ này. Học phí theo tháng thu theo việc sinh viên còn học, nên hệ thống dừng lại thay vì tính tạm.',
+         todo:'Mở <b>Dữ liệu học phí</b> để xác nhận tình trạng học tập. Xác nhận xong là khoản thu được tính ngay.' },
+       basis:null, total:'Chưa có',
+       hint:'Trong lúc chờ, sinh viên không nhìn thấy khoản này trên cổng sinh viên và không nộp được.',
+       paid:'Chưa ghi nhận khoản tiền nào.',
        ft:'goto' }
 };
 
 function openRcv(key) {
   var r = RCV[key];
   document.getElementById('rv-name').textContent = r.name;
-  document.getElementById('rv-sub').textContent = r.sub;
+  document.getElementById('rv-sub').textContent = r.code + ' · Học phí chính quy học kỳ 1, năm học 2026-2027';
 
   for (var i = 0; i < 3; i++) {
     var el = document.getElementById('rv-ax' + (i + 1));
@@ -454,34 +479,46 @@ function openRcv(key) {
   if (r.basis) {
     b.innerHTML = '<table class="mini"><thead><tr><th>Nội dung</th><th>Cách tính</th><th class="r">Thành tiền</th></tr></thead><tbody>' +
       r.basis.map(function (x) { return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td class="r">' + x[2] + '</td></tr>'; }).join('') +
-      '</tbody></table><div class="mini-sum"><span>Tổng phải thu</span><span>' + r.total + '</span></div>';
+      '</tbody></table><div class="mini-sum"><span>Số phải nộp</span><span>' + r.total + '</span></div>';
   } else {
-    b.innerHTML = '<div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">Chưa tính được số tiền. Xem phần <b>Cần lưu ý</b> ở trên.</div>';
+    b.innerHTML = '<div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">Chưa tính được số tiền. Xem phần <b>Việc cần làm</b> ở trên.</div>';
   }
+  document.getElementById('rv-hint').innerHTML = r.hint;
 
   var p = document.getElementById('rv-paid');
   if (typeof r.paid === 'string') {
-    p.innerHTML = '<div class="mini-wrap">' + r.paid + '</div>';
+    p.innerHTML = '<div class="mini-wrap"><div style="padding:14px;text-align:center;color:#67748A;font-size:12.5px">' + r.paid + '</div></div>';
   } else {
-    p.innerHTML = '<div class="mini-wrap"><table class="mini"><thead><tr><th style="min-width:130px">Thời điểm</th><th>Nội dung</th><th class="r">Số tiền</th></tr></thead><tbody>' +
+    p.innerHTML = '<div class="mini-wrap"><table class="mini"><thead><tr><th style="min-width:125px">Thời điểm</th><th>Nội dung</th><th class="r">Số tiền</th></tr></thead><tbody>' +
       r.paid.map(function (x) { return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td class="r">' + x[2] + '</td></tr>'; }).join('') +
       '</tbody></table></div>';
   }
 
   var ft = document.getElementById('rv-ft');
   if (r.ft === 'over') {
-    ft.innerHTML = '<button class="btn" onclick="openModal(\'m-adjust\')">Điều chỉnh khoản thu</button>' +
-                   '<button class="btn btn-primary" onclick="openModal(\'m-over\')">Xử lý tiền nộp thừa</button>';
+    ft.innerHTML = '<button class="btn" onclick="openModal(\'m-adjust\')">Điều chỉnh số phải nộp</button>' +
+                   '<button class="btn btn-primary" onclick="openModal(\'m-over\')">Xử lý tiền thừa</button>';
   } else if (r.ft === 'goto') {
     ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'student-tuition.html\'">Mở dữ liệu học phí</button>';
-  } else if (r.ft === 'none') {
-    ft.innerHTML = '<span style="font-size:12px;color:#67748A;align-self:center">Không có thao tác nào cần làm lúc này</span>';
+  } else if (r.ft === 'pr') {
+    ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'payment-requests.html\'">Xem yêu cầu thanh toán</button>';
+  } else if (r.ft === 'remind') {
+    ft.innerHTML = '<button class="btn" onclick="openModal(\'m-adjust\')">Điều chỉnh số phải nộp</button>' +
+                   '<button class="btn btn-primary" onclick="notReady(\'Gửi nhắc nộp học phí\')">Gửi nhắc nộp</button>';
   } else {
-    ft.innerHTML = '<button class="btn" onclick="notReady(\'Gửi nhắc nộp học phí\')">Gửi nhắc nộp</button>' +
-                   '<button class="btn btn-primary" onclick="openModal(\'m-adjust\')">Điều chỉnh khoản thu</button>';
+    ft.innerHTML = '<button class="btn" onclick="openModal(\'m-adjust\')">Điều chỉnh số phải nộp</button>';
   }
 
   openDrawer('d-rv');
+}
+
+function switchOver() {
+  var v = document.getElementById('ov-way').value;
+  document.getElementById('ov-next').style.display = (v === 'next') ? '' : 'none';
+  document.getElementById('ov-refund').style.display = (v === 'refund') ? '' : 'none';
+  document.getElementById('ov-note').innerHTML = (v === 'next')
+    ? '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg><div><span class="nt">Chuyển kỳ được ghi thành một cặp bút toán</span>Trừ ở kỳ này và cộng vào kỳ sau trong cùng một lần, không có trường hợp trừ rồi mà chưa cộng.</div>'
+    : '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg><div><span class="nt">Đề nghị hoàn chỉ giữ chỗ số tiền</span>Số tiền bị giữ lại ngay để không ai dùng sang việc khác, nhưng chỉ trừ thật khi Nhà trường chi tiền cho sinh viên.</div>';
 }
 </script>
 </body>

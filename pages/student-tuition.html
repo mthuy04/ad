@@ -18,7 +18,7 @@
         <div class="phead">
           <div>
             <h1>Dữ liệu học phí</h1>
-            <p>Danh sách sinh viên và căn cứ để tính học phí của một học kỳ. Dữ liệu lấy trực tiếp từ Cơ sở dữ liệu đào tạo,
+            <p>Danh sách sinh viên và căn cứ để tính học phí của một kỳ thu. Dữ liệu lấy trực tiếp từ Cơ sở dữ liệu đào tạo,
                hệ thống chỉ đọc và không sửa dữ liệu gốc.</p>
           </div>
           <div class="phead-act">
@@ -33,64 +33,43 @@
           </div>
         </div>
 
-        <!-- Mốc dữ liệu: cán bộ luôn phải biết số đang xem cũ hay mới -->
         <div class="srcbar">
           <span class="dot"></span>
           <span>Đã kết nối <b>Cơ sở dữ liệu đào tạo</b></span>
           <span class="sep"></span>
           <span>Số liệu tính đến <b>25/09/2026 08:15</b></span>
           <span class="sep"></span>
-          <span>Người thực hiện lần gần nhất: <b>Nguyễn Thị Hương</b></span>
+          <span>Người thực hiện: <b>Nguyễn Thị Hương</b></span>
           <span class="grow"></span>
           <button class="btn-link" onclick="showTab('st','history')">Xem lịch sử cập nhật</button>
         </div>
 
-        <!-- Phạm vi đang xem -->
+        <!-- Phạm vi đang xem. Đổi ở đây là đổi toàn bộ số liệu bên dưới. -->
         <div class="card">
           <div class="card-bd">
-            <div class="filters f-4" style="margin-bottom:0">
+            <div class="filters f-3" style="margin-bottom:0">
+              <div class="field">
+                <label>Kỳ thu</label>
+                <select class="sel" id="sel-period" onchange="switchPeriod()">
+                  <option value="main">Học phí chính quy học kỳ 1, năm học 2026-2027</option>
+                  <option value="retake">Học lại và học cải thiện học kỳ 1, năm học 2026-2027</option>
+                </select>
+              </div>
               <div class="field">
                 <label>Năm học</label>
-                <select class="sel"><option>2026 – 2027</option><option>2025 – 2026</option></select>
+                <select class="sel"><option>2026-2027</option><option>2025-2026</option></select>
               </div>
               <div class="field">
                 <label>Học kỳ</label>
                 <select class="sel"><option>Học kỳ 1</option><option>Học kỳ 2</option><option>Học kỳ hè</option></select>
               </div>
               <div class="field">
-                <label>Kỳ thu</label>
-                <select class="sel">
-                  <option>Học phí chính quy — HK1 2026-2027</option>
-                  <option>Học lại và học cải thiện — HK1 2026-2027</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Hệ đào tạo</label>
-                <select class="sel"><option>Đại học chính quy</option><option>Bằng kép</option><option>Vừa làm vừa học</option></select>
-              </div>
-              <div class="field">
-                <button class="btn" style="width:100%" onclick="toast('Đã áp dụng phạm vi đang chọn.','ok')">Áp dụng</button>
+                <button class="btn" style="width:100%" onclick="toast('Đã tải lại danh sách theo phạm vi đang chọn.','ok')">Áp dụng</button>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Ba chỉ số, mỗi chỉ số dẫn tới một việc cụ thể -->
-        <div class="kpis">
-          <div class="kpi">
-            <div class="kpi-l">Sinh viên trong kỳ thu</div>
-            <div class="kpi-v">8.214</div>
-            <div class="kpi-s">Đại học chính quy · Học kỳ 1</div>
-          </div>
-          <div class="kpi clickable" onclick="pickChip(document.querySelector('[data-filter=ready]'))">
-            <div class="kpi-l">Đủ căn cứ tính học phí</div>
-            <div class="kpi-v ok">7.980</div>
-            <div class="kpi-s">Chiếm 97,2% · có thể tính tiền ngay</div>
-          </div>
-          <div class="kpi clickable" onclick="pickChip(document.querySelector('[data-filter=need]'))">
-            <div class="kpi-l">Cần bổ sung thông tin</div>
-            <div class="kpi-v warn">234</div>
-            <div class="kpi-s">Bấm để xem danh sách cần xử lý</div>
+            <p class="hint" style="margin-top:9px" id="scope-note">
+              Kỳ thu này thu <b>5 tháng</b>, hạn nộp <b>31/10/2026</b>. Áp cho sinh viên đại học chính quy còn học trong kỳ.
+            </p>
           </div>
         </div>
 
@@ -103,11 +82,12 @@
         <div class="pane on" data-pane-group="st" data-pane="list">
 
           <div class="chips" data-target="tbl-st">
-            <button class="chip on" data-filter="all"  onclick="pickChip(this)">Tất cả <span class="n">8.214</span></button>
-            <button class="chip"    data-filter="ready" onclick="pickChip(this)">Đủ căn cứ tính <span class="n">7.980</span></button>
+            <button class="chip on" data-filter="all"   onclick="pickChip(this)">Tất cả <span class="n">8.214</span></button>
+            <button class="chip"    data-filter="ready" onclick="pickChip(this)">Đủ căn cứ tính <span class="n">7.962</span></button>
             <button class="chip"    data-filter="need"  onclick="pickChip(this)">Cần bổ sung <span class="n">234</span></button>
-            <button class="chip"    data-filter="nocfg" onclick="pickChip(this)">Thiếu cấu hình học phí <span class="n">18</span></button>
-            <button class="chip"    data-filter="wait"  onclick="pickChip(this)">Chờ áp dụng vào khoản thu <span class="n">45</span></button>
+            <button class="chip"    data-filter="nocfg" onclick="pickChip(this)">Thiếu mức thu <span class="n">18</span></button>
+            <button class="chip"    data-filter="wait"  onclick="pickChip(this)">Chờ áp vào khoản thu <span class="n">45</span></button>
+            <button class="chip"    data-filter="fix"   onclick="pickChip(this)">Cần điều chỉnh <span class="n">9</span></button>
           </div>
 
           <div class="filters f-3">
@@ -117,12 +97,12 @@
               <input class="inp" placeholder="Nhập mã sinh viên hoặc họ tên" oninput="filterTable(this,'tbl-st')">
             </div>
             <div class="field">
-              <label>Khoa / Bộ môn</label>
-              <select class="sel"><option>Tất cả khoa</option><option>Khoa NN&amp;VH Anh</option><option>Khoa NN&amp;VH Nhật Bản</option><option>Khoa NN&amp;VH Hàn Quốc</option><option>Khoa NN&amp;VH Nga</option></select>
+              <label>Khoa</label>
+              <select class="sel"><option>Tất cả khoa</option><option>Khoa Sư phạm tiếng Anh</option><option>Khoa NN và VH Anh</option><option>Khoa NN và VH Nhật Bản</option><option>Khoa NN và VH Hàn Quốc</option><option>Khoa NN và VH Nga</option><option>Khoa NN và VH Pháp</option></select>
             </div>
             <div class="field">
               <label>Khóa tuyển sinh</label>
-              <select class="sel"><option>Tất cả khóa</option><option>QH.2023</option><option>QH.2024</option><option>QH.2025</option><option>QH.2026</option></select>
+              <select class="sel"><option>Tất cả khóa</option><option>QH.2022</option><option>QH.2023</option><option>QH.2024</option><option>QH.2025</option><option>QH.2026</option></select>
             </div>
             <div class="field">
               <button class="btn" onclick="notReady('Xuất danh sách ra Excel')">Xuất Excel</button>
@@ -133,110 +113,110 @@
             <div class="card-hd">
               <div>
                 <h2>Sinh viên và căn cứ tính học phí</h2>
-                <div class="sub">Đang hiển thị <b data-count-for="tbl-st">8</b> trên 8.214 sinh viên</div>
+                <div class="sub">Đang hiển thị <b data-count-for="tbl-st">8</b> trên 8.214 sinh viên của kỳ thu đang chọn</div>
               </div>
             </div>
             <div class="card-bd flush">
               <div class="tbl-wrap">
-                <table class="tbl" id="tbl-st" style="min-width:1080px">
+                <table class="tbl" id="tbl-st" style="min-width:1045px">
                   <thead>
                     <tr>
                       <th style="min-width:175px">Sinh viên</th>
-                      <th style="min-width:165px">Chương trình tính phí</th>
-                      <th style="min-width:145px">Căn cứ tính</th>
-                      <th style="min-width:135px">Chất lượng dữ liệu</th>
-                      <th style="min-width:135px">Kết quả tính</th>
-                      <th style="min-width:135px">Khoản phải thu</th>
-                      <th style="min-width:110px">Cập nhật</th>
+                      <th class="w2" style="min-width:150px">Ngành và chương trình</th>
+                      <th class="w2" style="min-width:140px">Cách tính học phí</th>
+                      <th class="r w2" style="min-width:118px">Số tiền dự kiến</th>
+                      <th class="w2" style="min-width:118px">Chất lượng dữ liệu</th>
+                      <th class="w2" style="min-width:118px">Kết quả tính</th>
+                      <th class="w2" style="min-width:118px">Khoản phải thu</th>
                       <th class="r" style="min-width:86px">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr data-tags="ready">
                       <td><div class="t-main">Nguyễn Minh Anh</div><div class="t-sub">23041205 · QH.2023</div></td>
-                      <td><div class="t-main">Ngôn ngữ Anh</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Anh</div></td>
-                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.500.000 đ/tháng × 5 tháng</div></td>
+                      <td><div class="t-main">Ngôn ngữ Anh</div><div class="t-sub">Chương trình chuẩn</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.500.000 đ/tháng, 5 tháng</div></td>
+                      <td class="money">17.500.000</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
                       <td><span class="bg ok">Đã tính</span></td>
                       <td><span class="bg ok">Đã áp dụng</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
                       <td class="t-act"><button class="btn btn-sm" onclick="openStudent('a')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="need">
                       <td><div class="t-main">Trần Thị Bích Ngọc</div><div class="t-sub">24040388 · QH.2024</div></td>
                       <td><div class="t-main">Chưa xác định</div><div class="t-sub">Đang học 2 chương trình</div></td>
-                      <td><div class="t-main">Theo tháng</div><div class="t-sub">Chưa xác định được mức thu</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">Chưa biết áp mức thu nào</div></td>
+                      <td class="money" style="color:var(--muted)">Chưa tính</td>
                       <td><span class="bg warn">Cần bổ sung</span></td>
                       <td><span class="bg mute">Chưa tính được</span></td>
                       <td><span class="bg mute">Chưa có</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
                       <td class="t-act"><button class="btn btn-sm" onclick="openStudent('b')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="ready">
                       <td><div class="t-main">Lê Hoàng Nam</div><div class="t-sub">22041877 · QH.2022</div></td>
-                      <td><div class="t-main">Ngôn ngữ Nhật</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Nhật Bản</div></td>
-                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.500.000 đ/tháng × 5 tháng</div></td>
+                      <td><div class="t-main">Ngôn ngữ Nhật</div><div class="t-sub">Chương trình chuẩn</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.500.000 đ/tháng, 5 tháng</div></td>
+                      <td class="money">17.500.000</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
                       <td><span class="bg ok">Đã tính</span></td>
                       <td><span class="bg ok">Đã áp dụng</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('a')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('c')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="ready">
-                      <td><div class="t-main">Phạm Thu Hà</div><div class="t-sub">23040912 · QH.2023</div></td>
-                      <td><div class="t-main">Ngôn ngữ Hàn Quốc</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Hàn Quốc</div></td>
-                      <td><div class="t-main">3 học phần học lại</div><div class="t-sub">7 tín chỉ · tính theo tín</div></td>
+                      <td><div class="t-main">Đinh Thùy Dương</div><div class="t-sub">23041766 · QH.2023</div></td>
+                      <td><div class="t-main">Ngôn ngữ Nga</div><div class="t-sub">Chương trình chuẩn</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">2.310.000 đ/tháng, 5 tháng</div></td>
+                      <td class="money">11.550.000</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
                       <td><span class="bg ok">Đã tính</span></td>
                       <td><span class="bg ok">Đã áp dụng</span></td>
-                      <td><div class="t-main">24/09 16:40</div><div class="t-sub">Từ tệp Excel</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('c')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('d')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="nocfg">
                       <td><div class="t-main">Đỗ Quang Huy</div><div class="t-sub">26041044 · QH.2026</div></td>
-                      <td><div class="t-main">Ngôn ngữ Ả Rập</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Phương Tây</div></td>
+                      <td><div class="t-main">Ngôn ngữ Ả Rập</div><div class="t-sub">Chương trình chuẩn</div></td>
                       <td><div class="t-main">Theo tháng</div><div class="t-sub">5 tháng</div></td>
+                      <td class="money" style="color:var(--muted)">Chưa tính</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
-                      <td><span class="bg err">Thiếu cấu hình</span></td>
+                      <td><span class="bg err">Thiếu mức thu</span></td>
                       <td><span class="bg mute">Chưa có</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('d')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('e')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="wait">
                       <td><div class="t-main">Vũ Khánh Linh</div><div class="t-sub">24041530 · QH.2024</div></td>
-                      <td><div class="t-main">Ngôn ngữ Trung Quốc</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Trung Quốc</div></td>
-                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.800.000 đ/tháng × 5 tháng</div></td>
+                      <td><div class="t-main">Ngôn ngữ Trung Quốc</div><div class="t-sub">Chương trình chuẩn</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">3.800.000 đ/tháng, 5 tháng</div></td>
+                      <td class="money">19.000.000</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
                       <td><span class="bg ok">Đã tính</span></td>
                       <td><span class="bg info">Chờ áp dụng</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('e')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('f')">Chi tiết</button></td>
                     </tr>
                     <tr data-tags="need">
                       <td><div class="t-main">Hoàng Đức Trung</div><div class="t-sub">25040677 · QH.2025</div></td>
-                      <td><div class="t-main">Ngôn ngữ Pháp</div><div class="t-sub">Chuẩn · Khoa NN&amp;VH Pháp</div></td>
-                      <td><div class="t-main">Chưa xác định</div><div class="t-sub">Thiếu tình trạng học tập trong kỳ</div></td>
+                      <td><div class="t-main">Ngôn ngữ Pháp</div><div class="t-sub">Chương trình chuẩn</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">Chưa rõ có học kỳ này không</div></td>
+                      <td class="money" style="color:var(--muted)">Chưa tính</td>
                       <td><span class="bg warn">Cần bổ sung</span></td>
                       <td><span class="bg mute">Chưa tính được</span></td>
                       <td><span class="bg mute">Chưa có</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('f')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('g')">Chi tiết</button></td>
                     </tr>
-                    <tr data-tags="ready">
+                    <tr data-tags="fix">
                       <td><div class="t-main">Nguyễn Hải Yến</div><div class="t-sub">22041002 · QH.2022</div></td>
-                      <td><div class="t-main">Ngôn ngữ Anh — bằng kép</div><div class="t-sub">Bằng kép · tính theo tín chỉ</div></td>
-                      <td><div class="t-main">6 học phần</div><div class="t-sub">17 tín chỉ · tính theo tín</div></td>
+                      <td><div class="t-main">Sư phạm tiếng Anh</div><div class="t-sub">Chương trình sư phạm</div></td>
+                      <td><div class="t-main">Theo tháng</div><div class="t-sub">2.310.000 đ/tháng, 5 tháng</div></td>
+                      <td class="money">11.550.000</td>
                       <td><span class="bg ok">Đủ căn cứ</span></td>
                       <td><span class="bg ok">Đã tính</span></td>
                       <td><span class="bg warn">Cần điều chỉnh</span></td>
-                      <td><div class="t-main">25/09 08:15</div><div class="t-sub">Từ hệ đào tạo</div></td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('g')">Chi tiết</button></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openStudent('h')">Chi tiết</button></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div class="tfoot">
-                <div>Hiển thị 1–8 trong 8.214 sinh viên</div>
+                <div>Hiển thị 1 đến 8 trong 8.214 sinh viên</div>
                 <div class="pager">
                   <button class="pg" disabled>‹</button>
                   <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
@@ -257,20 +237,20 @@
             </div>
             <div class="card-bd flush">
               <div class="tbl-wrap">
-                <table class="tbl" style="min-width:900px">
+                <table class="tbl" style="min-width:920px">
                   <thead><tr>
-                    <th style="min-width:150px">Thời điểm</th>
-                    <th style="min-width:180px">Việc đã làm</th>
-                    <th style="min-width:210px">Phạm vi</th>
-                    <th class="r">Số sinh viên</th>
-                    <th style="min-width:150px">Kết quả</th>
-                    <th style="min-width:160px">Người thực hiện</th>
+                    <th style="min-width:145px">Thời điểm</th>
+                    <th style="min-width:200px">Việc đã làm</th>
+                    <th style="min-width:230px">Phạm vi</th>
+                    <th class="r" style="min-width:110px">Số sinh viên</th>
+                    <th style="min-width:180px">Kết quả</th>
+                    <th style="min-width:150px">Người thực hiện</th>
                   </tr></thead>
                   <tbody>
                     <tr>
                       <td>25/09/2026 08:15</td>
-                      <td><div class="t-main">Lấy dữ liệu từ CSDL đào tạo</div></td>
-                      <td>HK1 2026-2027 · Đại học chính quy</td>
+                      <td><div class="t-main">Lấy dữ liệu từ hệ đào tạo</div></td>
+                      <td>Học phí chính quy học kỳ 1, năm học 2026-2027</td>
                       <td class="r">8.214</td>
                       <td><span class="bg ok">Hoàn tất</span></td>
                       <td>Nguyễn Thị Hương</td>
@@ -278,24 +258,24 @@
                     <tr>
                       <td>24/09/2026 16:40</td>
                       <td><div class="t-main">Nhập đăng ký từ tệp Excel</div><div class="t-sub">DS_hoc_lai_HK1.xlsx</div></td>
-                      <td>HK1 2026-2027 · Học lại và học cải thiện</td>
+                      <td>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</td>
                       <td class="r">412</td>
-                      <td><span class="bg warn">Hoàn tất · 6 dòng bị bỏ qua</span></td>
+                      <td><span class="bg warn">Hoàn tất, 6 dòng bị bỏ qua</span></td>
                       <td>Trần Văn Bình</td>
                     </tr>
                     <tr>
                       <td>22/09/2026 09:02</td>
-                      <td><div class="t-main">Lấy dữ liệu từ CSDL đào tạo</div></td>
-                      <td>HK1 2026-2027 · Đại học chính quy</td>
+                      <td><div class="t-main">Lấy dữ liệu từ hệ đào tạo</div></td>
+                      <td>Học phí chính quy học kỳ 1, năm học 2026-2027</td>
                       <td class="r">8.190</td>
                       <td><span class="bg ok">Hoàn tất</span></td>
                       <td>Nguyễn Thị Hương</td>
                     </tr>
                     <tr>
                       <td>20/09/2026 14:25</td>
-                      <td><div class="t-main">Lấy dữ liệu từ CSDL đào tạo</div></td>
-                      <td>HK1 2026-2027 · Đại học chính quy</td>
-                      <td class="r">—</td>
+                      <td><div class="t-main">Lấy dữ liệu từ hệ đào tạo</div></td>
+                      <td>Học phí chính quy học kỳ 1, năm học 2026-2027</td>
+                      <td class="r">0</td>
                       <td><span class="bg err">Không kết nối được nguồn</span></td>
                       <td>Hệ thống tự chạy</td>
                     </tr>
@@ -317,20 +297,11 @@
   <div class="drw-hd">
     <div>
       <h2 id="ds-name">Nguyễn Minh Anh</h2>
-      <div class="sub" id="ds-sub">23041205 · Học kỳ 1, năm học 2026 – 2027</div>
+      <div class="sub" id="ds-sub">23041205 · Học phí chính quy học kỳ 1, năm học 2026-2027</div>
     </div>
     <button class="x" onclick="closeDrawer('d-st')">✕</button>
   </div>
   <div class="drw-bd">
-
-    <div class="sec">
-      <div class="sec-t">Tình trạng</div>
-      <div class="axes">
-        <div class="axis-row"><span class="axis-k">Chất lượng dữ liệu</span><span id="ds-ax1" class="bg ok">Đủ căn cứ tính</span></div>
-        <div class="axis-row"><span class="axis-k">Kết quả tính</span><span id="ds-ax2" class="bg ok">Đã tính</span></div>
-        <div class="axis-row"><span class="axis-k">Khoản phải thu</span><span id="ds-ax3" class="bg ok">Đã áp dụng</span></div>
-      </div>
-    </div>
 
     <div class="sec" id="ds-problem" style="display:none">
       <div class="sec-t">Việc cần làm</div>
@@ -338,41 +309,45 @@
     </div>
 
     <div class="sec">
+      <div class="sec-t">Tình trạng xử lý</div>
+      <div class="axes">
+        <div class="axis-row"><span class="axis-k">Dữ liệu sinh viên</span><span id="ds-ax1" class="bg ok">Đủ căn cứ tính</span></div>
+        <div class="axis-row"><span class="axis-k">Tính học phí</span><span id="ds-ax2" class="bg ok">Đã tính</span></div>
+        <div class="axis-row"><span class="axis-k">Khoản phải thu</span><span id="ds-ax3" class="bg ok">Đã áp dụng</span></div>
+      </div>
+      <p class="hint">Ba việc này chạy độc lập. Dữ liệu đủ chưa chắc đã tính được tiền, tính được tiền chưa chắc đã ghi vào khoản phải thu.</p>
+    </div>
+
+    <div class="sec">
       <div class="sec-t">Thông tin sinh viên</div>
       <dl class="dl">
+        <dt>Mã sinh viên</dt><dd id="ds-code">23041205</dd>
         <dt>Khóa tuyển sinh</dt><dd id="ds-cohort">QH.2023</dd>
-        <dt>Chương trình tính phí</dt><dd id="ds-prog">Ngôn ngữ Anh — chương trình chuẩn</dd>
-        <dt>Căn cứ xác định</dt><dd id="ds-progsrc">Lấy theo hồ sơ đăng ký của sinh viên</dd>
+        <dt>Khoa</dt><dd id="ds-fac">Khoa Ngôn ngữ và Văn hóa Anh</dd>
+        <dt>Ngành và chương trình</dt><dd id="ds-prog">Ngôn ngữ Anh, chương trình chuẩn</dd>
+        <dt>Căn cứ xác định</dt><dd id="ds-progsrc">Theo hồ sơ đăng ký của sinh viên</dd>
         <dt>Tình trạng học tập</dt><dd id="ds-status">Đang học</dd>
-        <dt>Kỳ thu</dt><dd id="ds-period">Học phí chính quy — HK1 2026-2027 (5 tháng)</dd>
+      </dl>
+    </div>
+
+    <div class="sec">
+      <div class="sec-t">Kỳ thu</div>
+      <dl class="dl">
+        <dt>Tên kỳ thu</dt><dd id="ds-period">Học phí chính quy học kỳ 1, năm học 2026-2027</dd>
+        <dt>Số tháng thu</dt><dd id="ds-months">5 tháng</dd>
+        <dt>Hạn nộp</dt><dd id="ds-due">31/10/2026</dd>
       </dl>
     </div>
 
     <div class="sec">
       <div class="sec-t">Căn cứ tính học phí</div>
-      <div class="mini-wrap" id="ds-basis">
-        <table class="mini">
-          <thead><tr><th>Nội dung</th><th>Cách tính</th><th class="r">Thành tiền</th></tr></thead>
-          <tbody>
-            <tr>
-              <td>Học phí chính quy</td>
-              <td>3.500.000 đ/tháng × 5 tháng</td>
-              <td class="r">17.500.000 đ</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="mini-sum"><span>Tổng học phí phải thu</span><span>17.500.000 đ</span></div>
-      </div>
-      <p class="hint" id="ds-hint">Mức thu theo khung học phí đang hiệu lực năm học 2026 – 2027.</p>
+      <div class="mini-wrap" id="ds-basis"></div>
+      <p class="hint" id="ds-hint"></p>
     </div>
 
     <div class="sec">
       <div class="sec-t">Diễn biến</div>
-      <div class="tl">
-        <div class="tl-i done"><div class="tl-t">Lấy dữ liệu từ CSDL đào tạo</div><div class="tl-m">25/09/2026 08:15 · Nguyễn Thị Hương</div></div>
-        <div class="tl-i done"><div class="tl-t">Tính học phí theo khung 2026 – 2027</div><div class="tl-m">25/09/2026 08:16 · Hệ thống</div></div>
-        <div class="tl-i done"><div class="tl-t">Áp vào khoản phải thu</div><div class="tl-m">25/09/2026 08:16 · Hệ thống</div></div>
-      </div>
+      <div class="tl" id="ds-tl"></div>
     </div>
 
   </div>
@@ -389,7 +364,7 @@
     </div>
     <div class="mdl-bd">
       <div class="grid2">
-        <div class="field"><label>Năm học</label><select class="sel"><option>2026 – 2027</option></select></div>
+        <div class="field"><label>Năm học</label><select class="sel"><option>2026-2027</option></select></div>
         <div class="field"><label>Học kỳ</label><select class="sel"><option>Học kỳ 1</option><option>Học kỳ 2</option></select></div>
       </div>
       <div class="note info" style="margin-top:14px">
@@ -397,14 +372,14 @@
         <div>
           <span class="nt">Việc này an toàn với số tiền đã thu</span>
           Học phí đã tính trước đó giữ nguyên mức thu tại thời điểm đã chốt. Nếu dữ liệu nguồn thay đổi, hệ thống
-          sẽ báo <b>Cần điều chỉnh</b> để cán bộ xem lại, chứ không tự sửa khoản đã thu tiền.
+          báo <b>Cần điều chỉnh</b> để cán bộ xem lại, chứ không tự sửa khoản đã thu tiền.
         </div>
       </div>
-      <p class="hint" style="margin-top:12px">Lần lấy dữ liệu gần nhất: 25/09/2026 08:15. Thời gian chạy dự kiến 3 – 5 phút cho khoảng 8.200 sinh viên.</p>
+      <p class="hint" style="margin-top:12px">Lần lấy dữ liệu gần nhất: 25/09/2026 08:15. Thời gian chạy dự kiến 3 đến 5 phút cho khoảng 8.200 sinh viên.</p>
     </div>
     <div class="mdl-ft">
       <button class="btn" onclick="closeModal('m-sync')">Đóng</button>
-      <button class="btn btn-primary" onclick="closeModal('m-sync');toast('Đang lấy dữ liệu học kỳ 1, năm học 2026 – 2027.','ok')">Bắt đầu lấy dữ liệu</button>
+      <button class="btn btn-primary" onclick="closeModal('m-sync');toast('Đang lấy dữ liệu học kỳ 1, năm học 2026-2027.','ok')">Bắt đầu lấy dữ liệu</button>
     </div>
   </div>
 </div>
@@ -414,7 +389,7 @@
   <div class="mdl wide">
     <div class="mdl-hd">
       <div><h2>Nhập đăng ký từ tệp Excel</h2>
-      <div class="sub">Dùng khi danh sách chưa có trên hệ thống đào tạo, ví dụ danh sách học lại do khoa gửi về</div></div>
+      <div class="sub">Dùng khi danh sách chưa có trên hệ đào tạo, ví dụ danh sách học lại do khoa gửi về</div></div>
       <button class="x" onclick="closeModal('m-import')">✕</button>
     </div>
     <div class="mdl-bd">
@@ -430,7 +405,7 @@
       <div class="fgroup">
         <div class="fgroup-t">Phạm vi áp dụng</div>
         <div class="grid3">
-          <div class="field"><label>Năm học <span class="req">*</span></label><select class="sel"><option>2026 – 2027</option></select></div>
+          <div class="field"><label>Năm học <span class="req">*</span></label><select class="sel"><option>2026-2027</option></select></div>
           <div class="field"><label>Học kỳ <span class="req">*</span></label><select class="sel"><option>Học kỳ 1</option></select></div>
           <div class="field"><label>Kỳ thu <span class="req">*</span></label><select class="sel"><option>Học lại và học cải thiện</option><option>Học phí chính quy</option></select></div>
         </div>
@@ -442,7 +417,7 @@
         <div class="drop">
           <svg viewBox="0 0 24 24"><path d="M12 16V4M8 8l4-4 4 4M3 16v3a2 2 0 002 2h14a2 2 0 002-2v-3"/></svg>
           <h4>Kéo tệp vào đây hoặc chọn từ máy</h4>
-          <p>Chỉ nhận tệp Excel (.xlsx), tối đa 10.000 dòng</p>
+          <p>Chỉ nhận tệp Excel dạng .xlsx, tối đa 10.000 dòng</p>
           <button class="btn" onclick="showImportResult()">Chọn tệp</button>
         </div>
         <p class="hint">
@@ -454,11 +429,11 @@
       <div id="ip-result" style="display:none">
         <div class="fgroup">
           <div class="fgroup-t">Kết quả kiểm tra tệp DS_hoc_lai_HK1.xlsx</div>
-          <div class="kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px">
-            <div class="kpi"><div class="kpi-l">Tổng số dòng</div><div class="kpi-v" style="font-size:20px">418</div></div>
-            <div class="kpi"><div class="kpi-l">Sẽ cập nhật</div><div class="kpi-v ok" style="font-size:20px">395</div><div class="kpi-s">dòng có thay đổi</div></div>
-            <div class="kpi"><div class="kpi-l">Không đổi</div><div class="kpi-v" style="font-size:20px">17</div><div class="kpi-s">bỏ qua, không tính lại</div></div>
-            <div class="kpi"><div class="kpi-l">Có lỗi</div><div class="kpi-v err" style="font-size:20px">6</div><div class="kpi-s">không đưa vào hệ thống</div></div>
+          <div class="sumrow">
+            <div class="it"><div class="l">Tổng số dòng</div><div class="v">418</div></div>
+            <div class="it"><div class="l">Sẽ cập nhật</div><div class="v ok">395</div><div class="s">dòng có thay đổi</div></div>
+            <div class="it"><div class="l">Không đổi</div><div class="v">17</div><div class="s">bỏ qua, không tính lại</div></div>
+            <div class="it"><div class="l">Có lỗi</div><div class="v err">6</div><div class="s">không đưa vào hệ thống</div></div>
           </div>
           <div class="mini-wrap">
             <table class="mini">
@@ -467,7 +442,7 @@
                 <tr><td>27</td><td>Không tìm thấy mã sinh viên 24049999</td><td>Kiểm tra lại mã trong danh sách của khoa</td></tr>
                 <tr><td>58</td><td>Mã học phần ENG3045 không có trong chương trình đào tạo</td><td>Đối chiếu với danh mục học phần</td></tr>
                 <tr><td>112</td><td>Số tín chỉ để trống</td><td>Điền số tín chỉ của học phần</td></tr>
-                <tr><td>203</td><td>Loại đăng ký ghi “HL2”, không thuộc 4 giá trị cho phép</td><td>Ghi là Học lại, Học cải thiện, Học lần đầu hoặc Học tự do</td></tr>
+                <tr><td>203</td><td>Loại đăng ký ghi "HL2", không thuộc 4 giá trị cho phép</td><td>Ghi là Học lần đầu, Học lại, Học cải thiện hoặc Học tự do</td></tr>
                 <tr><td>288</td><td>Trùng với dòng 112, cùng sinh viên và cùng học phần</td><td>Xóa bớt một dòng</td></tr>
                 <tr><td>350</td><td>Ô chứa công thức, hệ thống không đọc được giá trị</td><td>Dán lại dưới dạng giá trị</td></tr>
               </tbody>
@@ -476,7 +451,7 @@
           <div class="note warn" style="margin-top:12px">
             <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
             <div><span class="nt">6 dòng lỗi sẽ không được đưa vào hệ thống</span>
-            395 dòng hợp lệ vẫn được cập nhật bình thường. Sinh viên còn dòng lỗi sẽ không được tính học phí thiếu, mà chuyển sang <b>Cần bổ sung</b>.</div>
+            395 dòng hợp lệ vẫn được cập nhật bình thường. Sinh viên còn dòng lỗi sẽ không bị tính học phí thiếu, mà chuyển sang <b>Cần bổ sung</b>.</div>
           </div>
         </div>
       </div>
@@ -489,13 +464,12 @@
   </div>
 </div>
 
-
 <!-- ======================= HỘP THOẠI BỔ SUNG THÔNG TIN ======================= -->
 <div class="mov" id="m-fix">
   <div class="mdl">
     <div class="mdl-hd">
       <div><h2>Bổ sung thông tin cho sinh viên</h2>
-      <div class="sub">Dùng khi dữ liệu từ hệ đào tạo chưa đủ để tính học phí</div></div>
+      <div class="sub" id="fx-who">Trần Thị Bích Ngọc · 24040388</div></div>
       <button class="x" onclick="closeModal('m-fix')">✕</button>
     </div>
     <div class="mdl-bd">
@@ -504,28 +478,23 @@
         <select class="sel" id="fx-kind" onchange="switchFix()">
           <option value="prog">Chương trình tính phí</option>
           <option value="status">Tình trạng học tập trong kỳ</option>
-          <option value="credit">Số tín chỉ của học phần</option>
         </select>
       </div>
       <div class="field" id="fx-prog" style="margin-bottom:13px">
-        <label>Chọn chương trình áp dụng <span class="req">*</span></label>
+        <label>Chương trình áp dụng <span class="req">*</span></label>
         <select class="sel">
-          <option>Ngôn ngữ Anh — chương trình chuẩn</option>
-          <option>Ngôn ngữ Trung Quốc — chương trình chuẩn</option>
+          <option>Ngôn ngữ Anh, chương trình chuẩn (3.800.000 đ/tháng)</option>
+          <option>Ngôn ngữ Trung Quốc, chương trình chuẩn (3.800.000 đ/tháng)</option>
         </select>
       </div>
       <div class="field" id="fx-status" style="margin-bottom:13px;display:none">
         <label>Tình trạng học tập <span class="req">*</span></label>
         <select class="sel">
-          <option>Đang học</option>
-          <option>Bảo lưu — không phát sinh học phí kỳ này</option>
+          <option>Đang học, có phát sinh học phí</option>
+          <option>Bảo lưu, không phát sinh học phí kỳ này</option>
           <option>Đã thôi học</option>
           <option>Đã tốt nghiệp</option>
         </select>
-      </div>
-      <div class="field" id="fx-credit" style="margin-bottom:13px;display:none">
-        <label>Số tín chỉ <span class="req">*</span></label>
-        <input class="inp" placeholder="Ví dụ: 3">
       </div>
       <div class="field">
         <label>Căn cứ <span class="req">*</span></label>
@@ -546,89 +515,118 @@
 
 <script src="../js/ulis.js"></script>
 <script>
-/* ------- Dữ liệu mẫu cho ngăn chi tiết ------- */
+/* ---------- Dữ liệu mẫu cho ngăn chi tiết ---------- */
+var P_MAIN = 'Học phí chính quy học kỳ 1, năm học 2026-2027';
+
 var STUDENTS = {
-  a: { name:'Nguyễn Minh Anh', sub:'23041205 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2023',
-       prog:'Ngôn ngữ Anh — chương trình chuẩn', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Đang học', period:'Học phí chính quy — HK1 2026-2027 (5 tháng)',
-       ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['ok','Đã áp dụng']],
-       basis:[['Học phí chính quy','3.500.000 đ/tháng × 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
-       hint:'Mức thu theo khung học phí đang hiệu lực năm học 2026 – 2027, áp cho khóa QH.2022 và QH.2023 nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.', ft:'normal' },
+  a:{ name:'Nguyễn Minh Anh', code:'23041205', cohort:'QH.2023', fac:'Khoa Ngôn ngữ và Văn hóa Anh',
+      prog:'Ngôn ngữ Anh, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['ok','Đã áp dụng']],
+      basis:[['Học phí chính quy','3.500.000 đ mỗi tháng, thu 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+      hint:'Mức thu áp cho khóa QH.2022 và QH.2023, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn, theo khung học phí năm 2026-2027.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['done','Tính học phí theo khung 2026-2027','25/09/2026 08:16 · Hệ thống'],
+          ['done','Ghi vào khoản phải thu','25/09/2026 08:16 · Hệ thống']],
+      ft:'normal' },
 
-  b: { name:'Trần Thị Bích Ngọc', sub:'24040388 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2024',
-       prog:'Chưa xác định', progsrc:'Sinh viên đang học 2 chương trình, hồ sơ đăng ký không chỉ rõ chương trình nào',
-       status:'Đang học', period:'Học phí chính quy — HK1 2026-2027 (5 tháng)',
-       ax:[['warn','Cần bổ sung'],['mute','Chưa kiểm tra được'],['mute','Chưa có']],
-       problem:{ type:'warn', title:'Chưa xác định được chương trình tính phí',
-         body:'Sinh viên đang theo học đồng thời <b>Ngôn ngữ Anh</b> và <b>Ngôn ngữ Trung Quốc</b>. Mức thu của hai chương trình khác nhau nên hệ thống không tự chọn.',
-         todo:'Cán bộ chọn chương trình tính phí bằng nút <b>Bổ sung thông tin</b> ở dưới, kèm căn cứ. Sau khi ghi nhận, hệ thống sẽ tính lại ngay.' },
-       basis:null,
-       hint:'Chưa tính được học phí vì chưa biết áp mức thu của chương trình nào.', ft:'fix' },
+  b:{ name:'Trần Thị Bích Ngọc', code:'24040388', cohort:'QH.2024', fac:'Khoa Ngôn ngữ và Văn hóa Anh',
+      prog:'Chưa xác định', progsrc:'Sinh viên đang học 2 chương trình, hồ sơ đăng ký không chỉ rõ chương trình nào', status:'Đang học',
+      ax:[['warn','Cần bổ sung'],['mute','Chưa tính được'],['mute','Chưa có']],
+      problem:{ type:'warn', title:'Chưa xác định được chương trình tính phí',
+        body:'Sinh viên đang theo học đồng thời <b>Ngôn ngữ Anh</b> và <b>Ngôn ngữ Trung Quốc</b>. Hai chương trình có mức thu khác nhau nên hệ thống không tự chọn thay cán bộ.',
+        todo:'Bấm <b>Bổ sung thông tin</b> ở dưới, chọn chương trình áp dụng kèm căn cứ. Hệ thống sẽ tính lại ngay sau khi lưu.' },
+      basis:null,
+      hint:'Chưa tính được học phí vì chưa biết áp mức thu của chương trình nào.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['warn','Dừng lại vì chưa xác định được chương trình','25/09/2026 08:16 · Hệ thống']],
+      ft:'fix' },
 
-  c: { name:'Phạm Thu Hà', sub:'23040912 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2023',
-       prog:'Ngôn ngữ Hàn Quốc — chương trình chuẩn', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Đang học', period:'Học lại và học cải thiện — HK1 2026-2027',
-       ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['ok','Đã áp dụng']],
-       basis:[
-         ['KOR2012 — Ngữ pháp tiếng Hàn 2 · Học lại','2 tín × 920.000 đ × hệ số 1','1.840.000 đ'],
-         ['KOR2033 — Nghe hiểu 3 · Học lại','3 tín × 920.000 đ × hệ số 1','2.760.000 đ'],
-         ['PHI1004 — Triết học Mác – Lênin · Học cải thiện','2 tín × 920.000 đ × hệ số 1','1.840.000 đ']],
-       total:'6.440.000 đ',
-       hint:'Học lại và học cải thiện tính theo tín chỉ, tách riêng khỏi học phí chính quy và có hạn nộp riêng.', ft:'normal' },
+  c:{ name:'Lê Hoàng Nam', code:'22041877', cohort:'QH.2022', fac:'Khoa Ngôn ngữ và Văn hóa Nhật Bản',
+      prog:'Ngôn ngữ Nhật, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['ok','Đã áp dụng']],
+      basis:[['Học phí chính quy','3.500.000 đ mỗi tháng, thu 5 tháng','17.500.000 đ']], total:'17.500.000 đ',
+      hint:'Mức thu áp cho khóa QH.2022 và QH.2023, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['done','Tính học phí theo khung 2026-2027','25/09/2026 08:16 · Hệ thống'],
+          ['done','Ghi vào khoản phải thu','25/09/2026 08:16 · Hệ thống']],
+      ft:'normal' },
 
-  d: { name:'Đỗ Quang Huy', sub:'26041044 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2026',
-       prog:'Ngôn ngữ Ả Rập — chương trình chuẩn', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Đang học', period:'Học phí chính quy — HK1 2026-2027 (5 tháng)',
-       ax:[['ok','Đủ căn cứ tính'],['err','Thiếu cấu hình học phí'],['mute','Chưa có']],
-       problem:{ type:'err', title:'Khung học phí chưa có mức thu cho nhóm này',
-         body:'Chưa khai mức thu cho <b>khóa QH.2026 · nhóm ngành Ả Rập</b> trong khung học phí năm 2026 – 2027. Dữ liệu sinh viên đã đầy đủ, vấn đề nằm ở cấu hình.',
-         todo:'Mở <b>Cấu hình học phí</b> để thêm quy tắc cho nhóm này, sau đó tính lại. Có 18 sinh viên đang gặp đúng tình trạng này.' },
-       basis:null,
-       hint:'Hệ thống không tự tính 0 đồng khi thiếu mức thu, để tránh phát sinh khoản thu sai.', ft:'config' },
+  d:{ name:'Đinh Thùy Dương', code:'23041766', cohort:'QH.2023', fac:'Khoa Ngôn ngữ và Văn hóa Nga',
+      prog:'Ngôn ngữ Nga, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['ok','Đã áp dụng']],
+      basis:[['Học phí chính quy','2.310.000 đ mỗi tháng, thu 5 tháng','11.550.000 đ']], total:'11.550.000 đ',
+      hint:'Nhóm ngành Nga, Ả Rập và Văn hóa truyền thông xuyên quốc gia có mức thu riêng, thấp hơn nhóm ngành còn lại.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['done','Tính học phí theo khung 2026-2027','25/09/2026 08:16 · Hệ thống'],
+          ['done','Ghi vào khoản phải thu','25/09/2026 08:16 · Hệ thống']],
+      ft:'normal' },
 
-  e: { name:'Vũ Khánh Linh', sub:'24041530 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2024',
-       prog:'Ngôn ngữ Trung Quốc — chương trình chuẩn', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Đang học', period:'Học phí chính quy — HK1 2026-2027 (5 tháng)',
-       ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['info','Chờ áp dụng']],
-       problem:{ type:'info', title:'Kết quả mới đang chờ áp dụng',
-         body:'Sinh viên đang có mã thanh toán còn hiệu lực nên hệ thống tạm giữ số dư cũ, chưa ghi đè khoản phải thu.',
-         todo:'Không cần làm gì. Khi sinh viên thanh toán xong hoặc mã hết hiệu lực, hệ thống sẽ tự áp kết quả mới.' },
-       basis:[['Học phí chính quy','3.800.000 đ/tháng × 5 tháng','19.000.000 đ']], total:'19.000.000 đ',
-       hint:'Mức thu áp cho khóa QH.2024 và QH.2025 nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.', ft:'none' },
+  e:{ name:'Đỗ Quang Huy', code:'26041044', cohort:'QH.2026', fac:'Khoa Ngôn ngữ và Văn hóa Ả Rập',
+      prog:'Ngôn ngữ Ả Rập, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['err','Thiếu mức thu trong khung học phí'],['mute','Chưa có']],
+      problem:{ type:'err', title:'Khung học phí chưa khai mức thu cho nhóm này',
+        body:'Chưa có quy tắc nào khai mức thu cho <b>khóa QH.2026, nhóm ngành Ả Rập</b>. Dữ liệu sinh viên đã đầy đủ, vấn đề nằm ở phần cấu hình.',
+        todo:'Mở <b>Cấu hình học phí</b> để thêm quy tắc cho nhóm này rồi tính lại. Có 18 sinh viên đang gặp đúng tình trạng này.' },
+      basis:null,
+      hint:'Khi thiếu mức thu, hệ thống dừng lại chứ không tính 0 đồng, để tránh phát sinh khoản thu sai.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['warn','Không tìm thấy mức thu phù hợp trong khung học phí','25/09/2026 08:16 · Hệ thống']],
+      ft:'config' },
 
-  f: { name:'Hoàng Đức Trung', sub:'25040677 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2025',
-       prog:'Ngôn ngữ Pháp — chương trình chuẩn', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Chưa rõ', period:'Học phí chính quy — HK1 2026-2027 (5 tháng)',
-       ax:[['warn','Cần bổ sung'],['mute','Chưa kiểm tra được'],['mute','Chưa có']],
-       problem:{ type:'warn', title:'Chưa biết sinh viên có học trong kỳ này không',
-         body:'Học phí theo tháng thu theo việc sinh viên còn học trong kỳ, không phụ thuộc số học phần đã đăng ký. Dữ liệu nguồn chưa cho biết sinh viên <b>đang học</b>, <b>bảo lưu</b> hay <b>đã thôi học</b>.',
-         todo:'Xác nhận tình trạng học tập bằng nút <b>Bổ sung thông tin</b>. Nếu sinh viên bảo lưu thì không phát sinh học phí kỳ này.' },
-       basis:null,
-       hint:'Sinh viên bảo lưu không bị tính học phí, nên hệ thống dừng lại chờ xác nhận thay vì tính tạm.', ft:'fix' },
+  f:{ name:'Vũ Khánh Linh', code:'24041530', cohort:'QH.2024', fac:'Khoa Ngôn ngữ và Văn hóa Trung Quốc',
+      prog:'Ngôn ngữ Trung Quốc, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['info','Chờ áp dụng']],
+      problem:{ type:'info', title:'Kết quả mới đang chờ áp dụng',
+        body:'Sinh viên đang có mã thanh toán còn hiệu lực. Hệ thống giữ nguyên số tiền sinh viên đang nhìn thấy để tránh sinh viên trả sai số.',
+        todo:'Không cần làm gì. Khi sinh viên nộp xong hoặc mã hết hiệu lực, hệ thống tự áp kết quả mới.' },
+      basis:[['Học phí chính quy','3.800.000 đ mỗi tháng, thu 5 tháng','19.000.000 đ']], total:'19.000.000 đ',
+      hint:'Mức thu áp cho khóa QH.2024 và QH.2025, nhóm ngành Anh, Pháp, Đức, Trung, Nhật, Hàn.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['done','Tính học phí theo khung 2026-2027','25/09/2026 08:16 · Hệ thống'],
+          ['now','Chờ sinh viên nộp xong mới ghi số mới','Mã thanh toán hết hiệu lực lúc 09:53']],
+      ft:'none' },
 
-  g: { name:'Nguyễn Hải Yến', sub:'22041002 · Học kỳ 1, năm học 2026 – 2027', cohort:'QH.2022',
-       prog:'Ngôn ngữ Anh — bằng kép', progsrc:'Lấy theo hồ sơ đăng ký của sinh viên',
-       status:'Đang học', period:'Học phí chính quy — HK1 2026-2027',
-       ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['warn','Cần điều chỉnh']],
-       problem:{ type:'warn', title:'Số tiền tính lại khác với khoản đã thu tiền',
-         body:'Sinh viên đã nộp <b>18.700.000 đ</b> theo số cũ. Sau khi dữ liệu đăng ký thay đổi, số tính lại là <b>18.020.000 đ</b>, chênh <b>680.000 đ</b>.',
-         todo:'Hệ thống không tự sửa khoản đã thu tiền. Cán bộ xem xét và lập <b>điều chỉnh giảm</b> tại màn Khoản phải thu, phần chênh sẽ thành tiền nộp thừa.' },
-       basis:[
-         ['6 học phần bằng kép','17 tín × 1.100.000 đ × hệ số 1','18.700.000 đ'],
-         ['Điều chỉnh do bỏ 1 học phần','− 1 học phần · 2 tín','− 680.000 đ']],
-       total:'18.020.000 đ',
-       hint:'Bằng kép tính theo tín chỉ, không áp mức theo tháng.', ft:'rcv' }
+  g:{ name:'Hoàng Đức Trung', code:'25040677', cohort:'QH.2025', fac:'Khoa Ngôn ngữ và Văn hóa Pháp',
+      prog:'Ngôn ngữ Pháp, chương trình chuẩn', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Chưa rõ',
+      ax:[['warn','Cần bổ sung'],['mute','Chưa tính được'],['mute','Chưa có']],
+      problem:{ type:'warn', title:'Chưa biết sinh viên có học kỳ này không',
+        body:'Học phí theo tháng thu theo việc sinh viên còn học trong kỳ, không phụ thuộc số học phần đã đăng ký. Dữ liệu nguồn chưa cho biết sinh viên <b>đang học</b>, <b>bảo lưu</b> hay <b>đã thôi học</b>.',
+        todo:'Bấm <b>Bổ sung thông tin</b> để xác nhận tình trạng học tập. Nếu sinh viên bảo lưu thì không phát sinh học phí kỳ này.' },
+      basis:null,
+      hint:'Sinh viên bảo lưu không bị tính học phí, nên hệ thống dừng lại chờ xác nhận thay vì tính tạm rồi phải sửa.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['warn','Dừng lại vì chưa rõ tình trạng học tập','25/09/2026 08:16 · Hệ thống']],
+      ft:'fix' },
+
+  h:{ name:'Nguyễn Hải Yến', code:'22041002', cohort:'QH.2022', fac:'Khoa Sư phạm tiếng Anh',
+      prog:'Sư phạm tiếng Anh, chương trình sư phạm', progsrc:'Theo hồ sơ đăng ký của sinh viên', status:'Đang học',
+      ax:[['ok','Đủ căn cứ tính'],['ok','Đã tính'],['warn','Cần điều chỉnh']],
+      problem:{ type:'warn', title:'Số tính lại khác với số sinh viên đã nộp',
+        body:'Sinh viên đã nộp <b>11.550.000 đ</b> theo số cũ. Sau khi Nhà trường duyệt miễn giảm, số phải thu còn <b>5.775.000 đ</b>, chênh <b>5.775.000 đ</b>.',
+        todo:'Hệ thống không tự sửa khoản đã thu tiền. Mở <b>Khoản phải thu</b> để lập điều chỉnh giảm, phần chênh sẽ thành tiền nộp thừa và xử lý tiếp ở đó.' },
+      basis:[['Học phí chính quy','2.310.000 đ mỗi tháng, thu 5 tháng','11.550.000 đ'],
+             ['Miễn giảm 50% theo diện chính sách','Quyết định miễn giảm ngày 22/09/2026','trừ 5.775.000 đ']],
+      total:'5.775.000 đ',
+      hint:'Miễn giảm được duyệt sau khi sinh viên đã nộp, nên phần chênh thành tiền nộp thừa chứ không phải nộp sai.',
+      tl:[['done','Lấy dữ liệu từ hệ đào tạo','25/09/2026 08:15 · Nguyễn Thị Hương'],
+          ['done','Tính học phí theo khung 2026-2027','25/09/2026 08:16 · Hệ thống'],
+          ['warn','Số mới khác số đã thu, chờ cán bộ xử lý','25/09/2026 08:16 · Hệ thống']],
+      ft:'rcv' }
 };
 
 function openStudent(key) {
   var s = STUDENTS[key] || STUDENTS.a;
+  var isRetake = document.getElementById('sel-period').value === 'retake';
+
   document.getElementById('ds-name').textContent = s.name;
-  document.getElementById('ds-sub').textContent = s.sub;
+  document.getElementById('ds-sub').textContent = s.code + ' · ' + P_MAIN;
+  document.getElementById('ds-code').textContent = s.code;
   document.getElementById('ds-cohort').textContent = s.cohort;
+  document.getElementById('ds-fac').textContent = s.fac;
   document.getElementById('ds-prog').textContent = s.prog;
   document.getElementById('ds-progsrc').textContent = s.progsrc;
   document.getElementById('ds-status').textContent = s.status;
-  document.getElementById('ds-period').textContent = s.period;
+  document.getElementById('ds-period').textContent = P_MAIN;
 
   for (var i = 0; i < 3; i++) {
     var el = document.getElementById('ds-ax' + (i + 1));
@@ -650,19 +648,22 @@ function openStudent(key) {
 
   var basis = document.getElementById('ds-basis');
   if (s.basis) {
-    basis.style.display = '';
     basis.innerHTML =
       '<table class="mini"><thead><tr><th>Nội dung</th><th>Cách tính</th><th class="r">Thành tiền</th></tr></thead><tbody>' +
       s.basis.map(function (r) {
         return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td class="r">' + r[2] + '</td></tr>';
       }).join('') +
-      '</tbody></table><div class="mini-sum"><span>Tổng học phí phải thu</span><span>' + s.total + '</span></div>';
+      '</tbody></table><div class="mini-sum"><span>Học phí phải thu</span><span>' + s.total + '</span></div>';
   } else {
-    basis.style.display = '';
     basis.innerHTML = '<div style="padding:16px;text-align:center;color:#67748A;font-size:12.5px">Chưa tính được học phí. Xem phần <b>Việc cần làm</b> ở trên.</div>';
   }
-
   document.getElementById('ds-hint').innerHTML = s.hint;
+
+  document.getElementById('ds-tl').innerHTML = s.tl.map(function (x) {
+    return '<div class="tl-i ' + x[0] + '"><div class="tl-t">' + x[1] + '</div><div class="tl-m">' + x[2] + '</div></div>';
+  }).join('');
+
+  document.getElementById('fx-who').textContent = s.name + ' · ' + s.code;
 
   var ft = document.getElementById('ds-ft');
   if (s.ft === 'fix') {
@@ -670,7 +671,7 @@ function openStudent(key) {
   } else if (s.ft === 'config') {
     ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'tuition-config.html\'">Mở cấu hình học phí</button>';
   } else if (s.ft === 'rcv') {
-    ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'receivables.html\'">Xem khoản phải thu để điều chỉnh</button>';
+    ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'receivables.html\'">Mở khoản phải thu để điều chỉnh</button>';
   } else if (s.ft === 'none') {
     ft.innerHTML = '<span style="font-size:12px;color:#67748A;align-self:center">Không có thao tác nào cần làm lúc này</span>';
   } else {
@@ -682,11 +683,18 @@ function openStudent(key) {
   openDrawer('d-st');
 }
 
+/* Đổi kỳ thu thì đổi câu mô tả phạm vi */
+function switchPeriod() {
+  var v = document.getElementById('sel-period').value;
+  document.getElementById('scope-note').innerHTML = (v === 'retake')
+    ? 'Kỳ thu này tính <b>theo tín chỉ</b> của từng học phần đăng ký lại, hạn nộp <b>22/09/2026</b>. Chỉ áp cho sinh viên có đăng ký học lại hoặc học cải thiện.'
+    : 'Kỳ thu này thu <b>5 tháng</b>, hạn nộp <b>31/10/2026</b>. Áp cho sinh viên đại học chính quy còn học trong kỳ.';
+}
+
 function switchFix() {
   var k = document.getElementById('fx-kind').value;
   document.getElementById('fx-prog').style.display   = (k === 'prog')   ? '' : 'none';
   document.getElementById('fx-status').style.display = (k === 'status') ? '' : 'none';
-  document.getElementById('fx-credit').style.display = (k === 'credit') ? '' : 'none';
 }
 
 function showImportResult() {

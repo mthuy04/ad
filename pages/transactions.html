@@ -28,32 +28,16 @@
 
         <div class="srcbar">
           <span class="dot"></span>
-          <span>Nguồn tiền: <b>BIDV</b> — nộp qua mã thanh toán và chuyển khoản trực tiếp</span>
+          <span>Nguồn tiền: <b>BIDV</b></span>
+          <span class="sep"></span>
+          <span>Hôm nay nhận <b>316 giao dịch</b>, tổng <b>5,6 tỷ đ</b></span>
           <span class="sep"></span>
           <span>Cập nhật <b>25/09/2026 09:45</b></span>
         </div>
 
-        <div class="kpis">
-          <div class="kpi">
-            <div class="kpi-l">Tiền về hôm nay</div>
-            <div class="kpi-v ok">5,6 tỷ đ</div>
-            <div class="kpi-s">316 giao dịch</div>
-          </div>
-          <div class="kpi clickable" onclick="pickChip(document.querySelector('[data-filter=unapplied]'))">
-            <div class="kpi-l">Chưa gắn được vào khoản nào</div>
-            <div class="kpi-v warn">7 giao dịch</div>
-            <div class="kpi-s">Tương ứng 96,4 triệu đ · cần xử lý</div>
-          </div>
-          <div class="kpi clickable" onclick="pickChip(document.querySelector('[data-filter=review]'))">
-            <div class="kpi-l">Cần kiểm tra</div>
-            <div class="kpi-v err">2 giao dịch</div>
-            <div class="kpi-s">Số tiền hoặc thông tin bất thường</div>
-          </div>
-        </div>
-
         <div class="chips" data-target="tbl-tx">
           <button class="chip on" data-filter="all"       onclick="pickChip(this)">Tất cả <span class="n">316</span></button>
-          <button class="chip"    data-filter="done"      onclick="pickChip(this)">Đã ghi nhận <span class="n">305</span></button>
+          <button class="chip"    data-filter="done"      onclick="pickChip(this)">Đã ghi nhận xong <span class="n">305</span></button>
           <button class="chip"    data-filter="running"   onclick="pickChip(this)">Đang xử lý <span class="n">2</span></button>
           <button class="chip"    data-filter="unapplied" onclick="pickChip(this)">Chưa gắn khoản <span class="n">7</span></button>
           <button class="chip"    data-filter="review"    onclick="pickChip(this)">Cần kiểm tra <span class="n">2</span></button>
@@ -67,7 +51,7 @@
           </div>
           <div class="field">
             <label>Cách nộp</label>
-            <select class="sel"><option>Tất cả</option><option>Qua mã thanh toán</option><option>Chuyển khoản trực tiếp</option></select>
+            <select class="sel"><option>Tất cả</option><option>Nộp bằng mã thanh toán</option><option>Chuyển khoản trực tiếp</option></select>
           </div>
           <div class="field">
             <label>Từ ngày</label><input class="inp" value="18/09/2026">
@@ -80,16 +64,17 @@
         <div class="card">
           <div class="card-hd">
             <div><h2>Danh sách giao dịch</h2>
-            <div class="sub">Đang hiển thị <b data-count-for="tbl-tx">8</b> trên 316 giao dịch</div></div>
+            <div class="sub">Đang hiển thị <b data-count-for="tbl-tx">8</b> trên 316 giao dịch.
+              Cột <b>Ghi nhận</b> cho biết hệ thống đã xử lý xong tiền chưa, cột <b>Gắn vào khoản</b> cho biết tiền đã trừ vào công nợ của sinh viên nào chưa.</div></div>
           </div>
           <div class="card-bd flush">
             <div class="tbl-wrap">
               <table class="tbl" id="tbl-tx" style="min-width:1020px">
                 <thead><tr>
-                  <th style="min-width:130px">Thời gian</th>
-                  <th style="min-width:210px">Sinh viên / Nội dung chuyển khoản</th>
-                  <th class="r" style="min-width:125px">Số tiền</th>
-                  <th style="min-width:140px">Cách nộp</th>
+                  <th style="min-width:125px">Thời gian</th>
+                  <th style="min-width:210px">Sinh viên hoặc nội dung chuyển khoản</th>
+                  <th class="r" style="min-width:120px">Số tiền</th>
+                  <th style="min-width:150px">Cách nộp</th>
                   <th style="min-width:150px">Ghi nhận</th>
                   <th style="min-width:140px">Gắn vào khoản</th>
                   <th class="r" style="min-width:86px">Thao tác</th>
@@ -99,14 +84,14 @@
                     <td><div class="t-main">25/09 09:12</div></td>
                     <td><div class="t-main">Lê Hoàng Nam</div><div class="t-sub">22041877 · Ngôn ngữ Nhật</div></td>
                     <td class="money">17.500.000</td>
-                    <td>Qua mã thanh toán</td>
+                    <td>Nộp bằng mã thanh toán</td>
                     <td><span class="bg ok">Đã ghi nhận</span></td>
                     <td><span class="bg ok">Đã gắn khoản</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openTx('t1')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="done">
                     <td><div class="t-main">25/09 08:47</div></td>
-                    <td><div class="t-main">Phạm Thu Hà</div><div class="t-sub">23040912 · chuyển khoản trực tiếp</div></td>
+                    <td><div class="t-main">Phạm Thu Hà</div><div class="t-sub">23040912 · Ngôn ngữ Hàn Quốc</div></td>
                     <td class="money">10.000.000</td>
                     <td>Chuyển khoản trực tiếp</td>
                     <td><span class="bg ok">Đã ghi nhận</span></td>
@@ -118,7 +103,7 @@
                     <td><div class="t-main">Chưa xác định sinh viên</div><div class="t-sub">NGUYEN VAN A CK HOC PHI</div></td>
                     <td class="money">17.500.000</td>
                     <td>Chuyển khoản trực tiếp</td>
-                    <td><span class="bg info">Đã tiếp nhận</span></td>
+                    <td><span class="bg info">Đã nhận tiền</span></td>
                     <td><span class="bg warn">Chưa gắn khoản</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openTx('t3')">Chi tiết</button></td>
                   </tr>
@@ -126,14 +111,14 @@
                     <td><div class="t-main">25/09 09:36</div></td>
                     <td><div class="t-main">Trần Quốc Việt</div><div class="t-sub">25040211 · Ngôn ngữ Đức</div></td>
                     <td class="money">19.000.000</td>
-                    <td>Qua mã thanh toán</td>
+                    <td>Nộp bằng mã thanh toán</td>
                     <td><span class="bg warn">Đang xử lý</span></td>
                     <td><span class="bg mute">Chưa gắn khoản</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openTx('t4')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="review">
                     <td><div class="t-main">24/09 15:20</div></td>
-                    <td><div class="t-main">Đỗ Quang Huy</div><div class="t-sub">26041044 · chuyển khoản trực tiếp</div></td>
+                    <td><div class="t-main">Đỗ Quang Huy</div><div class="t-sub">26041044 · Ngôn ngữ Ả Rập</div></td>
                     <td class="money">500</td>
                     <td>Chuyển khoản trực tiếp</td>
                     <td><span class="bg err">Cần kiểm tra</span></td>
@@ -142,10 +127,10 @@
                   </tr>
                   <tr data-tags="unapplied">
                     <td><div class="t-main">24/09 11:05</div></td>
-                    <td><div class="t-main">Nguyễn Thị Mai</div><div class="t-sub">Xác định được sinh viên, có 2 khoản đang nợ</div></td>
+                    <td><div class="t-main">Nguyễn Thị Mai</div><div class="t-sub">24041902 · đang nợ 2 khoản</div></td>
                     <td class="money">6.440.000</td>
                     <td>Chuyển khoản trực tiếp</td>
-                    <td><span class="bg info">Đã xác định người nộp</span></td>
+                    <td><span class="bg info">Đã nhận tiền</span></td>
                     <td><span class="bg warn">Chưa gắn khoản</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openTx('t6')">Chi tiết</button></td>
                   </tr>
@@ -153,25 +138,25 @@
                     <td><div class="t-main">22/09 08:13</div></td>
                     <td><div class="t-main">Đinh Thùy Dương</div><div class="t-sub">23041766 · Ngôn ngữ Nga</div></td>
                     <td class="money">11.550.000</td>
-                    <td>Qua mã thanh toán</td>
+                    <td>Nộp bằng mã thanh toán</td>
                     <td><span class="bg ok">Đã ghi nhận</span></td>
                     <td><span class="bg ok">Đã gắn khoản</span></td>
-                    <td class="t-act"><button class="btn btn-sm" onclick="openTx('t1')">Chi tiết</button></td>
+                    <td class="t-act"><button class="btn btn-sm" onclick="openTx('t7')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="review">
                     <td><div class="t-main">21/09 16:58</div></td>
-                    <td><div class="t-main">Hoàng Anh Tuấn</div><div class="t-sub">Ngân hàng báo đảo giao dịch</div></td>
-                    <td class="money" style="color:var(--err)">− 17.500.000</td>
+                    <td><div class="t-main">Hoàng Anh Tuấn</div><div class="t-sub">23040544 · ngân hàng báo thu hồi</div></td>
+                    <td class="money" style="color:var(--err)">trừ 17.500.000</td>
                     <td>Chuyển khoản trực tiếp</td>
                     <td><span class="bg err">Cần kiểm tra</span></td>
                     <td><span class="bg mute">Chưa xử lý</span></td>
-                    <td class="t-act"><button class="btn btn-sm" onclick="openTx('t7')">Chi tiết</button></td>
+                    <td class="t-act"><button class="btn btn-sm" onclick="openTx('t8')">Chi tiết</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="tfoot">
-              <div>Hiển thị 1–8 trong 316 giao dịch</div>
+              <div>Hiển thị 1 đến 8 trong 316 giao dịch</div>
               <div class="pager">
                 <button class="pg" disabled>‹</button>
                 <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
@@ -180,6 +165,14 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="note info">
+          <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+          <div><span class="nt">Vì sao có giao dịch chưa gắn được vào khoản</span>
+          Tiền nộp bằng mã thanh toán luôn tự gắn đúng khoản vì mã đã gắn sẵn với một khoản phải thu.
+          Chỉ tiền <b>chuyển khoản trực tiếp</b> mới cần cán bộ xác định, khi nội dung chuyển khoản không có mã sinh viên
+          hoặc khi sinh viên đang nợ nhiều khoản.</div>
         </div>
 
       </div>
@@ -193,11 +186,16 @@
   <div class="drw-hd">
     <div>
       <h2 id="tx-title">Giao dịch ngày 25/09/2026</h2>
-      <div class="sub" id="tx-sub">Nộp qua mã thanh toán</div>
+      <div class="sub" id="tx-sub">Nộp bằng mã thanh toán</div>
     </div>
     <button class="x" onclick="closeDrawer('d-tx')">✕</button>
   </div>
   <div class="drw-bd">
+
+    <div class="sec" id="tx-problem" style="display:none">
+      <div class="sec-t">Việc cần làm</div>
+      <div id="tx-problem-body"></div>
+    </div>
 
     <div class="sec">
       <div class="sec-t">Khoản tiền</div>
@@ -209,14 +207,10 @@
       </div>
       <div class="axes" style="margin-top:12px">
         <div class="axis-row"><span class="axis-k">Thời gian</span><span id="tx-time" style="font-size:12.5px;font-weight:600">25/09/2026 09:12</span></div>
+        <div class="axis-row"><span class="axis-k">Cách nộp</span><span id="tx-way" style="font-size:12.5px;font-weight:600">Nộp bằng mã thanh toán</span></div>
         <div class="axis-row"><span class="axis-k">Ghi nhận</span><span id="tx-ax1" class="bg ok">Đã ghi nhận</span></div>
         <div class="axis-row"><span class="axis-k">Gắn vào khoản</span><span id="tx-ax2" class="bg ok">Đã gắn khoản</span></div>
       </div>
-    </div>
-
-    <div class="sec" id="tx-problem" style="display:none">
-      <div class="sec-t">Cần lưu ý</div>
-      <div id="tx-problem-body"></div>
     </div>
 
     <div class="sec">
@@ -225,7 +219,7 @@
     </div>
 
     <div class="sec" id="tx-after-sec">
-      <div class="sec-t">Công nợ sau khi trừ</div>
+      <div class="sec-t">Công nợ của sinh viên sau giao dịch này</div>
       <div class="mini-wrap" id="tx-after"></div>
     </div>
 
@@ -243,7 +237,7 @@
   <div class="mdl wide">
     <div class="mdl-hd">
       <div><h2>Gắn giao dịch vào khoản phải thu</h2>
-      <div class="sub">Chọn đúng sinh viên và khoản thu để trừ số tiền 17.500.000 đ</div></div>
+      <div class="sub" id="lk-sub">Chọn đúng sinh viên và khoản thu để trừ số tiền 17.500.000 đ</div></div>
       <button class="x" onclick="closeModal('m-link')">✕</button>
     </div>
     <div class="mdl-bd">
@@ -255,11 +249,11 @@
       </div>
       <div class="mini-wrap">
         <table class="mini" id="tbl-link">
-          <thead><tr><th style="width:40px"></th><th>Sinh viên</th><th>Khoản thu</th><th class="r">Còn phải thu</th></tr></thead>
+          <thead><tr><th style="width:40px"></th><th>Sinh viên</th><th>Khoản thu</th><th class="r">Còn phải nộp</th></tr></thead>
           <tbody>
-            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Văn An</div><div class="t-sub">23041188 · Ngôn ngữ Anh</div></td><td>Học phí chính quy · HK1 2026-2027</td><td class="r">17.500.000 đ</td></tr>
-            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Vân Anh</div><div class="t-sub">24040755 · Ngôn ngữ Pháp</div></td><td>Học phí chính quy · HK1 2026-2027</td><td class="r">19.000.000 đ</td></tr>
-            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Văn Ấn</div><div class="t-sub">22041399 · Ngôn ngữ Trung Quốc</div></td><td>Học phí chính quy · HK1 2026-2027</td><td class="r">17.500.000 đ</td></tr>
+            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Văn An</div><div class="t-sub">23041188 · Ngôn ngữ Anh</div></td><td>Học phí chính quy học kỳ 1</td><td class="r">17.500.000 đ</td></tr>
+            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Vân Anh</div><div class="t-sub">24040755 · Ngôn ngữ Pháp</div></td><td>Học phí chính quy học kỳ 1</td><td class="r">19.000.000 đ</td></tr>
+            <tr><td><input type="radio" name="lk"></td><td><div class="t-main">Nguyễn Văn Ấn</div><div class="t-sub">22041399 · Ngôn ngữ Trung Quốc</div></td><td>Học phí chính quy học kỳ 1</td><td class="r">17.500.000 đ</td></tr>
           </tbody>
         </table>
       </div>
@@ -270,7 +264,7 @@
       <div class="note warn" style="margin-top:13px">
         <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
         <div><span class="nt">Gắn xong là tiền được trừ vào công nợ ngay</span>
-        Việc này được ghi lại kèm tên người thực hiện và căn cứ. Nếu gắn nhầm, phải làm thao tác đảo, không xóa được.</div>
+        Việc này được ghi lại kèm tên người thực hiện và căn cứ. Nếu gắn nhầm thì phải làm thao tác đảo, không xóa được.</div>
       </div>
     </div>
     <div class="mdl-ft">
@@ -283,77 +277,87 @@
 <script src="../js/ulis.js"></script>
 <script>
 var TX = {
-  t1:{ title:'Giao dịch ngày 25/09/2026', sub:'Nộp qua mã thanh toán', amt:'17.500.000 đ', time:'25/09/2026 09:12',
+  t1:{ title:'Giao dịch ngày 25/09/2026', way:'Nộp bằng mã thanh toán', amt:'17.500.000 đ', time:'25/09/2026 09:12',
        ax:[['ok','Đã ghi nhận'],['ok','Đã gắn khoản']],
-       who:{ name:'Lê Hoàng Nam', code:'22041877 · Ngôn ngữ Nhật', rcv:'Học phí chính quy — HK1 2026-2027' },
-       after:[['Phải thu','17.500.000 đ'],['Đã thu sau giao dịch này','17.500.000 đ'],['Còn phải thu','0 đ']],
+       who:{ name:'Lê Hoàng Nam', code:'22041877 · Ngôn ngữ Nhật', rcv:'Học phí chính quy học kỳ 1, năm học 2026-2027' },
+       after:[['Phải nộp','17.500.000 đ'],['Đã nộp','17.500.000 đ'],['Còn phải nộp','0 đ']],
        tl:[['done','Ngân hàng báo có tiền về','25/09/2026 09:12'],
-           ['done','Xác định đúng mã thanh toán của sinh viên','25/09/2026 09:12'],
+           ['done','Khớp đúng mã thanh toán của sinh viên','25/09/2026 09:12'],
            ['done','Trừ vào khoản phải thu','25/09/2026 09:12'],
            ['done','Hoàn tất','25/09/2026 09:12']],
        ft:'view' },
 
-  t2:{ title:'Giao dịch ngày 25/09/2026', sub:'Chuyển khoản trực tiếp', amt:'10.000.000 đ', time:'25/09/2026 08:47',
+  t2:{ title:'Giao dịch ngày 25/09/2026', way:'Chuyển khoản trực tiếp', amt:'10.000.000 đ', time:'25/09/2026 08:47',
        ax:[['ok','Đã ghi nhận'],['ok','Đã gắn khoản']],
-       who:{ name:'Phạm Thu Hà', code:'23040912 · Ngôn ngữ Hàn Quốc', rcv:'Học phí chính quy — HK1 2026-2027' },
-       after:[['Phải thu','17.500.000 đ'],['Đã thu sau giao dịch này','10.000.000 đ'],['Còn phải thu','7.500.000 đ']],
-       problem:{ type:'info', title:'Sinh viên nộp thiếu so với số phải thu',
-         body:'Chuyển khoản trực tiếp thì hệ thống ghi đúng số ngân hàng báo, còn thiếu 7.500.000 đ.',
-         todo:'Không cần xử lý. Khoản thu chuyển sang <b>Thu một phần</b>, sinh viên nộp tiếp phần còn lại.' },
+       who:{ name:'Phạm Thu Hà', code:'23040912 · Ngôn ngữ Hàn Quốc', rcv:'Học phí chính quy học kỳ 1, năm học 2026-2027' },
+       after:[['Phải nộp','17.500.000 đ'],['Đã nộp','10.000.000 đ'],['Còn phải nộp','7.500.000 đ']],
+       problem:{ type:'info', title:'Sinh viên nộp thiếu so với số phải nộp',
+         body:'Sinh viên tự chuyển khoản 10.000.000 đ thay vì nộp bằng mã thanh toán. Hệ thống ghi đúng số ngân hàng báo nên còn thiếu 7.500.000 đ.',
+         todo:'Không cần xử lý. Khoản thu chuyển sang <b>Nộp thiếu</b>. Nhắc sinh viên nộp nốt phần còn lại bằng mã thanh toán trên cổng.' },
        tl:[['done','Ngân hàng báo có tiền về','25/09/2026 08:47'],
            ['done','Xác định được đúng một khoản đang nợ của sinh viên','25/09/2026 08:47'],
            ['done','Trừ vào khoản phải thu','25/09/2026 08:47'],
            ['done','Hoàn tất','25/09/2026 08:47']],
        ft:'view' },
 
-  t3:{ title:'Giao dịch ngày 25/09/2026', sub:'Chuyển khoản trực tiếp', amt:'17.500.000 đ', time:'25/09/2026 08:30',
-       ax:[['info','Đã tiếp nhận'],['warn','Chưa gắn khoản']],
+  t3:{ title:'Giao dịch ngày 25/09/2026', way:'Chuyển khoản trực tiếp', amt:'17.500.000 đ', time:'25/09/2026 08:30',
+       ax:[['info','Đã nhận tiền'],['warn','Chưa gắn khoản']],
        who:{ raw:'NGUYEN VAN A CK HOC PHI' },
        problem:{ type:'warn', title:'Không xác định được sinh viên nào nộp',
          body:'Nội dung chuyển khoản chỉ có họ tên, không có mã sinh viên. Hệ thống không đoán theo họ tên vì dễ nhầm giữa các sinh viên trùng tên.',
-         todo:'Liên hệ sinh viên để xin mã sinh viên hoặc ảnh ủy nhiệm chi, rồi bấm <b>Gắn vào khoản phải thu</b>.' },
+         todo:'Liên hệ sinh viên xin mã sinh viên hoặc ảnh ủy nhiệm chi, rồi bấm <b>Gắn vào khoản phải thu</b>.' },
        tl:[['done','Ngân hàng báo có tiền về','25/09/2026 08:30'],
            ['warn','Không tìm được khoản phải thu tương ứng','Đang chờ cán bộ xử lý']],
        ft:'link' },
 
-  t4:{ title:'Giao dịch ngày 25/09/2026', sub:'Nộp qua mã thanh toán', amt:'19.000.000 đ', time:'25/09/2026 09:36',
+  t4:{ title:'Giao dịch ngày 25/09/2026', way:'Nộp bằng mã thanh toán', amt:'19.000.000 đ', time:'25/09/2026 09:36',
        ax:[['warn','Đang xử lý'],['mute','Chưa gắn khoản']],
-       who:{ name:'Trần Quốc Việt', code:'25040211 · Ngôn ngữ Đức', rcv:'Học phí chính quy — HK1 2026-2027' },
+       who:{ name:'Trần Quốc Việt', code:'25040211 · Ngôn ngữ Đức', rcv:'Học phí chính quy học kỳ 1, năm học 2026-2027' },
        problem:{ type:'warn', title:'Đang chờ ngân hàng xác nhận',
          body:'Ngân hàng đã báo có giao dịch nhưng chưa xác nhận xong, đã 7 phút.',
-         todo:'Không thao tác gì với giao dịch này. Hệ thống đang tự kiểm tra lại. Nếu quá 30 phút vẫn chưa xong, báo bộ phận kỹ thuật.' },
+         todo:'Không thao tác gì với giao dịch này. Hệ thống đang tự hỏi lại ngân hàng. Nếu quá 30 phút vẫn chưa xong thì báo bộ phận kỹ thuật.' },
        tl:[['done','Ngân hàng báo có tiền về','25/09/2026 09:36'],
-           ['now','Đang chờ ngân hàng xác nhận','Hệ thống tự kiểm tra lại']],
+           ['now','Đang chờ ngân hàng xác nhận','Hệ thống tự hỏi lại']],
        ft:'none' },
 
-  t5:{ title:'Giao dịch ngày 24/09/2026', sub:'Chuyển khoản trực tiếp', amt:'500 đ', time:'24/09/2026 15:20',
+  t5:{ title:'Giao dịch ngày 24/09/2026', way:'Chuyển khoản trực tiếp', amt:'500 đ', time:'24/09/2026 15:20',
        ax:[['err','Cần kiểm tra'],['mute','Chưa gắn khoản']],
-       who:{ name:'Đỗ Quang Huy', code:'26041044 · Ngôn ngữ Ả Rập', rcv:'Chưa có khoản phải thu' },
+       who:{ name:'Đỗ Quang Huy', code:'26041044 · Ngôn ngữ Ả Rập', rcv:'Sinh viên chưa có khoản phải thu nào' },
        problem:{ type:'err', title:'Số tiền quá nhỏ so với học phí',
          body:'Sinh viên chuyển 500 đ, nhiều khả năng là thao tác thử tài khoản. Sinh viên này cũng chưa có khoản phải thu vì khung học phí chưa khai mức thu cho nhóm ngành Ả Rập.',
-         todo:'Liên hệ sinh viên xác nhận. Nếu là nộp nhầm, ghi nhận <b>không phát sinh công nợ</b> và hướng dẫn sinh viên làm thủ tục nhận lại.' },
+         todo:'Liên hệ sinh viên xác nhận. Nếu là nộp thử thì ghi nhận <b>Không phát sinh công nợ</b> và hướng dẫn sinh viên làm thủ tục nhận lại tiền.' },
        tl:[['done','Ngân hàng báo có tiền về','24/09/2026 15:20'],
            ['warn','Số tiền bất thường, chuyển sang cần kiểm tra','24/09/2026 15:20']],
        ft:'review' },
 
-  t6:{ title:'Giao dịch ngày 24/09/2026', sub:'Chuyển khoản trực tiếp', amt:'6.440.000 đ', time:'24/09/2026 11:05',
-       ax:[['info','Đã xác định người nộp'],['warn','Chưa gắn khoản']],
-       who:{ name:'Nguyễn Thị Mai', code:'24041902 · Ngôn ngữ Hàn Quốc', rcv:'Đang nợ 2 khoản' },
-       problem:{ type:'warn', title:'Sinh viên đang nợ nhiều khoản, chưa rõ trừ vào khoản nào',
+  t6:{ title:'Giao dịch ngày 24/09/2026', way:'Chuyển khoản trực tiếp', amt:'6.440.000 đ', time:'24/09/2026 11:05',
+       ax:[['info','Đã nhận tiền'],['warn','Chưa gắn khoản']],
+       who:{ name:'Nguyễn Thị Mai', code:'24041902 · Ngôn ngữ Hàn Quốc', rcv:'Đang nợ 2 khoản, chưa rõ nộp cho khoản nào' },
+       problem:{ type:'warn', title:'Sinh viên đang nợ nhiều khoản',
          body:'Sinh viên còn nợ <b>Học phí chính quy 19.000.000 đ</b> và <b>Học lại 6.440.000 đ</b>. Số tiền chuyển khớp với khoản học lại nhưng hệ thống không tự chọn thay cán bộ.',
          todo:'Hỏi sinh viên muốn nộp cho khoản nào rồi bấm <b>Gắn vào khoản phải thu</b>.' },
        tl:[['done','Ngân hàng báo có tiền về','24/09/2026 11:05'],
            ['done','Xác định được sinh viên qua nội dung chuyển khoản','24/09/2026 11:05'],
-           ['warn','Sinh viên có nhiều khoản đang nợ, giữ lại chờ cán bộ chọn','24/09/2026 11:05']],
+           ['warn','Giữ lại chờ cán bộ chọn khoản','24/09/2026 11:05']],
        ft:'link' },
 
-  t7:{ title:'Giao dịch đảo ngày 21/09/2026', sub:'Ngân hàng báo đảo giao dịch', amt:'− 17.500.000 đ', amtl:'Số tiền ngân hàng thu hồi',
-       time:'21/09/2026 16:58',
+  t7:{ title:'Giao dịch ngày 22/09/2026', way:'Nộp bằng mã thanh toán', amt:'11.550.000 đ', time:'22/09/2026 08:13',
+       ax:[['ok','Đã ghi nhận'],['ok','Đã gắn khoản']],
+       who:{ name:'Đinh Thùy Dương', code:'23041766 · Ngôn ngữ Nga', rcv:'Học phí chính quy học kỳ 1, năm học 2026-2027' },
+       after:[['Phải nộp','11.550.000 đ'],['Đã nộp','11.550.000 đ'],['Còn phải nộp','0 đ']],
+       tl:[['done','Ngân hàng báo có tiền về','22/09/2026 08:13'],
+           ['done','Khớp đúng mã thanh toán của sinh viên','22/09/2026 08:13'],
+           ['done','Trừ vào khoản phải thu','22/09/2026 08:13'],
+           ['done','Hoàn tất','22/09/2026 08:13']],
+       ft:'view' },
+
+  t8:{ title:'Giao dịch đảo ngày 21/09/2026', way:'Ngân hàng báo thu hồi giao dịch',
+       amt:'trừ 17.500.000 đ', amtl:'Số tiền ngân hàng thu hồi', time:'21/09/2026 16:58',
        ax:[['err','Cần kiểm tra'],['mute','Chưa xử lý']],
-       who:{ name:'Hoàng Anh Tuấn', code:'23040544 · Ngôn ngữ Anh', rcv:'Học phí chính quy — HK1 2026-2027' },
+       who:{ name:'Hoàng Anh Tuấn', code:'23040544 · Ngôn ngữ Anh', rcv:'Học phí chính quy học kỳ 1, năm học 2026-2027' },
        problem:{ type:'err', title:'Không tự đảo được vì tiền đã dùng sang việc khác',
-         body:'Khoản tiền gốc 17.500.000 đ đã được trừ vào học phí, và phần nộp thừa 200.000 đ đã chuyển sang kỳ sau. Đảo tự động sẽ làm số dư bị âm.',
-         todo:'Kiểm tra với ngân hàng lý do thu hồi, sau đó xử lý thủ công theo hướng dẫn của Phòng KHTC. Không tự sửa số liệu.' },
+         body:'Khoản tiền gốc 17.500.000 đ đã trừ vào học phí, phần thừa 200.000 đ đã chuyển sang kỳ sau. Đảo tự động sẽ làm số dư bị âm.',
+         todo:'Hỏi ngân hàng lý do thu hồi, sau đó xử lý theo hướng dẫn của Phòng Kế hoạch Tài chính. Không tự sửa số liệu.' },
        tl:[['done','Ngân hàng báo thu hồi giao dịch','21/09/2026 16:58'],
            ['warn','Không đảo tự động được, chuyển sang cần kiểm tra','21/09/2026 16:58']],
        ft:'review' }
@@ -362,10 +366,11 @@ var TX = {
 function openTx(key) {
   var r = TX[key];
   document.getElementById('tx-title').textContent = r.title;
-  document.getElementById('tx-sub').textContent = r.sub;
+  document.getElementById('tx-sub').textContent = r.way;
   document.getElementById('tx-amt').textContent = r.amt;
   document.getElementById('tx-amtl').textContent = r.amtl || 'Số tiền ngân hàng báo về';
   document.getElementById('tx-time').textContent = r.time;
+  document.getElementById('tx-way').textContent = r.way;
 
   for (var i = 0; i < 2; i++) {
     var el = document.getElementById('tx-ax' + (i + 1));
@@ -408,6 +413,8 @@ function openTx(key) {
   document.getElementById('tx-tl').innerHTML = r.tl.map(function (x) {
     return '<div class="tl-i ' + x[0] + '"><div class="tl-t">' + x[1] + '</div><div class="tl-m">' + x[2] + '</div></div>';
   }).join('');
+
+  document.getElementById('lk-sub').textContent = 'Chọn đúng sinh viên và khoản thu để trừ số tiền ' + r.amt;
 
   var ft = document.getElementById('tx-ft');
   if (r.ft === 'link') {
