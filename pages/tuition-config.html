@@ -3,173 +3,679 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cấu hình học phí · Hệ thống thu học phí ULIS</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css"/>
-<link rel="stylesheet" href="../css/mvp-clean.css"/>
-<link rel="stylesheet" href="../css/tuition-config.css"/>
+<title>Cấu hình học phí · Hệ thống quản lý thu học phí ULIS</title>
+<link rel="stylesheet" href="../css/ulis.css">
 </head>
-<body>
-<div id="toast-container"></div>
+<body data-page="tuition-config" data-crumb="Nghiệp vụ" data-title="Cấu hình học phí">
+<div id="toasts"></div>
 <div id="app">
-
-<nav id="sidebar">
-    <div class="sidebar-brand">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="../assets/ulis-logo.png" alt="ULIS" style="height:36px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'"/>
-        <div>
-          <div class="brand-inst" style="font-size:11.5px;font-weight:600;">Trường Đại học Ngoại ngữ</div>
-          <div class="brand-vnu">Đại học Quốc gia Hà Nội</div>
-        </div>
-      </div>
-      <div class="brand-sep" style="margin:10px 0 0;"></div>
-    </div>
-
-    <div class="sidebar-nav">
-      <div class="sidebar-group-label">Nghiệp vụ</div>
-
-      <a class="nav-item" href="overview.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/>
-          <rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/>
-          <rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/>
-          <rect x="9" y="9" width="5.5" height="5.5" rx="1"/>
-        </svg>
-        Tổng quan
-      </a>
-
-      <a class="nav-item active" href="tuition-config.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 4h12M2 8h8M2 12h10"/>
-        </svg>
-        Cấu hình học phí
-      </a>
-
-      <a class="nav-item" href="student-tuition.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M9 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V7M9 2l5 5M9 2v5h5"/>
-        </svg>
-        Dữ liệu học phí
-      </a>
-
-      <a class="nav-item" href="receivables.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M13 5H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1zM11 5V3a2 2 0 00-4 0v2"/>
-        </svg>
-        Khoản phải thu
-      </a>
-
-      <a class="nav-item" href="payment-requests.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <rect x="1.5" y="3.5" width="13" height="9" rx="1"/>
-          <path d="M1.5 6.5h13"/>
-        </svg>
-        Yêu cầu thanh toán
-      </a>
-
-      <a class="nav-item" href="transactions.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 8h12M10 4l4 4-4 4M6 4L2 8l4 4"/>
-        </svg>
-        Giao dịch
-      </a>
-
-      <a class="nav-item" href="reconciliation.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 3h5v10H2zM9 3h5v10H9M5 8h6"/>
-        </svg>
-        Đối soát BIDV
-      </a>
-
-      <a class="nav-item" href="exceptions.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M8 2L1 14h14L8 2zM8 6v4M8 11v1.5"/>
-        </svg>
-        Ngoại lệ
-      </a>
-
-      <div class="sidebar-group-label">Quản lý</div>
-
-      <a class="nav-item" href="reports.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M3 2h10v12H3zM6 6h4M6 9h4M6 12h2"/>
-        </svg>
-        Báo cáo
-      </a>
-
-      <a class="nav-item" href="reminders.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M8 1a5 5 0 015 5c0 4 2 5 2 5H1s2-1 2-5a5 5 0 015-5zM6.5 13.5a1.5 1.5 0 003 0"/>
-        </svg>
-        Nhắc hạn
-      </a>
-
-      <div class="sidebar-group-label">Cấu hình</div>
-
-      <a class="nav-item" href="system-config.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <circle cx="8" cy="8" r="2.5"/>
-          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4"/>
-        </svg>
-        Cấu hình hệ thống
-      </a>
-    </div>
-  </nav>
-
+  <nav id="sidebar"></nav>
   <div id="main">
-    <header id="topbar">
-      <div class="topbar-crumb">
-        <span class="crumb-root">Nghiệp vụ</span>
-        <span class="crumb-sep" aria-hidden="true">&rsaquo;</span>
-        <span class="crumb-page">Cấu hình học phí</span>
-      </div>
-      <div class="topbar-user topbar-user-wrap">
-        <div class="user-menu-trigger">
-          <div class="topbar-user-info">
-            <div class="topbar-user-dept">Phòng Kế hoạch Tài chính</div>
-            <div class="topbar-user-role">Cán bộ KHTC &nbsp;&bull;&nbsp; Nguyễn Thị Hương</div>
-          </div>
-          <div class="topbar-avatar">NH</div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ============ MÔ-ĐUN CẤU HÌNH HỌC PHÍ ============
-         Toàn bộ nằm trong .tc-scope để CSS không đụng các trang khác. -->
-    <div class="tc-scope">
-      <main class="tc-main">
+    <header id="topbar"></header>
+    <div id="content">
+      <div class="wrap">
 
         <div class="phead">
           <div>
             <h1>Cấu hình học phí</h1>
-            <p id="pageSub">Mỗi khung học phí có thể có nhiều phiên bản theo từng thời kỳ.</p>
+            <p>Nơi khai mức thu và cách tính học phí. Hệ thống dùng đúng khung đang hiệu lực để tính tiền cho sinh viên,
+               không sửa trong mã nguồn.</p>
           </div>
-          <div id="headActions"></div>
+          <div class="phead-act">
+            <button class="btn" onclick="notReady('Nhập quy tắc từ tệp')">Nhập quy tắc từ tệp</button>
+            <button class="btn btn-primary" onclick="openModal('m-version')">
+              <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg>
+              Thêm khung học phí
+            </button>
+          </div>
         </div>
 
-        <div class="tabs" role="tablist">
-          <button class="tab" role="tab" id="tab-versions"  aria-selected="true"  onclick="TC.tab('versions')">Phiên bản khung</button>
-          <button class="tab" role="tab" id="tab-documents" aria-selected="false" onclick="TC.tab('documents')">Văn bản căn cứ</button>
-          <button class="tab" role="tab" id="tab-calc"      aria-selected="false" onclick="TC.tab('calc')">Thử tính</button>
-          <button class="tab" role="tab" id="tab-audit"     aria-selected="false" onclick="TC.tab('audit')">Nhật ký thay đổi</button>
+        <div class="srcbar">
+          <span class="dot"></span>
+          <span>Đang áp dụng: <b>Khung học phí năm 2026 – 2027</b></span>
+          <span class="sep"></span>
+          <span>Hiệu lực từ <b>01/09/2026</b></span>
+          <span class="sep"></span>
+          <span><b>46</b> quy tắc</span>
+          <span class="sep"></span>
+          <span>Kiểm tra gần nhất <b>24/09/2026 17:20</b> — không có lỗi</span>
         </div>
 
-        <section id="view" role="tabpanel" aria-labelledby="tab-versions"></section>
-      </main>
+        <div class="tabs">
+          <button class="tab on" data-tab-group="cf" data-tab="versions" onclick="showTab('cf','versions')">Khung học phí</button>
+          <button class="tab" data-tab-group="cf" data-tab="rules" onclick="showTab('cf','rules')">Quy tắc học phí <span class="n">46</span></button>
+          <button class="tab" data-tab-group="cf" data-tab="check" onclick="showTab('cf','check')">Kiểm tra và tính thử</button>
+          <button class="tab" data-tab-group="cf" data-tab="audit" onclick="showTab('cf','audit')">Lịch sử thay đổi</button>
+        </div>
 
-      <div class="tc-ov" id="overlay" hidden onclick="TC.overlayClick(event)">
-        <div class="tc-modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+        <!-- ================= KHUNG HỌC PHÍ ================= -->
+        <div class="pane on" data-pane-group="cf" data-pane="versions">
+          <div class="filters f-3">
+            <div class="field f-search">
+              <label>Tìm khung học phí</label>
+              <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+              <input class="inp" placeholder="Nhập tên khung học phí" oninput="filterTable(this,'tbl-ver')">
+            </div>
+            <div class="field">
+              <label>Năm học</label>
+              <select class="sel"><option>Tất cả năm học</option><option>2026 – 2027</option><option>2025 – 2026</option></select>
+            </div>
+            <div class="field">
+              <label>Tình trạng</label>
+              <select class="sel"><option>Tất cả</option><option>Nháp</option><option>Đã kích hoạt</option><option>Đã thay thế</option><option>Đã hủy</option></select>
+            </div>
+            <div class="field"><button class="btn" onclick="notReady('Xuất danh sách')">Xuất Excel</button></div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Danh sách khung học phí</h2>
+              <div class="sub">Mỗi năm học chỉ có một khung được áp dụng tại một thời điểm. Khung mới thay thế trọn khung cũ.</div></div>
+            </div>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" id="tbl-ver" style="min-width:1010px">
+                  <thead><tr>
+                    <th style="min-width:250px">Khung học phí</th>
+                    <th style="min-width:110px">Năm học</th>
+                    <th style="min-width:200px">Thời gian áp dụng</th>
+                    <th class="r" style="min-width:100px">Số quy tắc</th>
+                    <th style="min-width:180px">Tình trạng</th>
+                    <th style="min-width:150px">Cập nhật</th>
+                    <th class="r" style="min-width:86px">Thao tác</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="t-main">Khung học phí năm 2026 – 2027</div>
+                          <div class="t-sub">Theo Quyết định mức thu học phí từ năm 2026</div></td>
+                      <td>2026 – 2027</td>
+                      <td><div class="t-main">Từ 01/09/2026</div><div class="t-sub">Chưa đặt ngày kết thúc</div></td>
+                      <td class="r">46</td>
+                      <td><span class="bg ok">Đang áp dụng</span></td>
+                      <td><div class="t-main">24/09 17:20</div><div class="t-sub">Nguyễn Thị Hương</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="showTab('cf','rules')">Chi tiết</button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="t-main">Khung học phí năm 2027 – 2028</div>
+                          <div class="t-sub">Đang soạn, chưa áp dụng</div></td>
+                      <td>2027 – 2028</td>
+                      <td><div class="t-main">Dự kiến từ 01/09/2027</div><div class="t-sub">—</div></td>
+                      <td class="r">12</td>
+                      <td><span class="bg info">Bản nháp</span></td>
+                      <td><div class="t-main">25/09 09:05</div><div class="t-sub">Nguyễn Thị Hương</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openModal('m-activate')">Chi tiết</button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="t-main">Khung học phí năm 2025 – 2026</div>
+                          <div class="t-sub">Đã bị khung 2026 – 2027 thay thế</div></td>
+                      <td>2025 – 2026</td>
+                      <td><div class="t-main">01/09/2025 – 31/08/2026</div><div class="t-sub">Đã hết hiệu lực</div></td>
+                      <td class="r">44</td>
+                      <td><span class="bg mute">Đã thay thế</span></td>
+                      <td><div class="t-main">28/08/2026</div><div class="t-sub">Trần Văn Bình</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Xem khung cũ')">Chi tiết</button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="t-main">Khung học phí 2026 – 2027 (bản thử)</div>
+                          <div class="t-sub">Đã hủy · trùng phạm vi với bản chính thức</div></td>
+                      <td>2026 – 2027</td>
+                      <td><div class="t-main">—</div><div class="t-sub">Không áp dụng</div></td>
+                      <td class="r">8</td>
+                      <td><span class="bg mute">Đã hủy</span></td>
+                      <td><div class="t-main">20/09/2026</div><div class="t-sub">Nguyễn Thị Hương</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Xem khung đã hủy')">Chi tiết</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= QUY TẮC ================= -->
+        <div class="pane" data-pane-group="cf" data-pane="rules">
+
+          <div class="srcbar" style="border-left-color:var(--primary)">
+            <span>Đang xem quy tắc của <b>Khung học phí năm 2026 – 2027</b></span>
+            <span class="sep"></span>
+            <span class="bg ok plain">Đang áp dụng</span>
+            <span class="grow"></span>
+            <span style="color:var(--muted)">Khung đang áp dụng không sửa trực tiếp. Muốn đổi mức thu, tạo khung mới.</span>
+          </div>
+
+          <div class="chips" data-target="tbl-rule">
+            <button class="chip on" data-filter="all" onclick="pickChip(this)">Tất cả <span class="n">46</span></button>
+            <button class="chip" data-filter="month" onclick="pickChip(this)">Theo tháng <span class="n">18</span></button>
+            <button class="chip" data-filter="credit" onclick="pickChip(this)">Theo tín chỉ <span class="n">21</span></button>
+            <button class="chip" data-filter="course" onclick="pickChip(this)">Theo học phần <span class="n">4</span></button>
+            <button class="chip" data-filter="fixed" onclick="pickChip(this)">Cố định cả kỳ <span class="n">3</span></button>
+          </div>
+
+          <div class="filters f-3">
+            <div class="field f-search">
+              <label>Tìm quy tắc</label>
+              <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+              <input class="inp" placeholder="Nhập tên quy tắc hoặc nhóm ngành" oninput="filterTable(this,'tbl-rule')">
+            </div>
+            <div class="field">
+              <label>Khóa tuyển sinh</label>
+              <select class="sel"><option>Tất cả khóa</option><option>QH.2022</option><option>QH.2023</option><option>QH.2024</option><option>QH.2025</option><option>QH.2026</option></select>
+            </div>
+            <div class="field">
+              <label>Loại đăng ký</label>
+              <select class="sel"><option>Tất cả</option><option>Học lần đầu</option><option>Học lại</option><option>Học cải thiện</option><option>Học tự do</option></select>
+            </div>
+            <div class="field">
+              <button class="btn btn-primary" onclick="openRule()">Thêm quy tắc</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Quy tắc tính học phí</h2>
+              <div class="sub">Đang hiển thị <b data-count-for="tbl-rule">7</b> trên 46 quy tắc</div></div>
+            </div>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" id="tbl-rule" style="min-width:1060px">
+                  <thead><tr>
+                    <th style="min-width:200px">Quy tắc</th>
+                    <th style="min-width:240px">Áp dụng cho</th>
+                    <th style="min-width:120px">Loại đăng ký</th>
+                    <th style="min-width:110px">Cách tính</th>
+                    <th class="r" style="min-width:130px">Mức thu</th>
+                    <th style="min-width:120px">Kiểm tra</th>
+                    <th class="r" style="min-width:86px">Thao tác</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr data-tags="month">
+                      <td><div class="t-main">Học phí tháng — QH.2022, QH.2023 nhóm A</div></td>
+                      <td><div class="t-main">Khóa QH.2022, QH.2023</div>
+                          <div class="t-sub">Anh, Pháp, Đức, Trung, Nhật, Hàn · chương trình chuẩn</div></td>
+                      <td>Học lần đầu</td>
+                      <td>Theo tháng</td>
+                      <td class="money">3.500.000 đ<div class="t-sub" style="font-weight:400">mỗi tháng</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('m1')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="month">
+                      <td><div class="t-main">Học phí tháng — QH.2024, QH.2025 nhóm A</div></td>
+                      <td><div class="t-main">Khóa QH.2024, QH.2025</div>
+                          <div class="t-sub">Anh, Pháp, Đức, Trung, Nhật, Hàn · chương trình chuẩn</div></td>
+                      <td>Học lần đầu</td>
+                      <td>Theo tháng</td>
+                      <td class="money">3.800.000 đ<div class="t-sub" style="font-weight:400">mỗi tháng</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('m2')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="month">
+                      <td><div class="t-main">Học phí tháng — QH.2026 nhóm A</div></td>
+                      <td><div class="t-main">Khóa QH.2026 trở đi</div>
+                          <div class="t-sub">Anh, Pháp, Đức, Trung, Nhật, Hàn · chương trình chuẩn</div></td>
+                      <td>Học lần đầu</td>
+                      <td>Theo tháng</td>
+                      <td class="money">4.200.000 đ<div class="t-sub" style="font-weight:400">mỗi tháng</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('m3')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="month">
+                      <td><div class="t-main">Học phí tháng — nhóm Nga, Ả Rập, VH&amp;TTXQG</div></td>
+                      <td><div class="t-main">Khóa QH.2022 – QH.2025</div>
+                          <div class="t-sub">Nga, Ả Rập, Văn hóa và truyền thông xuyên quốc gia</div></td>
+                      <td>Học lần đầu</td>
+                      <td>Theo tháng</td>
+                      <td class="money">2.310.000 đ<div class="t-sub" style="font-weight:400">mỗi tháng</div></td>
+                      <td><span class="bg warn">Chưa phủ QH.2026</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('m4')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="credit">
+                      <td><div class="t-main">Học lại — chương trình chất lượng cao</div></td>
+                      <td><div class="t-main">Áp dụng tất cả khóa</div>
+                          <div class="t-sub">Chương trình chất lượng cao</div></td>
+                      <td>Học lại</td>
+                      <td>Theo tín chỉ</td>
+                      <td class="money">920.000 đ<div class="t-sub" style="font-weight:400">mỗi tín · hệ số 1</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('c1')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="credit">
+                      <td><div class="t-main">Học phần ngoài chương trình đào tạo</div></td>
+                      <td><div class="t-main">Áp dụng tất cả khóa</div>
+                          <div class="t-sub">Chương trình chất lượng cao</div></td>
+                      <td>Học tự do</td>
+                      <td>Theo tín chỉ</td>
+                      <td class="money">920.000 đ<div class="t-sub" style="font-weight:400">mỗi tín · hệ số 1,5</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('c2')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="credit">
+                      <td><div class="t-main">Bằng kép — nhóm ngành ngôn ngữ</div></td>
+                      <td><div class="t-main">Áp dụng tất cả khóa</div>
+                          <div class="t-sub">Chương trình đại học thứ hai</div></td>
+                      <td>Học lần đầu</td>
+                      <td>Theo tín chỉ</td>
+                      <td class="money">1.100.000 đ<div class="t-sub" style="font-weight:400">mỗi tín · hệ số 1</div></td>
+                      <td><span class="bg ok">Đạt</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openRule('c3')">Chi tiết</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tfoot">
+                <div>Hiển thị 1–7 trong 46 quy tắc</div>
+                <div class="pager">
+                  <button class="pg" disabled>‹</button>
+                  <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
+                  <button class="pg">4</button><button class="pg">5</button><button class="pg">6</button>
+                  <button class="pg">7</button><button class="pg">›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= KIỂM TRA VÀ TÍNH THỬ ================= -->
+        <div class="pane" data-pane-group="cf" data-pane="check">
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Kết quả kiểm tra khung học phí 2026 – 2027</h2>
+              <div class="sub">Chạy lúc 24/09/2026 17:20 · trên 8.214 sinh viên của học kỳ 1</div></div>
+              <div class="card-hd-act">
+                <button class="btn btn-primary" onclick="toast('Đang kiểm tra lại khung học phí.','ok')">Kiểm tra lại</button>
+              </div>
+            </div>
+            <div class="card-bd">
+              <div class="kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:0">
+                <div class="kpi"><div class="kpi-l">Tính được học phí</div><div class="kpi-v ok" style="font-size:21px">8.196</div><div class="kpi-s">99,8% sinh viên</div></div>
+                <div class="kpi"><div class="kpi-l">Không tìm thấy mức thu</div><div class="kpi-v err" style="font-size:21px">18</div><div class="kpi-s">phải bổ sung quy tắc</div></div>
+                <div class="kpi"><div class="kpi-l">Khớp nhiều quy tắc</div><div class="kpi-v" style="font-size:21px">0</div><div class="kpi-s">không có trùng lặp</div></div>
+                <div class="kpi"><div class="kpi-l">Cảnh báo</div><div class="kpi-v warn" style="font-size:21px">2</div><div class="kpi-s">không chặn áp dụng</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd"><div><h2>Việc cần xử lý</h2></div></div>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" style="min-width:960px">
+                  <thead><tr>
+                    <th style="min-width:110px">Mức độ</th>
+                    <th style="min-width:250px">Nhóm sinh viên bị ảnh hưởng</th>
+                    <th style="min-width:280px">Nguyên nhân</th>
+                    <th style="min-width:230px">Cách xử lý</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="bg err">Phải sửa</span></td>
+                      <td><div class="t-main">18 sinh viên khóa QH.2026</div><div class="t-sub">Nhóm ngành Ả Rập</div></td>
+                      <td>Chưa có quy tắc nào khai mức thu cho nhóm này</td>
+                      <td><button class="btn btn-sm" onclick="openRule()">Thêm quy tắc</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="bg warn">Nên xem lại</span></td>
+                      <td><div class="t-main">Nhóm học lại chất lượng cao</div></td>
+                      <td>Đơn giá tín chỉ 920.000 đ lệch so với mức tháng 3.500.000 đ đang khai</td>
+                      <td><button class="btn btn-sm" onclick="openRule('c1')">Xem quy tắc</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="bg warn">Nên xem lại</span></td>
+                      <td><div class="t-main">Chương trình sư phạm</div></td>
+                      <td>Chưa khai chính sách miễn giảm theo Nghị định 116</td>
+                      <td><span style="color:var(--muted)">Chờ Nhà trường hướng dẫn</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Tính thử cho một sinh viên</h2>
+              <div class="sub">Kiểm tra hệ thống sẽ ra bao nhiêu tiền trước khi áp dụng khung mới</div></div>
+            </div>
+            <div class="card-bd">
+              <div class="grid3" style="margin-bottom:14px">
+                <div class="field"><label>Mã sinh viên</label><input class="inp" value="23041205"></div>
+                <div class="field"><label>Học kỳ</label><select class="sel"><option>Học kỳ 1, năm học 2026 – 2027</option></select></div>
+                <div class="field" style="display:flex;align-items:flex-end">
+                  <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('try-res').style.display='';toast('Đã tính thử xong.','ok')">Tính thử</button>
+                </div>
+              </div>
+              <div id="try-res" style="display:none">
+                <div class="mini-wrap">
+                  <table class="mini">
+                    <thead><tr><th>Nội dung</th><th>Quy tắc áp dụng</th><th>Cách tính</th><th class="r">Thành tiền</th></tr></thead>
+                    <tbody>
+                      <tr>
+                        <td>Học phí chính quy</td>
+                        <td>Học phí tháng — QH.2022, QH.2023 nhóm A</td>
+                        <td>3.500.000 đ × 5 tháng</td>
+                        <td class="r">17.500.000 đ</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="mini-sum"><span>Tổng học phí</span><span>17.500.000 đ</span></div>
+                </div>
+                <div class="note ok" style="margin-top:12px">
+                  <svg class="ic" viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5L13 5"/></svg>
+                  <div><span class="nt">Tính được, không có vướng mắc</span>
+                  Sinh viên Nguyễn Minh Anh, khóa QH.2023, ngành Ngôn ngữ Anh, đang học trong kỳ.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= LỊCH SỬ ================= -->
+        <div class="pane" data-pane-group="cf" data-pane="audit">
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Lịch sử thay đổi cấu hình</h2>
+              <div class="sub">Ghi lại ai đổi gì, khi nào và vì sao, phục vụ giải trình khi cần</div></div>
+            </div>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" style="min-width:980px">
+                  <thead><tr>
+                    <th style="min-width:150px">Thời điểm</th>
+                    <th style="min-width:180px">Người thực hiện</th>
+                    <th style="min-width:230px">Thay đổi</th>
+                    <th style="min-width:300px">Lý do và căn cứ</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr><td>24/09/2026 17:20</td><td>Nguyễn Thị Hương</td>
+                        <td><div class="t-main">Áp dụng khung học phí 2026 – 2027</div></td>
+                        <td>Theo Quyết định mức thu học phí từ năm 2026 và năm học 2026 – 2027</td></tr>
+                    <tr><td>24/09/2026 16:05</td><td>Nguyễn Thị Hương</td>
+                        <td><div class="t-main">Thêm 18 quy tắc tính theo tháng</div></td>
+                        <td>Chuyển học phí chính quy sang thu theo tháng</td></tr>
+                    <tr><td>23/09/2026 10:40</td><td>Trần Văn Bình</td>
+                        <td><div class="t-main">Sửa mức thu nhóm Nga từ 2.100.000 đ lên 2.310.000 đ</div></td>
+                        <td>Tăng theo chỉ số giá tiêu dùng, đúng thông báo tuyển sinh</td></tr>
+                    <tr><td>22/09/2026 15:12</td><td>Nguyễn Thị Hương</td>
+                        <td><div class="t-main">Hủy bản nháp Khung 2026 – 2027 (bản thử)</div></td>
+                        <td>Trùng phạm vi với bản chính thức, tạo nhầm</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="tc-toast" id="toast"></div>
     </div>
-
   </div>
 </div>
 
-<script src="../js/common.js"></script>
-<script src="../js/mvp-clean.js"></script>
-<script src="../js/tuition-config.js"></script>
+<!-- ======================= HỘP THOẠI QUY TẮC ======================= -->
+<div class="mov" id="m-rule">
+  <div class="mdl wide">
+    <div class="mdl-hd">
+      <div><h2 id="r-title">Thêm quy tắc học phí</h2>
+      <div class="sub">Khai mức thu và cách tính cho một nhóm sinh viên</div></div>
+      <button class="x" onclick="closeModal('m-rule')">✕</button>
+    </div>
+    <div class="mdl-bd">
+
+      <div class="fgroup">
+        <div class="fgroup-t">Tên quy tắc</div>
+        <div class="field">
+          <input class="inp" id="r-name" placeholder="Ví dụ: Học phí tháng — QH.2026 nhóm ngành Ả Rập">
+          <p class="hint">Đặt tên để người sau đọc là hiểu quy tắc áp cho ai.</p>
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <div class="fgroup-t">Áp dụng cho</div>
+        <div class="grid3">
+          <div class="field"><label>Khóa tuyển sinh</label>
+            <select class="sel" id="r-cohort"><option>Tất cả khóa</option><option>QH.2022</option><option>QH.2023</option><option>QH.2024</option><option>QH.2025</option><option selected>QH.2026</option></select></div>
+          <div class="field"><label>Hệ đào tạo</label>
+            <select class="sel"><option>Tất cả hệ</option><option selected>Đại học chính quy</option><option>Bằng kép</option><option>Vừa làm vừa học</option></select></div>
+          <div class="field"><label>Ngành / nhóm ngành</label>
+            <select class="sel" id="r-major"><option>Tất cả ngành</option><option>Anh, Pháp, Đức, Trung, Nhật, Hàn</option><option selected>Ngôn ngữ Ả Rập</option><option>Ngôn ngữ Nga</option></select></div>
+        </div>
+        <div class="grid3" style="margin-top:12px">
+          <div class="field"><label>Bậc đào tạo</label>
+            <select class="sel"><option>Tất cả bậc</option><option selected>Đại học</option><option>Thạc sĩ</option><option>Tiến sĩ</option></select></div>
+          <div class="field"><label>Chương trình đào tạo</label>
+            <select class="sel"><option>Tất cả chương trình</option><option selected>Chương trình chuẩn</option><option>Chất lượng cao</option><option>Sư phạm</option></select></div>
+          <div class="field"><label>Học kỳ</label>
+            <select class="sel"><option selected>Tất cả học kỳ</option><option>Học kỳ 1</option><option>Học kỳ 2</option><option>Học kỳ hè</option></select></div>
+        </div>
+        <p class="hint">Để trống hoặc chọn <b>Tất cả</b> nghĩa là quy tắc áp cho mọi trường hợp của tiêu chí đó.
+           Quy tắc nào khai cụ thể hơn sẽ được ưu tiên áp dụng.</p>
+      </div>
+
+      <div class="fgroup">
+        <div class="fgroup-t">Loại đăng ký <span class="req">*</span></div>
+        <div class="field">
+          <select class="sel" id="r-regtype" onchange="updFormula()">
+            <option value="FIRST">Học lần đầu</option>
+            <option value="RETAKE">Học lại</option>
+            <option value="IMPROVE">Học cải thiện điểm</option>
+            <option value="FREE">Học học phần ngoài chương trình đào tạo</option>
+          </select>
+          <p class="hint">Bắt buộc chọn một loại, không để trống. Mỗi loại đăng ký có mức thu và hệ số riêng.</p>
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <div class="fgroup-t">Cách tính và mức thu</div>
+        <div class="grid2">
+          <div class="field">
+            <label>Cách tính <span class="req">*</span></label>
+            <select class="sel" id="r-method" onchange="switchMethod()">
+              <option value="month">Theo tháng — thu cố định hằng tháng</option>
+              <option value="credit">Theo tín chỉ — nhân số tín của học phần</option>
+              <option value="course">Theo học phần — mỗi học phần một mức</option>
+              <option value="fixed">Cố định cả kỳ — một mức cho cả học kỳ</option>
+            </select>
+          </div>
+          <div class="field">
+            <label id="r-amount-l">Mức thu một tháng (đồng) <span class="req">*</span></label>
+            <input class="inp" id="r-amount" value="4.200.000" oninput="updFormula()">
+          </div>
+        </div>
+
+        <div class="grid2" id="r-credit-row" style="margin-top:12px;display:none">
+          <div class="field">
+            <label>Hệ số</label>
+            <select class="sel" id="r-coef" onchange="updFormula()">
+              <option value="1">1 — mức chuẩn</option>
+              <option value="1.5">1,5 — học phần ngoài chương trình đào tạo</option>
+            </select>
+            <p class="hint">Chỉ chọn được hệ số đã khai trong khung học phí, kèm căn cứ ban hành.</p>
+          </div>
+          <div class="field"></div>
+        </div>
+
+        <div class="note info" id="r-month-note" style="margin-top:12px">
+          <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+          <div><span class="nt">Thu theo tháng không phụ thuộc số học phần đăng ký</span>
+          Sinh viên đăng ký nhiều hay ít học phần đều nộp như nhau. Số tháng của kỳ thu do Phòng KHTC đặt ở mục
+          <b>Kỳ thu</b>, quy tắc này chỉ khai mức thu một tháng.</div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="fgroup-t" style="border:none;padding:0;margin-bottom:7px">Hệ thống sẽ tính như sau</div>
+          <div class="formula" id="r-formula">
+            Số tiền = <b>Mức thu một tháng</b> × <b>Số tháng của kỳ thu</b>
+            <span class="res">4.200.000 đ × 5 tháng = 21.000.000 đ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <div class="fgroup-t">Ghi chú</div>
+        <textarea class="inp" rows="2" placeholder="Ghi căn cứ hoặc lưu ý cho người dùng sau"></textarea>
+      </div>
+
+    </div>
+    <div class="mdl-ft">
+      <button class="btn" onclick="closeModal('m-rule')">Hủy</button>
+      <button class="btn btn-primary" onclick="closeModal('m-rule');toast('Đã lưu quy tắc vào bản nháp khung học phí.','ok')">Lưu quy tắc</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= HỘP THOẠI THÊM KHUNG ======================= -->
+<div class="mov" id="m-version">
+  <div class="mdl">
+    <div class="mdl-hd">
+      <div><h2>Thêm khung học phí</h2>
+      <div class="sub">Tạo bản nháp trước, khai đủ quy tắc rồi mới áp dụng</div></div>
+      <button class="x" onclick="closeModal('m-version')">✕</button>
+    </div>
+    <div class="mdl-bd">
+      <div class="field" style="margin-bottom:13px">
+        <label>Tên khung học phí <span class="req">*</span></label>
+        <input class="inp" placeholder="Ví dụ: Khung học phí năm 2027 – 2028">
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Năm học <span class="req">*</span></label>
+          <select class="sel"><option>2027 – 2028</option><option>2026 – 2027</option></select></div>
+        <div class="field"><label>Áp dụng từ ngày <span class="req">*</span></label>
+          <input class="inp" placeholder="dd/mm/yyyy" value="01/09/2027"></div>
+      </div>
+      <div class="field" style="margin-top:13px">
+        <label>Căn cứ ban hành</label>
+        <input class="inp" placeholder="Số và tên văn bản">
+        <p class="hint">Có thể để trống khi lưu nháp, nhưng bắt buộc phải có trước khi áp dụng.</p>
+      </div>
+      <div class="note info" style="margin-top:14px">
+        <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+        <div><span class="nt">Khung mới thay thế trọn khung cũ</span>
+        Khi áp dụng khung mới, khung của năm học đó sẽ kết thúc ngay trước ngày khung mới bắt đầu.
+        Các khoản học phí đã tính trước đó giữ nguyên mức thu cũ.</div>
+      </div>
+    </div>
+    <div class="mdl-ft">
+      <button class="btn" onclick="closeModal('m-version')">Hủy</button>
+      <button class="btn btn-primary" onclick="closeModal('m-version');toast('Đã tạo bản nháp khung học phí.','ok')">Lưu bản nháp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= HỘP THOẠI ÁP DỤNG KHUNG ======================= -->
+<div class="mov" id="m-activate">
+  <div class="mdl">
+    <div class="mdl-hd">
+      <div><h2>Áp dụng khung học phí năm 2027 – 2028</h2>
+      <div class="sub">Kiểm tra các điều kiện dưới đây trước khi đưa khung vào sử dụng</div></div>
+      <button class="x" onclick="closeModal('m-activate')">✕</button>
+    </div>
+    <div class="mdl-bd">
+      <div class="cond">
+        <span class="st ok">✓</span>
+        <div><div class="cond-t">Đã khai ngày bắt đầu áp dụng</div>
+        <div class="cond-m">Từ 01/09/2027</div></div>
+      </div>
+      <div class="cond">
+        <span class="st no">!</span>
+        <div><div class="cond-t">Chưa đính kèm căn cứ ban hành</div>
+        <div class="cond-m">Bắt buộc có quyết định hoặc thông báo của Nhà trường
+        <button class="btn-link" onclick="notReady('Bổ sung căn cứ')">Bổ sung ngay</button></div></div>
+      </div>
+      <div class="cond">
+        <span class="st no">!</span>
+        <div><div class="cond-t">Còn 34 nhóm sinh viên chưa có mức thu</div>
+        <div class="cond-m">Khung hiện có 12 quy tắc, cần khai đủ trước khi áp dụng
+        <button class="btn-link" onclick="closeModal('m-activate');showTab('cf','rules')">Xem quy tắc</button></div></div>
+      </div>
+      <div class="cond">
+        <span class="st no">!</span>
+        <div><div class="cond-t">Chưa chạy kiểm tra trên khung này</div>
+        <div class="cond-m">Kiểm tra phải đạt và chạy trên đúng nội dung hiện tại
+        <button class="btn-link" onclick="closeModal('m-activate');showTab('cf','check')">Chạy kiểm tra</button></div></div>
+      </div>
+
+      <div class="note warn" style="margin-top:14px">
+        <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+        <div><span class="nt">Còn 3 điều kiện chưa đạt</span>
+        Hoàn tất các việc trên rồi quay lại. Sau khi áp dụng, khung sẽ bị khóa và không sửa được nữa.</div>
+      </div>
+    </div>
+    <div class="mdl-ft">
+      <button class="btn" onclick="closeModal('m-activate')">Đóng</button>
+      <button class="btn btn-primary" disabled>Áp dụng khung học phí</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/ulis.js"></script>
+<script>
+var RULES = {
+  m1:{name:'Học phí tháng — QH.2022, QH.2023 nhóm A', method:'month', amount:'3.500.000', cohort:'QH.2023', major:'Anh, Pháp, Đức, Trung, Nhật, Hàn', reg:'FIRST', coef:'1'},
+  m2:{name:'Học phí tháng — QH.2024, QH.2025 nhóm A', method:'month', amount:'3.800.000', cohort:'QH.2024', major:'Anh, Pháp, Đức, Trung, Nhật, Hàn', reg:'FIRST', coef:'1'},
+  m3:{name:'Học phí tháng — QH.2026 nhóm A',          method:'month', amount:'4.200.000', cohort:'QH.2026', major:'Anh, Pháp, Đức, Trung, Nhật, Hàn', reg:'FIRST', coef:'1'},
+  m4:{name:'Học phí tháng — nhóm Nga, Ả Rập, VH&TTXQG',method:'month', amount:'2.310.000', cohort:'QH.2025', major:'Ngôn ngữ Nga', reg:'FIRST', coef:'1'},
+  c1:{name:'Học lại — chương trình chất lượng cao',    method:'credit',amount:'920.000',   cohort:'Tất cả khóa', major:'Tất cả ngành', reg:'RETAKE', coef:'1'},
+  c2:{name:'Học phần ngoài chương trình đào tạo',      method:'credit',amount:'920.000',   cohort:'Tất cả khóa', major:'Tất cả ngành', reg:'FREE', coef:'1.5'},
+  c3:{name:'Bằng kép — nhóm ngành ngôn ngữ',           method:'credit',amount:'1.100.000', cohort:'Tất cả khóa', major:'Tất cả ngành', reg:'FIRST', coef:'1'}
+};
+
+function openRule(key) {
+  var r = key ? RULES[key] : null;
+  document.getElementById('r-title').textContent = r ? 'Chi tiết quy tắc học phí' : 'Thêm quy tắc học phí';
+  document.getElementById('r-name').value = r ? r.name : '';
+  document.getElementById('r-method').value = r ? r.method : 'month';
+  document.getElementById('r-amount').value = r ? r.amount : '4.200.000';
+  document.getElementById('r-regtype').value = r ? r.reg : 'FIRST';
+  document.getElementById('r-coef').value = r ? r.coef : '1';
+  if (r) {
+    setSel('r-cohort', r.cohort);
+    setSel('r-major', r.major);
+  }
+  switchMethod();
+  openModal('m-rule');
+}
+
+function setSel(id, text) {
+  var s = document.getElementById(id);
+  for (var i = 0; i < s.options.length; i++) {
+    if (s.options[i].text === text) { s.selectedIndex = i; return; }
+  }
+}
+
+/* Đổi cách tính thì đổi nhãn ô nhập, ô hệ số và câu giải thích */
+function switchMethod() {
+  var m = document.getElementById('r-method').value;
+  var lbl = document.getElementById('r-amount-l');
+  document.getElementById('r-credit-row').style.display = (m === 'credit') ? '' : 'none';
+  document.getElementById('r-month-note').style.display = (m === 'month') ? '' : 'none';
+  if (m === 'month')  lbl.innerHTML = 'Mức thu một tháng (đồng) <span class="req">*</span>';
+  if (m === 'credit') lbl.innerHTML = 'Đơn giá một tín chỉ (đồng) <span class="req">*</span>';
+  if (m === 'course') lbl.innerHTML = 'Mức thu một học phần (đồng) <span class="req">*</span>';
+  if (m === 'fixed')  lbl.innerHTML = 'Mức thu cả học kỳ (đồng) <span class="req">*</span>';
+  updFormula();
+}
+
+function updFormula() {
+  var m = document.getElementById('r-method').value;
+  var raw = document.getElementById('r-amount').value.replace(/[^\d]/g, '');
+  var v = Number(raw || 0);
+  var f = document.getElementById('r-formula');
+  var txt = '', res = '';
+  if (m === 'month') {
+    txt = 'Số tiền = <b>Mức thu một tháng</b> × <b>Số tháng của kỳ thu</b>';
+    res = vnd(v) + ' đ × 5 tháng = ' + vnd(v * 5) + ' đ';
+  } else if (m === 'credit') {
+    var c = Number(document.getElementById('r-coef').value || 1);
+    txt = 'Số tiền = <b>Số tín chỉ</b> × <b>Đơn giá một tín</b> × <b>Hệ số</b>';
+    res = 'Học phần 3 tín: 3 × ' + vnd(v) + ' đ × ' + String(c).replace('.', ',') + ' = ' + vnd(v * 3 * c) + ' đ';
+  } else if (m === 'course') {
+    txt = 'Số tiền = <b>Mức thu của học phần</b>, không nhân số tín chỉ';
+    res = 'Mỗi học phần: ' + vnd(v) + ' đ';
+  } else {
+    txt = 'Số tiền = <b>Mức thu cả học kỳ</b>, thu một lần dù đăng ký bao nhiêu học phần';
+    res = 'Cả học kỳ: ' + vnd(v) + ' đ';
+  }
+  f.innerHTML = txt + '<span class="res">' + res + '</span>';
+}
+</script>
 </body>
 </html>
