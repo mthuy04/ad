@@ -40,7 +40,8 @@
           <button class="chip"    data-filter="pending"    onclick="pickChip(this)">Đang chờ sinh viên nộp <span class="n">37</span></button>
           <button class="chip"    data-filter="processing" onclick="pickChip(this)">Ngân hàng đang xử lý <span class="n">4</span></button>
           <button class="chip"    data-filter="paid"       onclick="pickChip(this)">Đã nộp xong <span class="n">1.198</span></button>
-          <button class="chip"    data-filter="expired"    onclick="pickChip(this)">Hết hiệu lực <span class="n">39</span></button>
+          <button class="chip"    data-filter="expired"    onclick="pickChip(this)">Hết hạn, chưa nộp <span class="n">36</span></button>
+          <button class="chip"    data-filter="stopped"    onclick="pickChip(this)">Đã ngừng vì nộp cách khác <span class="n">3</span></button>
           <button class="chip"    data-filter="cancelled"  onclick="pickChip(this)">Đã hủy <span class="n">6</span></button>
         </div>
 
@@ -67,7 +68,7 @@
         <div class="card">
           <div class="card-hd">
             <div><h2>Danh sách yêu cầu thanh toán</h2>
-            <div class="sub">Đang hiển thị <b data-count-for="tbl-pr">8</b> trên 1.284 yêu cầu</div></div>
+            <div class="sub">Đang hiển thị <b data-count-for="tbl-pr">9</b> trên 1.284 yêu cầu</div></div>
           </div>
           <div class="card-bd flush">
             <div class="tbl-wrap">
@@ -95,10 +96,19 @@
                     <td><div class="t-main">Trần Quốc Việt</div><div class="t-sub">25040211 · Ngôn ngữ Đức</div></td>
                     <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, năm học 2026-2027</div></td>
                     <td class="money">19.000.000</td>
-                    <td><span class="bg warn">Ngân hàng đang xử lý, 7 phút</span></td>
+                    <td><span class="bg err">Ngân hàng đang xử lý, 7 phút</span><div class="t-sub">Quá 5 phút, cần theo dõi</div></td>
                     <td><div class="t-main">25/09 09:35</div></td>
                     <td><div class="t-main">25/09 09:50</div><div class="t-sub">Đang giữ chỗ</div></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openPr('p2')">Chi tiết</button></td>
+                  </tr>
+                  <tr data-tags="processing">
+                    <td><div class="t-main">Ngô Bảo Châu</div><div class="t-sub">24040733 · Ngôn ngữ Hàn Quốc</div></td>
+                    <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, năm học 2026-2027</div></td>
+                    <td class="money">19.000.000</td>
+                    <td><span class="bg info">Ngân hàng đang xử lý, 40 giây</span><div class="t-sub">Trong mức bình thường</div></td>
+                    <td><div class="t-main">25/09 09:41</div></td>
+                    <td><div class="t-main">25/09 09:56</div><div class="t-sub">Đang giữ chỗ</div></td>
+                    <td class="t-act"><button class="btn btn-sm" onclick="openPr('p9')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="paid">
                     <td><div class="t-main">Lê Hoàng Nam</div><div class="t-sub">22041877 · Ngôn ngữ Nhật</div></td>
@@ -119,12 +129,12 @@
                     <td class="t-act"><button class="btn btn-sm" onclick="openPr('p4')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="expired">
-                    <td><div class="t-main">Phạm Thu Hà</div><div class="t-sub">23040912 · Ngôn ngữ Hàn Quốc</div></td>
+                    <td><div class="t-main">Nguyễn Thị Mai</div><div class="t-sub">24041902 · Ngôn ngữ Hàn Quốc</div></td>
                     <td><div class="t-main">Học lại và học cải thiện</div><div class="t-sub">Học kỳ 1, năm học 2026-2027</div></td>
                     <td class="money">6.440.000</td>
-                    <td><span class="bg mute">Hết hiệu lực</span></td>
-                    <td><div class="t-main">24/09 16:02</div></td>
-                    <td><div class="t-main">24/09 16:17</div><div class="t-sub">Sinh viên chưa nộp</div></td>
+                    <td><span class="bg mute">Hết hạn, chưa nộp</span></td>
+                    <td><div class="t-main">24/09 09:30</div></td>
+                    <td><div class="t-main">24/09 09:45</div><div class="t-sub">Sinh viên chưa nộp</div></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openPr('p5')">Chi tiết</button></td>
                   </tr>
                   <tr data-tags="pending">
@@ -145,20 +155,20 @@
                     <td><div class="t-main">Hủy lúc 10:07</div><div class="t-sub">Sinh viên tự hủy</div></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openPr('p7')">Chi tiết</button></td>
                   </tr>
-                  <tr data-tags="expired">
+                  <tr data-tags="stopped">
                     <td><div class="t-main">Nguyễn Hải Yến</div><div class="t-sub">22041002 · Sư phạm tiếng Anh</div></td>
                     <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1, năm học 2026-2027</div></td>
                     <td class="money">11.550.000</td>
-                    <td><span class="bg mute">Hết hiệu lực</span></td>
+                    <td><span class="bg mute">Đã ngừng vì nộp cách khác</span></td>
                     <td><div class="t-main">18/09 10:14</div></td>
-                    <td><div class="t-main">18/09 10:29</div><div class="t-sub">Đã nộp bằng cách khác</div></td>
+                    <td><div class="t-main">18/09 10:29</div><div class="t-sub">Tiền đã ghi nhận</div></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openPr('p8')">Chi tiết</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="tfoot">
-              <div>Hiển thị 1 đến 8 trong 1.284 yêu cầu</div>
+              <div>Hiển thị 1 đến 9 trong 1.284 yêu cầu</div>
               <div class="pager">
                 <button class="pg" disabled>‹</button>
                 <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
@@ -270,7 +280,7 @@ var PR = {
        ft:'cancel' },
 
   p2:{ name:'Trần Quốc Việt', code:'25040211', period:'Học phí chính quy học kỳ 1, năm học 2026-2027', amt:'19.000.000 đ',
-       ax:[['warn','Ngân hàng đang xử lý'],['mute','Đã 7 phút kể từ khi ngân hàng báo'],['mute','Quét mã trên cổng sinh viên']],
+       ax:[['err','Ngân hàng đang xử lý quá 5 phút'],['mute','Đã 7 phút kể từ khi ngân hàng báo'],['mute','Quét mã trên cổng sinh viên']],
        problem:{ type:'warn', title:'Xử lý lâu hơn bình thường',
          body:'Ngân hàng đã báo có giao dịch nhưng chưa xác nhận xong. Bình thường việc này mất dưới một phút.',
          todo:'Không hủy yêu cầu này. Hệ thống đang tự hỏi lại ngân hàng. Nếu sinh viên gọi, báo là tiền đang được xác nhận và sẽ ghi nhận trong hôm nay.' },
@@ -297,13 +307,22 @@ var PR = {
        tx:'Giao dịch ngày 22/09/2026, số tiền 11.550.000 đ',
        ft:'view' },
 
-  p5:{ name:'Phạm Thu Hà', code:'23040912', period:'Học lại và học cải thiện học kỳ 1, năm học 2026-2027', amt:'6.440.000 đ',
-       ax:[['mute','Hết hiệu lực'],['mute','Hết lúc 24/09/2026 16:17'],['mute','Quét mã trên cổng sinh viên']],
+  p5:{ name:'Nguyễn Thị Mai', code:'24041902', period:'Học lại và học cải thiện học kỳ 1, năm học 2026-2027', amt:'6.440.000 đ',
+       ax:[['mute','Hết hạn, chưa nộp'],['mute','Hết lúc 24/09/2026 09:45'],['mute','Quét mã trên cổng sinh viên']],
        problem:{ type:'info', title:'Mã hết hạn do sinh viên chưa nộp',
          body:'Mã chỉ có hiệu lực 15 phút. Hết thời gian mà chưa có tiền về thì mã tự ngừng, khoản phải thu giữ nguyên.',
-         todo:'Không cần xử lý. Sinh viên vào cổng sinh viên tạo mã mới là nộp được.' },
-       tl:[['done','Sinh viên tạo mã thanh toán trên cổng sinh viên','24/09/2026 16:02'],
-           ['done','Hết thời gian hiệu lực, chưa có tiền về','24/09/2026 16:17']],
+         todo:'Sinh viên sau đó tự chuyển khoản trực tiếp lúc 11:05 cùng ngày. Khoản tiền đó đang chờ cán bộ chọn khoản, xem ở màn Giao dịch.' },
+       tl:[['done','Sinh viên tạo mã thanh toán trên cổng sinh viên','24/09/2026 09:30'],
+           ['done','Hết thời gian hiệu lực, chưa có tiền về','24/09/2026 09:45'],
+           ['warn','Sinh viên chuyển khoản trực tiếp, chưa gắn được khoản','24/09/2026 11:05']],
+       tx:'Giao dịch ngày 24/09/2026, số tiền 6.440.000 đ, đang chờ gắn khoản',
+       ft:'view' },
+
+  p9:{ name:'Ngô Bảo Châu', code:'24040733', period:'Học phí chính quy học kỳ 1, năm học 2026-2027', amt:'19.000.000 đ',
+       ax:[['info','Ngân hàng đang xử lý'],['mute','Mới 40 giây, trong mức bình thường'],['mute','Quét mã trên cổng sinh viên']],
+       tl:[['done','Sinh viên tạo mã thanh toán trên cổng sinh viên','25/09/2026 09:41'],
+           ['done','Ngân hàng báo có giao dịch','25/09/2026 09:44'],
+           ['now','Đang chờ ngân hàng xác nhận','Mới 40 giây, chưa cần can thiệp']],
        ft:'none' },
 
   p6:{ name:'Nguyễn Minh Anh', code:'23041205', period:'Học phí chính quy học kỳ 1, năm học 2026-2027', amt:'17.500.000 đ',
@@ -319,7 +338,7 @@ var PR = {
        ft:'none' },
 
   p8:{ name:'Nguyễn Hải Yến', code:'22041002', period:'Học phí chính quy học kỳ 1, năm học 2026-2027', amt:'11.550.000 đ',
-       ax:[['mute','Hết hiệu lực'],['mute','Sinh viên đã nộp bằng cách khác'],['mute','Quét mã trên cổng sinh viên']],
+       ax:[['mute','Đã ngừng vì nộp cách khác'],['mute','Ngừng lúc 18/09/2026 10:29'],['mute','Quét mã trên cổng sinh viên']],
        problem:{ type:'info', title:'Sinh viên chuyển khoản trực tiếp khi mã còn hiệu lực',
          body:'Hệ thống nhận được tiền chuyển khoản trực tiếp nên đã ngừng mã này để tránh sinh viên nộp hai lần.',
          todo:'Không cần xử lý. Tiền đã được ghi nhận vào khoản phải thu của sinh viên.' },
