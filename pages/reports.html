@@ -252,6 +252,8 @@ var REPORTS = [
     total:'auto', totalLabel:'Toàn trường',
     note:['warn','Khoa NN và VH Ả Rập có tỷ lệ thu thấp nhất, chênh gần 10 điểm so với các khoa còn lại',
       'Chưa rõ nguyên nhân, cần trao đổi với khoa. Đây là việc riêng, không liên quan tới mục dữ liệu chưa đầy đủ bên dưới.'],
+    note3:['warn','Cột Đã thu là số sổ nội bộ, chưa phải số ngân hàng đã xác nhận hết',
+      'Trong 97,39 tỷ đã ghi sổ thu, <b>91,77 tỷ</b> đã đối soát khớp với sao kê ngân hàng, <b>5,60 tỷ</b> chưa tới lượt đối soát, và <b>18 triệu</b> đang vướng mắc. Khi báo cáo ra ngoài Nhà trường nên nói rõ phần đã đối soát khớp.'],
     note2:['info','Báo cáo chưa đầy đủ: 18 sinh viên chưa được lập khoản phải thu',
       'Đều thuộc khóa QH.2026 nhóm ngành Ả Rập, do khung học phí chưa khai mức thu cho nhóm này. Số sinh viên và số tiền của 18 em <b>chưa nằm trong bảng</b>. Khi khai xong mức thu, phần Phải thu sẽ tăng thêm còn Đã thu chưa đổi, nên tỷ lệ của khoa sẽ giảm tiếp rồi mới tăng dần khi các em nộp.'],
     foot:'Bảng hiển thị đủ 9 khoa của hệ đại học chính quy, dòng Toàn trường là tổng của các dòng đang hiển thị.' },
@@ -351,17 +353,16 @@ var REPORTS = [
     desc:'Dùng để làm biên bản đối soát định kỳ với BIDV',
     src:'Kết quả so khớp với sao kê cuối ngày của BIDV',
     filters:['range','recstatus'],
-    cols:[{t:'Ngày nghiệp vụ'},{t:'Bút toán khớp',a:'r',n:1},{t:'Mục chênh lệch',a:'r',n:1},
-          {t:'Số tiền chênh (đ)',a:'r',m:1},{t:'Tình trạng'}],
+    cols:[{t:'Cửa sổ đối soát'},{t:'Bút toán khớp',a:'r',n:1},{t:'Mục chênh',a:'r',n:1},
+          {t:'Mục phải xử lý',a:'r',n:1},{t:'Giá trị liên quan (đ)',a:'r',m:1},{t:'Tình trạng'}],
     rows:[
-      ['24/09/2026',289,3,7440000,'badge|warn|Còn chênh lệch'],
-      ['23/09/2026',312,1,250000,'badge|warn|Còn chênh lệch'],
-      ['22/09/2026',341,0,0,'badge|ok|Đã đóng sổ'],
-      ['21/09/2026',298,1,0,'badge|ok|Đã đóng sổ, đã giải trình'],
-      ['20/09/2026',276,0,0,'badge|ok|Đã đóng sổ'],
-      ['19/09/2026',254,0,0,'badge|ok|Đã đóng sổ']],
-    total:'auto', totalLabel:'Tổng 6 ngày',
-    foot:'Ngày 25/09 chưa có sao kê ngân hàng nên chưa nằm trong bảng. Ngày 21/09 từng có một mục chênh lệch, đã giải trình xong trước khi đóng sổ.' },
+      ['24/09/2026',289,3,2,6690000,'badge|warn|Chưa đóng sổ được'],
+      ['23/09/2026',312,1,1,250000,'badge|warn|Chưa đóng sổ được'],
+      ['22/09/2026',341,0,0,0,'badge|ok|Đã đóng sổ 23/09'],
+      ['21/09/2026',298,1,1,17500000,'badge|warn|Chưa đóng sổ được'],
+      ['18/09 đến 20/09/2026',831,0,0,0,'badge|ok|Đã đóng sổ 21/09']],
+    total:'auto', totalLabel:'Tổng 5 đợt',
+    foot:'Đối soát chạy vào ngày làm việc, cửa sổ sau ngày nghỉ được gộp thành một đợt nên số đợt ít hơn số ngày. Cửa sổ 25/09 chưa tới lượt, sẽ chạy thứ Hai 28/09 cùng hai ngày cuối tuần.' },
 
   { id:'r8', name:'Giao dịch bị đảo',
     short:'Tiền đã ghi nhận rồi bị ngân hàng thu hồi',
@@ -605,7 +606,7 @@ function render() {
       '<div class="l">Số tổng của toàn bộ báo cáo</div><div class="v" style="font-size:16px">' +
       r.sample.sum + '</div><div class="s">Bảng bên dưới chỉ hiển thị một phần</div></div></div>';
   }
-  ['note', 'note2'].forEach(function (key, i) {
+  ['note', 'note2', 'note3'].forEach(function (key, i) {
     if (!r[key]) return;
     top += '<div class="nbox ' + r[key][0] + '" id="nb-' + i + '">' +
       '<div class="nbox-hd" onclick="this.parentElement.classList.toggle(\'open\')">' +

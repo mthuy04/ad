@@ -587,6 +587,13 @@ table.tbl thead th.sortable.on .sx{opacity:1}
 .stk .lb{font-size:10px;color:var(--muted);white-space:nowrap}
 .stk .vl{font-size:10.5px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums}
 
+/* ---- Thanh ngang chia lớp xác nhận của số tiền ---- */
+.hstack{display:flex;height:16px;border-radius:5px;overflow:hidden;background:var(--neutral-bg)}
+.hstack div{height:100%}
+.hstack .a{background:var(--ok)}
+.hstack .b{background:#7FB4E4}
+.hstack .c{background:var(--err)}
+
 /* ---- Dải tình hình đối soát theo ngày ---- */
 .rdays{display:flex;gap:7px}
 .rday{flex:1;padding:9px 6px;border-radius:var(--r);text-align:center;border:1px solid}

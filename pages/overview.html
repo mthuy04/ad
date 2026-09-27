@@ -38,9 +38,40 @@
 
         <div class="sumrow">
           <div class="it"><div class="l">Tổng phải thu</div><div class="v">141,1 tỷ đ</div><div class="s">Của 8.196 sinh viên</div></div>
-          <div class="it"><div class="l">Đã thu</div><div class="v ok">97,4 tỷ đ</div><div class="s">5.612 sinh viên đã nộp đủ</div></div>
+          <div class="it"><div class="l">Đã ghi sổ thu</div><div class="v ok">97,4 tỷ đ</div><div class="s">5.612 sinh viên đã nộp đủ</div></div>
           <div class="it"><div class="l">Còn phải thu</div><div class="v warn">43,7 tỷ đ</div><div class="s">2.584 sinh viên chưa nộp đủ</div></div>
           <div class="it"><div class="l">Tỷ lệ đã thu</div><div class="v">69,0%</div><div class="s">Vượt tiến độ theo lịch của kỳ</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div><h2>Trong 97,4 tỷ đã ghi sổ thu, bao nhiêu đã được ngân hàng xác nhận</h2>
+            <div class="sub">Tiền vào sổ của trường và tiền ngân hàng xác nhận là hai việc khác nhau, không nên nhìn chung một số</div></div>
+          </div>
+          <div class="card-bd">
+            <div class="hstack">
+              <div class="a" style="width:94.2%"></div>
+              <div class="b" style="width:5.76%"></div>
+              <div class="c" style="width:0.04%"></div>
+            </div>
+            <div class="lg" style="margin-top:12px">
+              <div class="lg-row"><span class="lg-dot" style="background:var(--ok)"></span>
+                <span class="lg-nm">Đã đối soát khớp với sao kê ngân hàng</span><span class="lg-vl">91,77 tỷ</span><span class="lg-pc">94,2%</span></div>
+              <div class="lg-row"><span class="lg-dot" style="background:#7FB4E4"></span>
+                <span class="lg-nm">Chưa tới lượt đối soát hoặc ngân hàng chưa xác nhận</span><span class="lg-vl">5,60 tỷ</span><span class="lg-pc">5,8%</span></div>
+              <div class="lg-row"><span class="lg-dot" style="background:var(--err)"></span>
+                <span class="lg-nm">Đang có vướng mắc khi đối soát</span><span class="lg-vl">18,0 triệu</span><span class="lg-pc">0,02%</span></div>
+              <div class="lg-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:8px">
+                <span class="lg-nm" style="font-weight:650;color:var(--text)">Tổng đã ghi sổ thu</span>
+                <span class="lg-vl">97,39 tỷ</span><span class="lg-pc">100%</span></div>
+            </div>
+            <div class="note warn" style="margin-top:12px">
+              <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+              <div><span class="nt">Con số 97,4 tỷ là số sổ nội bộ, chưa phải số đã được ngân hàng xác nhận hết</span>
+              Khi báo cáo ra ngoài, nên nói rõ phần đã đối soát khớp là <b>91,77 tỷ</b>. Phần 5,60 tỷ là tiền ngày 25/09
+              chưa tới lượt đối soát, bình thường. Phần 18 triệu là các mục đang vướng, xem ở màn Đối soát và Ngoại lệ.</div>
+            </div>
+          </div>
         </div>
 
         <!-- ===== HÀNG 1: TIẾN ĐỘ THU VÀ CƠ CẤU ===== -->
@@ -211,19 +242,19 @@
         <!-- ===== HÀNG 3: ĐỐI SOÁT VÀ VIỆC CẦN LÀM ===== -->
         <div class="card">
           <div class="card-hd">
-            <div><h2>Đối soát với ngân hàng 7 ngày gần nhất</h2>
-            <div class="sub">Ngày nào chưa đóng sổ được thì còn chênh lệch phải xử lý</div></div>
+            <div><h2>Các đợt đối soát gần nhất</h2>
+            <div class="sub">Đối soát chạy vào ngày làm việc, cửa sổ sau ngày nghỉ được gộp thành một đợt</div></div>
             <div class="card-hd-act"><button class="btn-link" onclick="location.href='reconciliation.html'">Mở màn đối soát</button></div>
           </div>
           <div class="card-bd">
             <div class="rdays">
-              <div class="rday ok"><div class="d">19/09</div><div class="s">Đã đóng sổ</div></div>
-              <div class="rday ok"><div class="d">20/09</div><div class="s">Đã đóng sổ</div></div>
-              <div class="rday ok"><div class="d">21/09</div><div class="s">Đã đóng sổ</div></div>
+              <div class="rday ok"><div class="d">18 đến 20/09</div><div class="s">Gộp cuối tuần, đã đóng sổ</div></div>
+              <div class="rday warn"><div class="d">21/09</div><div class="s">Ngân hàng đảo bút toán 17.500.000 đ</div></div>
               <div class="rday ok"><div class="d">22/09</div><div class="s">Đã đóng sổ</div></div>
-              <div class="rday warn"><div class="d">23/09</div><div class="s">Còn 1 mục chênh 250.000 đ</div></div>
-              <div class="rday warn"><div class="d">24/09</div><div class="s">Còn 2 mục chênh 6.690.000 đ</div></div>
-              <div class="rday mute"><div class="d">25/09</div><div class="s">Chờ sao kê ngân hàng</div></div>
+              <div class="rday warn"><div class="d">23/09</div><div class="s">Lệch số tiền 250.000 đ</div></div>
+              <div class="rday warn"><div class="d">24/09</div><div class="s">Còn 2 mục, 6.690.000 đ</div></div>
+              <div class="rday mute"><div class="d">25/09</div><div class="s">Chưa tới lượt, chạy thứ Hai 28/09</div></div>
+            </div>
             </div>
           </div>
         </div>
@@ -236,9 +267,9 @@
           <div class="card-bd flush">
 
             <div class="todo" style="cursor:pointer" onclick="location.href='reconciliation.html'">
-              <span class="n err">3</span>
+              <span class="n err">4</span>
               <div class="tx"><b>Chênh lệch đối soát đang chặn đóng sổ</b>
-              <span>Hai ngày 23/09 và 24/09 chưa đóng sổ được</span></div>
+              <span>Ba cửa sổ 21/09, 23/09 và 24/09 chưa đóng sổ được</span></div>
               <span class="bg err">Phải xử lý ngay</span>
             </div>
 

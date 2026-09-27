@@ -30,7 +30,7 @@
           <span class="dot" style="background:var(--warn)"></span>
           <span>Số liệu tính đến <b>25/09/2026 09:45</b></span>
           <span class="sep"></span>
-          <span>Có <b>3 việc</b> đang chặn đóng sổ đối soát</span>
+          <span>Có <b>4 việc</b> đang chặn đóng sổ đối soát</span>
           <span class="grow"></span>
           <button class="btn-link" onclick="location.href='reconciliation.html'">Mở màn Đối soát BIDV</button>
         </div>
@@ -45,9 +45,9 @@
         <div class="chips" data-target="tbl-ex">
           <button class="chip on" data-filter="all"   onclick="pickChip(this)">Tất cả <span class="n">14</span></button>
           <button class="chip"    data-filter="alloc" onclick="pickChip(this)">Tiền chưa gắn khoản <span class="n">7</span></button>
-          <button class="chip"    data-filter="recon" onclick="pickChip(this)">Chênh lệch đối soát <span class="n">3</span></button>
+          <button class="chip"    data-filter="recon" onclick="pickChip(this)">Chênh lệch đối soát <span class="n">4</span></button>
           <button class="chip"    data-filter="adj"   onclick="pickChip(this)">Khoản thu cần điều chỉnh <span class="n">2</span></button>
-          <button class="chip"    data-filter="odd"   onclick="pickChip(this)">Giao dịch bất thường <span class="n">2</span></button>
+          <button class="chip"    data-filter="odd"   onclick="pickChip(this)">Giao dịch bất thường <span class="n">1</span></button>
         </div>
 
         <div class="filters f-4x">
@@ -115,9 +115,9 @@
                     <td>Nguyễn Thị Hương</td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openEx('e3')">Chi tiết</button></td>
                   </tr>
-                  <tr data-tags="odd">
-                    <td><div class="t-main">Không đảo được bút toán tự động</div><div class="t-sub">Tiền đã dùng sang việc khác</div></td>
-                    <td><div class="t-main">Giao dịch</div><div class="t-sub">Hoàng Anh Tuấn, 23040544</div></td>
+                  <tr data-tags="recon">
+                    <td><div class="t-main">Ngân hàng đảo bút toán đã ghi nhận</div><div class="t-sub">Đối soát cửa sổ 21/09, đang chặn đóng sổ</div></td>
+                    <td><div class="t-main">Đối soát BIDV</div><div class="t-sub">Hoàng Anh Tuấn, 23040544</div></td>
                     <td class="money" style="color:var(--err)">-17.500.000</td>
                     <td><span class="bg err">Phải xử lý ngay</span></td>
                     <td><div class="t-main">21/09</div><div class="t-sub">Chờ 4 ngày</div></td>
@@ -320,20 +320,21 @@ var EX = {
            ['now','Chờ ngân hàng trả lời','Đã 1 ngày']],
        go:['reconciliation.html','Mở đợt đối soát ngày 23/09'] },
 
-  e4:{ title:'Không đảo được bút toán tự động', sub:'Giao dịch ngày 21/09/2026', amt:'-17.500.000 đ', amtl:'Số tiền ngân hàng thu hồi',
-       lv:['err','Phải xử lý ngay'], blk:['mute','Không, sổ ngày 21/09 đã đóng'], own:'Trần Văn Bình',
+  e4:{ title:'Ngân hàng đảo bút toán đã ghi nhận', sub:'Đối soát cửa sổ 21/09/2026', amt:'-17.500.000 đ', amtl:'Số tiền ngân hàng thu hồi',
+       lv:['err','Phải xử lý ngay'], blk:['err','Có, cửa sổ 21/09 chưa đóng sổ được'], own:'Trần Văn Bình',
        todo:['err','Xử lý tay theo hướng dẫn của Phòng Kế hoạch Tài chính',
          'Ngân hàng thu hồi giao dịch 17.500.000 đ của sinh viên Hoàng Anh Tuấn. Hệ thống <b>đã ghi bút toán đảo ở mức giao dịch</b> nên sổ đối soát ngày 21/09 cân và đã đóng. Nhưng <b>phần tiền đã trừ vào khoản phải thu thì chưa đảo được</b>: tiền gốc đã vào học phí và phần thừa 200.000 đ đã chuyển sang kỳ sau, đảo tự động sẽ làm số dư của sinh viên bị âm. Hiện công nợ vẫn ghi là em ấy đã nộp, trong khi tiền đã bị ngân hàng lấy lại.',
          'Liên hệ sinh viên và ngân hàng làm rõ, sau đó lập bút toán điều chỉnh tay. Không tự sửa số liệu trong cơ sở dữ liệu.'],
-       info:[['Nguồn phát sinh','Giao dịch bị ngân hàng thu hồi'],['Sinh viên','Hoàng Anh Tuấn, 23040544'],
+       info:[['Nguồn phát sinh','Đối soát với sao kê ngân hàng'],['Sinh viên','Hoàng Anh Tuấn, 23040544'],
              ['Tiền gốc đã trừ vào','Học phí chính quy học kỳ 1'],['Phần thừa đã chuyển','200.000 đ sang học kỳ 2'],
-             ['Đối soát ngày 21/09','Đã khớp và đã đóng sổ, vì bút toán đảo đã ghi ở mức giao dịch'],
+             ['Đối soát cửa sổ 21/09','Tổng tiền hai bên cân, nhưng đợt này chưa đóng sổ được vì còn mục ngân hàng đảo bút toán'],
+             ['Hạn xử lý','Hết ngày 28/09/2026, đã dùng 4 trong 5 ngày làm việc'],
              ['Rủi ro nếu để lâu','Công nợ đang ghi thiếu 17.500.000 đ so với thực tế, sinh viên có thể được xét tốt nghiệp nhầm']],
        tl:[['done','Ngân hàng báo thu hồi giao dịch','21/09/2026 16:58'],
            ['done','Hệ thống dừng lại, không đảo tự động','21/09/2026 16:58'],
-           ['done','Đối soát ngày 21/09 đã giải trình xong và đóng sổ','22/09/2026 10:40'],
+           ['done','Đối soát gửi bằng chứng đảo sang bộ phận công nợ','22/09/2026 09:20'],
            ['warn','Công nợ của sinh viên vẫn chưa được chỉnh','Đã 4 ngày, đây là số tiền thật đang ghi sai']],
-       go:['transactions.html','Mở giao dịch liên quan'] },
+       go:['reconciliation.html','Mở đợt đối soát cửa sổ 21/09'] },
 
   e5:{ title:'Không xác định được sinh viên nào nộp', sub:'Giao dịch ngày 25/09/2026', amt:'17.500.000 đ',
        lv:['warn','Cần xử lý'], blk:['mute','Không'], own:'Chưa phân công',
