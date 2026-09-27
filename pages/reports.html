@@ -18,20 +18,16 @@
         <div class="phead">
           <div>
             <h1>Báo cáo</h1>
-            <p>Chọn báo cáo cần xem, đặt phạm vi rồi tải về. Số liệu là ảnh chụp tại thời điểm ghi bên dưới,
-               hệ thống làm mới 30 phút một lần.</p>
+            <p>Chọn báo cáo cần xem, đặt phạm vi rồi tải về hoặc in.</p>
+            <div class="pmeta">
+              <span class="dot"></span>
+              <span>Số liệu tính đến <b>25/09/2026 08:16</b></span>
+              <span class="sep"></span>
+              <span>Làm mới tiếp theo khoảng <b>08:46</b></span>
+              <span class="sep"></span>
+              <button class="btn-link" onclick="toast('Đang làm mới số liệu báo cáo.','ok')">Làm mới ngay</button>
+            </div>
           </div>
-        </div>
-
-        <div class="srcbar">
-          <span class="dot"></span>
-          <span>Số liệu tính đến <b>25/09/2026 08:16</b></span>
-          <span class="sep"></span>
-          <span>Lần làm mới tiếp theo khoảng <b>08:46</b></span>
-          <span class="grow"></span>
-          <button class="btn-link" onclick="toast('Đang làm mới số liệu báo cáo.','ok')">Làm mới ngay</button>
-          <span class="sep"></span>
-          <button class="btn-link" onclick="showTab('rp','history')">Lịch sử xuất báo cáo</button>
         </div>
 
         <div class="tabs">
@@ -43,16 +39,16 @@
         <div class="pane on" data-pane-group="rp" data-pane="make">
           <div class="rp-layout">
 
-            <nav class="rp-side" id="rp-list"></nav>
+            <nav class="rp-side">
+              <div class="rp-find"><input placeholder="Tìm báo cáo" oninput="findReport(this.value)"></div>
+              <div id="rp-list"></div>
+            </nav>
 
             <div>
               <!-- Bộ lọc thay đổi theo từng báo cáo -->
-              <div class="card">
-                <div class="card-bd">
-                  <div class="filters" id="rv-filters" style="margin-bottom:0"></div>
-                  <p class="hint" style="margin-top:9px" id="rv-scope"></p>
-                </div>
-              </div>
+              <div class="filters" id="rv-filters" style="margin-bottom:8px"></div>
+              <div class="qr" id="rv-quick" style="display:none"></div>
+              <p class="hint" id="rv-scope" style="margin:0 0 12px"></p>
 
               <div class="card" style="margin-bottom:0">
                 <div class="card-hd">
@@ -241,8 +237,8 @@ var REPORTS = [
     src:'Khoản phải thu và giao dịch đã gắn khoản',
     filters:['period','fac','asof'],
     sort:{col:5,dir:1},
-    cols:[{t:'Khoa'},{t:'Sinh viên có khoản phải thu',a:'r',n:1},{t:'Phải thu (đ)',a:'r',m:1},
-          {t:'Đã thu (đ)',a:'r',m:1},{t:'Còn phải thu (đ)',a:'r',m:1,calc:[2,3]},{t:'Tỷ lệ đã thu',a:'r',pct:[3,2]}],
+    cols:[{t:'Khoa'},{t:'Sinh viên có khoản phải thu',a:'r',n:1},{t:'Phải thu',a:'r',m:1,short:1},
+          {t:'Đã thu',a:'r',m:1,short:1},{t:'Còn phải thu',a:'r',m:1,short:1,calc:[2,3]},{t:'Tỷ lệ đã thu',a:'r',pct:[3,2]}],
     rows:[
       ['Khoa NN và VH Anh',1842,34815000000,24987000000],
       ['Khoa Sư phạm tiếng Anh',1126,13905000000,10203000000],
@@ -302,8 +298,8 @@ var REPORTS = [
     desc:'Dùng để đối chiếu với sổ sách kế toán của Nhà trường',
     src:'Giao dịch ngân hàng đã báo về',
     filters:['range','channel'],
-    cols:[{t:'Ngày'},{t:'Số giao dịch',a:'r',n:1},{t:'Nộp bằng mã thanh toán (đ)',a:'r',m:1},
-          {t:'Chuyển khoản trực tiếp (đ)',a:'r',m:1},{t:'Tổng tiền về (đ)',a:'r',m:1}],
+    cols:[{t:'Ngày'},{t:'Số giao dịch',a:'r',n:1},{t:'Nộp bằng mã thanh toán',a:'r',m:1,short:1},
+          {t:'Chuyển khoản trực tiếp',a:'r',m:1,short:1},{t:'Tổng tiền về',a:'r',m:1,short:1}],
     rows:[
       ['25/09/2026',316,5410000000,190000000,5600000000],
       ['24/09/2026',292,5015000000,215000000,5230000000],
@@ -422,6 +418,8 @@ var REPORTS = [
       'Số sinh viên trong danh sách này chưa có khoản phải thu, nên chưa nằm trong bất kỳ con số tiền nào của các báo cáo khác.'],
     foot:'Bảng hiển thị 5 trường hợp gần nhất. Số tổng ở trên là của toàn bộ báo cáo.' },
 
+  { g:'Tra cứu một sinh viên' },
+
   { id:'r10', name:'Chi tiết căn cứ tính của một sinh viên',
     short:'Vì sao sinh viên phải nộp đúng số tiền đó',
     desc:'Mở ra khi sinh viên hoặc khoa hỏi lại số tiền, in ra được để trả lời bằng văn bản',
@@ -476,7 +474,7 @@ var FILTERS = {
   period:{ lb:'Kỳ thu', opts:['Học phí chính quy học kỳ 1, năm học 2026-2027','Học lại và học cải thiện học kỳ 1, năm học 2026-2027'] },
   periodOpen:{ lb:'Kỳ thu', opts:['Tất cả kỳ thu còn mở','Học phí chính quy học kỳ 1, năm học 2026-2027','Học lại và học cải thiện học kỳ 1, năm học 2026-2027'] },
   fac:{ lb:'Khoa', opts:['Tất cả khoa'].concat(KHOA), filterCol:true },
-  asof:{ lb:'Tính đến ngày', input:'25/09/2026' },
+  asof:{ lb:'Tính đến ngày', date:'2026-09-25' },
   range:{ lb:'range' },
   due:{ lb:'Tình trạng hạn nộp', opts:['Tất cả','Còn hạn','Sắp đến hạn','Đã quá hạn'] },
   adjtype:{ lb:'Loại điều chỉnh', opts:['Tất cả','Miễn giảm','Bảo lưu','Bổ sung học phần','Sửa sai sót dữ liệu'] },
@@ -502,11 +500,13 @@ function buildFilters() {
   r.filters.forEach(function (k) {
     var f = FILTERS[k];
     if (k === 'range') {
-      html += fld('Từ ngày', '<input class="inp" id="flt-from" value="01/09/2026" onchange="render()">');
-      html += fld('Đến ngày', '<input class="inp" id="flt-to" value="25/09/2026" onchange="render()">');
+      html += fld('Từ ngày', '<input class="inp" type="date" id="flt-from" value="2026-09-01" onchange="render()">');
+      html += fld('Đến ngày', '<input class="inp" type="date" id="flt-to" value="2026-09-25" onchange="render()">');
       n += 2; return;
     }
-    if (f.input) {
+    if (f.date) {
+      html += fld(f.lb, '<input class="inp" type="date" id="flt-' + k + '" value="' + f.date + '" onchange="render()">');
+    } else if (f.input) {
       html += fld(f.lb, '<input class="inp" id="flt-' + k + '" value="' + f.input + '" onchange="render()">');
     } else {
       html += fld(f.lb, '<select class="sel" id="flt-' + k + '" onchange="render()">' +
@@ -517,6 +517,37 @@ function buildFilters() {
   var box = document.getElementById('rv-filters');
   box.className = 'filters ' + (n >= 4 ? 'f-4x' : n === 3 ? 'f-3x' : 'f-2x');
   box.innerHTML = html;
+
+  var q = document.getElementById('rv-quick');
+  if (r.filters.indexOf('range') >= 0) {
+    q.style.display = '';
+    q.innerHTML = '<button onclick="quickRange(7)">7 ngày qua</button>' +
+                  '<button onclick="quickRange(30)">30 ngày qua</button>' +
+                  '<button onclick="quickRange(0)">Cả kỳ thu</button>';
+  } else { q.style.display = 'none'; q.innerHTML = ''; }
+}
+
+/* Chọn nhanh khoảng ngày để không phải gõ tay */
+function quickRange(days) {
+  var to = '2026-09-25', from;
+  if (days === 0) from = '2026-09-01';
+  else { var d = new Date('2026-09-25'); d.setDate(d.getDate() - days + 1); from = d.toISOString().slice(0, 10); }
+  document.getElementById('flt-from').value = from;
+  document.getElementById('flt-to').value = to;
+  render();
+}
+
+/* Lọc danh sách báo cáo bên trái */
+function findReport(q) {
+  q = (q || '').trim().toLowerCase();
+  document.querySelectorAll('#rp-list .rp-item').forEach(function (el) {
+    el.style.display = (!q || el.textContent.toLowerCase().indexOf(q) >= 0) ? '' : 'none';
+  });
+  document.querySelectorAll('#rp-list .rp-group').forEach(function (g) {
+    var any = false, n = g.nextElementSibling;
+    while (n && n.classList.contains('rp-item')) { if (n.style.display !== 'none') any = true; n = n.nextElementSibling; }
+    g.style.display = any ? '' : 'none';
+  });
 }
 function fld(lb, inner) { return '<div class="field"><label>' + lb + '</label>' + inner + '</div>'; }
 
@@ -537,15 +568,16 @@ function render() {
   var acts = '';
   if (r.share) acts += '<button class="btn btn-sm" onclick="openSend()">' +
     (r.share.kind === 'khoa' ? 'Gửi cho khoa' : 'Gửi cho đơn vị xử lý') + '</button>';
-  acts += '<button class="btn btn-sm" onclick="exportReport(\'PDF\')">Tải PDF</button>' +
+  acts += '<button class="btn btn-sm" onclick="window.print()">In</button>' +
+          '<button class="btn btn-sm" onclick="exportReport(\'PDF\')">Tải PDF</button>' +
           '<button class="btn btn-sm btn-primary" onclick="exportReport(\'Excel\')">Tải Excel</button>';
   document.getElementById('rv-actions').innerHTML = acts;
 
   /* Câu nhắc lại phạm vi, ghép từ chính các ô lọc đang có */
   var parts = [];
   r.filters.forEach(function (k) {
-    if (k === 'range') { parts.push('từ <b>' + val('from') + '</b> đến <b>' + val('to') + '</b>'); return; }
-    parts.push(FILTERS[k].lb.toLowerCase() + ' <b>' + val(k) + '</b>');
+    if (k === 'range') { parts.push('từ <b>' + viDate(val('from')) + '</b> đến <b>' + viDate(val('to')) + '</b>'); return; }
+    parts.push(FILTERS[k].lb.toLowerCase() + ' <b>' + (FILTERS[k].date ? viDate(val(k)) : val(k)) + '</b>');
   });
   var warn = '';
   if (r.filters.indexOf('range') >= 0 && dmy(val('from')) > dmy(val('to'))) {
@@ -573,11 +605,13 @@ function render() {
       '<div class="l">Số tổng của toàn bộ báo cáo</div><div class="v" style="font-size:16px">' +
       r.sample.sum + '</div><div class="s">Bảng bên dưới chỉ hiển thị một phần</div></div></div>';
   }
-  ['note', 'note2'].forEach(function (key) {
+  ['note', 'note2'].forEach(function (key, i) {
     if (!r[key]) return;
-    top += '<div class="note ' + r[key][0] + '" style="margin-bottom:12px">' +
-      '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>' +
-      '<div><span class="nt">' + r[key][1] + '</span>' + r[key][2] + '</div></div>';
+    top += '<div class="nbox ' + r[key][0] + '" id="nb-' + i + '">' +
+      '<div class="nbox-hd" onclick="this.parentElement.classList.toggle(\'open\')">' +
+        '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>' +
+        '<b>' + r[key][1] + '</b><span class="chev">Xem giải thích</span></div>' +
+      '<div class="nbox-bd">' + r[key][2] + '</div></div>';
   });
   var tb = document.getElementById('rv-top');
   tb.style.display = top ? '' : 'none';
@@ -585,16 +619,20 @@ function render() {
 
   /* Bảng */
   var head = '<thead><tr>' + r.cols.map(function (c, i) {
-    var arrow = r.sort && r.sort.col === i ? (r.sort.dir > 0 ? ' ↑' : ' ↓') : '';
-    return '<th' + (c.a === 'r' ? ' class="r w2"' : ' class="w2"') +
-      ' style="cursor:pointer" onclick="doSort(' + i + ')">' + c.t + arrow + '</th>';
+    var on = r.sort && r.sort.col === i;
+    var mark = on ? (r.sort.dir > 0 ? '↑' : '↓') : '⇅';
+    return '<th class="w2 sortable' + (c.a === 'r' ? ' r' : '') + (on ? ' on' : '') + '"' +
+      ' title="Bấm để sắp xếp theo cột này" onclick="doSort(' + i + ')">' +
+      c.t + '<span class="sx">' + mark + '</span></th>';
   }).join('') + '</tr></thead>';
 
   var body = '<tbody>';
   if (!rows.length) {
     body += '<tr><td colspan="' + r.cols.length + '" style="padding:34px;text-align:center;color:var(--muted)">' +
-      (warn ? 'Chưa lấy được số liệu vì khoảng ngày chưa hợp lệ.'
-            : 'Không có dòng nào khớp bộ lọc đang chọn.') + '</td></tr>';
+      (warn ? 'Chưa lấy được số liệu vì ngày bắt đầu đang sau ngày kết thúc.'
+            : 'Không có dòng nào khớp bộ lọc đang chọn.') +
+      '<div style="margin-top:10px"><button class="btn btn-sm" onclick="resetFilters()">Xóa bộ lọc</button></div>' +
+      '</td></tr>';
   } else {
     body += rows.map(function (row) {
       return '<tr>' + r.cols.map(function (c, i) {
@@ -609,10 +647,13 @@ function render() {
   t.style.minWidth = Math.max(760, r.cols.length * 158) + 'px';
   t.innerHTML = head + body;
 
-  document.getElementById('rv-foot').textContent =
-    (facSel && facSel !== 'Tất cả khoa' && facCol >= 0)
-      ? 'Đang lọc theo ' + facSel + ', hiển thị ' + rows.length + ' dòng. Số tổng tính lại theo đúng các dòng đang hiển thị.'
-      : r.foot;
+  var hasShort = r.cols.some(function (c) { return c.short; });
+  document.getElementById('rv-foot').innerHTML =
+    ((facSel && facSel !== 'Tất cả khoa' && facCol >= 0)
+      ? 'Đang lọc theo <b>' + facSel + '</b>, hiển thị ' + rows.length + ' dòng. Số tổng tính lại theo đúng các dòng đang hiển thị.'
+      : r.foot) +
+    (hasShort ? ' Bảng hiện số rút gọn cho dễ đọc, đưa chuột lên số để xem số nguyên đồng. Tệp tải về luôn có số nguyên đồng.' : '') +
+    ' Tệp tải về gồm đúng phần đang lọc.';
 }
 
 /* Dòng tổng luôn cộng từ chính các dòng đang hiển thị */
@@ -633,7 +674,8 @@ function totalRow(rows, r, facSel) {
       var v = rows.reduce(function (s, x) {
         return s + (c.calc ? (x[c.calc[0]] - x[c.calc[1]]) : (Number(x[i]) || 0));
       }, 0);
-      out += '<td class="money" style="font-weight:750">' + vnd(v) + '</td>';
+      out += '<td class="money" style="font-weight:750"' + (c.short ? ' title="' + vnd(v) + ' đồng"' : '') +
+             '>' + (c.short ? vndShort(v) : vnd(v)) + '</td>';
       return;
     }
     out += '<td></td>';
@@ -642,6 +684,14 @@ function totalRow(rows, r, facSel) {
 }
 
 /* Một ô có thể là chữ, tên kèm mã, nội dung hai dòng, tiền, số đếm, nhãn hoặc thanh tỷ lệ */
+/* Số rút gọn cho báo cáo tổng hợp, giữ số nguyên đồng ở ô chú giải và trong tệp tải về */
+function vndShort(n) {
+  var v = Math.abs(n), dau = n < 0 ? '-' : '';
+  if (v >= 1e9) return dau + (v / 1e9).toFixed(1).replace('.', ',') + ' tỷ';
+  if (v >= 1e6) return dau + (v / 1e6).toFixed(0) + ' triệu';
+  return vnd(n);
+}
+
 function td(cell, c, pctPair) {
   if (c.pct) {
     var a = pctPair ? pctPair[0] : cell.paid, b = pctPair ? pctPair[1] : cell.due;
@@ -650,6 +700,7 @@ function td(cell, c, pctPair) {
       '" style="width:' + v.toFixed(1) + '%"></div></div><span class="num">' +
       v.toFixed(1).replace('.', ',') + '%</span></div></td>';
   }
+  if (c.m && c.short) return '<td class="money" title="' + vnd(cell) + ' đồng">' + vndShort(cell) + '</td>';
   if (c.m || c.n) return '<td class="money">' + vnd(cell) + '</td>';
   if (typeof cell === 'string' && cell.indexOf('badge|') === 0) {
     var p = cell.split('|');
@@ -680,15 +731,24 @@ function doSort(i) {
   render();
 }
 
-function dmy(s) {
-  var p = String(s || '').split('/');
-  return p.length === 3 ? p[2] + p[1].padStart(2, '0') + p[0].padStart(2, '0') : '';
+/* Ô ngày dùng lịch chọn nên giá trị là dạng năm-tháng-ngày, so sánh trực tiếp được */
+function dmy(s) { return String(s || ''); }
+function viDate(s) {
+  var p = String(s || '').split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : s;
 }
 
 function pick(id) { current = id; buildFilters(); render(); }
 
+/* Đưa mọi ô lọc của báo cáo đang xem về mặc định */
+function resetFilters() { buildFilters(); render(); toast('Đã xóa bộ lọc, quay về phạm vi mặc định.', 'ok'); }
+
 function exportReport(kind) {
-  toast('Đang tạo bản ' + kind + ' của báo cáo ' + cur().name + ', số liệu tính đến 25/09/2026 08:16.', 'ok');
+  var r = cur();
+  var fac = r.filters.indexOf('fac') >= 0 ? val('fac') : '';
+  var pham = (fac && fac !== 'Tất cả khoa') ? fac : 'toàn bộ phạm vi đang lọc';
+  toast('Đang tạo bản ' + kind + ' của báo cáo ' + r.name + ', gồm ' + pham +
+        ', số liệu tính đến 25/09/2026 08:16.', 'ok');
 }
 
 /* ---------------- Hộp thoại gửi ---------------- */
