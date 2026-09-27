@@ -55,10 +55,17 @@
 
         <!-- Ba số tiền cộng dồn trong khoảng ngày đang lọc -->
         <div class="sumrow">
-          <div class="it"><div class="l">Ngân hàng báo về</div><div class="v">32,84 tỷ đ</div><div class="s">1.874 bút toán từ 19/09 đến 24/09</div></div>
-          <div class="it"><div class="l">Hệ thống đã ghi nhận</div><div class="v">32,83 tỷ đ</div><div class="s">1.872 giao dịch</div></div>
-          <div class="it"><div class="l">Chênh lệch chưa xử lý</div><div class="v warn">7,69 triệu đ</div><div class="s">3 mục ở 2 ngày, xem bên dưới</div></div>
+          <div class="it"><div class="l">Ngân hàng báo về</div><div class="v">29.926.190.000 đ</div><div class="s">1.824 bút toán, từ 19/09 đến 24/09</div></div>
+          <div class="it"><div class="l">Hệ thống đã ghi nhận</div><div class="v">29.920.000.000 đ</div><div class="s">1.824 giao dịch, cùng khoảng ngày</div></div>
+          <div class="it"><div class="l">Chênh lệch giữa hai bên</div><div class="v warn">6.190.000 đ</div><div class="s">Gồm 4 mục, trong đó 3 mục phải xử lý</div></div>
         </div>
+
+        <p class="hint" style="margin:-4px 0 14px">
+          Bốn mục chênh cộng lại <b>7.690.000 đ</b>, nhưng lệch ngược chiều nhau nên bù trừ còn <b>6.190.000 đ</b>:
+          ngân hàng có mà hệ thống chưa có <b>6.440.000 đ</b>, hai mục lệch số tiền <b>500.000 đ</b>,
+          trừ đi mục hệ thống có mà ngân hàng chưa có <b>750.000 đ</b>.
+          Ngày 25/09 chưa có sao kê nên chưa vào các số trên.
+        </p>
 
         <div class="chips" data-target="tbl-rc">
           <button class="chip on" data-filter="all"    onclick="pickChip(this)">Tất cả <span class="n">7</span></button>
@@ -98,8 +105,8 @@
                   <tr data-tags="diff">
                     <td><div class="t-main">24/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 25/09 07:32</div><div class="t-sub">Bản gửi lần 1</div></td>
-                    <td><div class="t-main">289 bút toán khớp</div><div class="t-sub">3 mục chênh lệch</div></td>
-                    <td class="money" style="color:var(--warn)">7.440.000</td>
+                    <td><div class="t-main">289 bút toán khớp</div><div class="t-sub">3 mục chênh, 2 mục phải xử lý</div></td>
+                    <td class="money" style="color:var(--warn)">6.690.000</td>
                     <td><span class="bg warn">Chưa đủ, còn 2 việc</span></td>
                     <td><span class="bg warn">Còn chênh lệch</span></td>
                     <td class="t-act"><button class="btn btn-sm" onclick="openRc('d24')">Chi tiết</button></td>
@@ -107,7 +114,7 @@
                   <tr data-tags="diff">
                     <td><div class="t-main">23/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 24/09 07:28</div><div class="t-sub">Bản gửi lần 1</div></td>
-                    <td><div class="t-main">312 bút toán khớp</div><div class="t-sub">1 mục chênh lệch</div></td>
+                    <td><div class="t-main">312 bút toán khớp</div><div class="t-sub">1 mục chênh, 1 mục phải xử lý</div></td>
                     <td class="money" style="color:var(--warn)">250.000</td>
                     <td><span class="bg warn">Chưa đủ, còn 1 việc</span></td>
                     <td><span class="bg warn">Còn chênh lệch</span></td>
@@ -116,7 +123,7 @@
                   <tr data-tags="closed">
                     <td><div class="t-main">22/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 23/09 07:30</div><div class="t-sub">Bản gửi lần 1</div></td>
-                    <td><div class="t-main">341 bút toán khớp</div><div class="t-sub">0 mục chênh lệch</div></td>
+                    <td><div class="t-main">341 bút toán khớp</div><div class="t-sub">Không có mục chênh</div></td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><span class="bg ok">Đủ điều kiện</span></td>
                     <td><span class="bg ok">Đã đóng sổ 23/09 09:15</span></td>
@@ -125,7 +132,7 @@
                   <tr data-tags="closed">
                     <td><div class="t-main">21/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 22/09 07:31</div><div class="t-sub">Bản gửi lần 2</div></td>
-                    <td><div class="t-main">298 bút toán khớp</div><div class="t-sub">1 mục chênh lệch, đã giải trình</div></td>
+                    <td><div class="t-main">298 bút toán khớp</div><div class="t-sub">1 mục chênh, đã giải trình xong</div></td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><span class="bg ok">Đủ điều kiện</span></td>
                     <td><span class="bg ok">Đã đóng sổ 22/09 10:40</span></td>
@@ -134,7 +141,7 @@
                   <tr data-tags="closed">
                     <td><div class="t-main">20/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 21/09 07:29</div><div class="t-sub">Bản gửi lần 1</div></td>
-                    <td><div class="t-main">276 bút toán khớp</div><div class="t-sub">0 mục chênh lệch</div></td>
+                    <td><div class="t-main">276 bút toán khớp</div><div class="t-sub">Không có mục chênh</div></td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><span class="bg ok">Đủ điều kiện</span></td>
                     <td><span class="bg ok">Đã đóng sổ 21/09 08:50</span></td>
@@ -143,7 +150,7 @@
                   <tr data-tags="closed">
                     <td><div class="t-main">19/09/2026</div></td>
                     <td><div class="t-main">Đã nhận 20/09 07:33</div><div class="t-sub">Bản gửi lần 1</div></td>
-                    <td><div class="t-main">254 bút toán khớp</div><div class="t-sub">0 mục chênh lệch</div></td>
+                    <td><div class="t-main">254 bút toán khớp</div><div class="t-sub">Không có mục chênh</div></td>
                     <td class="money" style="color:var(--muted)">0</td>
                     <td><span class="bg ok">Đủ điều kiện</span></td>
                     <td><span class="bg ok">Đã đóng sổ 20/09 09:02</span></td>
@@ -190,7 +197,7 @@
       <div class="money3">
         <div class="m-box"><div class="m-l">Ngân hàng báo về</div><div class="m-v" id="rc-m1">5.234.500.000</div></div>
         <div class="m-box ok"><div class="m-l">Hệ thống ghi nhận</div><div class="m-v" id="rc-m2">5.227.060.000</div></div>
-        <div class="m-box hl"><div class="m-l">Chênh lệch</div><div class="m-v" id="rc-m3">7.440.000</div></div>
+        <div class="m-box hl"><div class="m-l">Chênh lệch giữa hai bên</div><div class="m-v" id="rc-m3">7.440.000</div></div>
       </div>
       <div class="axes" style="margin-top:12px">
         <div class="axis-row"><span class="axis-k">Bút toán khớp</span><span id="rc-ok" style="font-size:12.5px;font-weight:600">289 bút toán</span></div>
@@ -252,7 +259,7 @@
 <script>
 var RC = {
   d25:{ title:'Đối soát ngày 25/09/2026', sub:'Chưa nhận sao kê ngân hàng', date:'25/09/2026',
-        m:['Chưa có','5.612.000.000','Chưa có'], ok:'Chưa chạy được', st:['mute','Chờ sao kê ngân hàng'],
+        m:['Chưa có','5.600.000.000','Chưa có'], ok:'Chưa chạy được', st:['mute','Chờ sao kê ngân hàng'],
         problem:{ type:'info', title:'Chưa đối soát được vì chưa có sao kê',
           body:'Ngân hàng gửi sao kê cuối ngày vào khoảng 07:30 sáng hôm sau. Sao kê của ngày 25/09 dự kiến về lúc 26/09 07:30.',
           todo:'Không cần làm gì. Nếu quá 09:00 ngày 26/09 vẫn chưa nhận được, hệ thống sẽ báo và cán bộ liên hệ ngân hàng.' },
@@ -262,19 +269,19 @@ var RC = {
         ft:'none' },
 
   d24:{ title:'Đối soát ngày 24/09/2026', sub:'Sao kê nhận lúc 25/09/2026 07:32', date:'24/09/2026',
-        m:['5.234.500.000','5.227.060.000','7.440.000'], ok:'289 bút toán', st:['warn','Còn chênh lệch'],
+        m:['5.235.940.000','5.230.000.000','5.940.000'], ok:'289 bút toán', st:['warn','Còn chênh lệch'],
         problem:{ type:'warn', title:'Còn 2 việc phải xong mới đóng sổ được',
           body:'Ngày này có 3 mục chênh lệch, tổng 7.440.000 đ. Trong đó 1 mục được phép chuyển sang ngày sau, còn 2 mục phải xử lý dứt điểm.',
           todo:'Xử lý hai mục ghi dấu chấm than trong danh sách bên dưới. Xong cả hai thì nút Đóng sổ mới mở.' },
         cond:[[0,'Đã nhận đủ sao kê của ngày','Sao kê ngày 24/09 nhận lúc 25/09 07:32'],
-              [0,'Số dòng và tổng tiền trên sao kê cân nhau','Ngân hàng gửi 292 dòng, hệ thống đọc đủ 292'],
+              [0,'Tệp sao kê đọc được đủ và tự cân','Ngân hàng khai 292 bút toán, hệ thống đọc đủ 292, tổng tiền khớp phần khai báo'],
               [1,'Không còn mục ngân hàng có mà hệ thống chưa có','Còn 1 mục, 6.440.000 đ'],
               [1,'Không còn mục lệch số tiền','Còn 1 mục, 250.000 đ'],
-              [0,'Mục còn trong thời gian chờ được phép chuyển sang ngày sau','1 mục, 750.000 đ, hệ thống ghi lúc 23:52'],
+              [0,'Mục chờ sang ngày sau còn trong hạn cho phép','1 mục, 750.000 đ, hạn chờ tới hết 26/09'],
               [0,'Không còn giao dịch nào đang xử lý dở','Tất cả đã xử lý xong']],
-        diff:[['err','Ngân hàng có, hệ thống chưa có','6.440.000 đ','Sinh viên chuyển khoản lúc 23:58, sát giờ chốt sổ nên hệ thống chưa kịp nhận báo có','Kiểm tra lại và bổ sung giao dịch vào hệ thống'],
+        diff:[['err','Ngân hàng có, hệ thống chưa có','6.440.000 đ','Sinh viên chuyển khoản lúc 23:58, sát giờ chốt sổ nên hệ thống chưa kịp nhận báo có','Xin ủy nhiệm chi gốc, rồi nạp bổ sung bút toán từ tệp sao kê, không gõ tay số tiền'],
               ['err','Lệch số tiền','250.000 đ','Ngân hàng ghi 8.700.000 đ, hệ thống ghi 8.450.000 đ cho cùng một bút toán','Đối chiếu chứng từ gốc với ngân hàng'],
-              ['ok','Hệ thống có, ngân hàng chưa có','750.000 đ','Hệ thống ghi nhận lúc 23:52, sao kê ngày 24/09 chưa có. Còn trong thời gian chờ nên được phép chuyển sang ngày 25/09','Không cần làm gì, theo dõi ở đợt ngày 25/09']],
+              ['ok','Hệ thống có, ngân hàng chưa có','750.000 đ','Hệ thống ghi nhận lúc 23:52, sao kê ngày 24/09 chưa có. Đây là chiều cần cảnh giác vì hệ thống đã coi là sinh viên nộp trong khi ngân hàng chưa xác nhận','Được phép chờ tối đa 2 ngày làm việc, tức tới hết 26/09. Nếu sao kê ngày 25 hoặc 26/09 vẫn không có bút toán này thì tự chuyển thành mục phải xử lý và chặn đóng sổ ngày 24/09']],
         tl:[['done','Hệ thống chốt số liệu của ngày','24/09/2026 23:30'],
             ['done','Nhận sao kê ngân hàng','25/09/2026 07:32'],
             ['done','Chạy so khớp','25/09/2026 07:35'],
@@ -282,12 +289,12 @@ var RC = {
         ft:'blocked' },
 
   d23:{ title:'Đối soát ngày 23/09/2026', sub:'Sao kê nhận lúc 24/09/2026 07:28', date:'23/09/2026',
-        m:['4.812.300.000','4.812.050.000','250.000'], ok:'312 bút toán', st:['warn','Còn chênh lệch'],
+        m:['4.810.250.000','4.810.000.000','250.000'], ok:'312 bút toán', st:['warn','Còn chênh lệch'],
         problem:{ type:'warn', title:'Còn 1 mục lệch số tiền chưa xử lý',
           body:'Đã gửi văn bản hỏi ngân hàng ngày 24/09, chưa nhận được trả lời.',
           todo:'Theo dõi trả lời của ngân hàng. Nếu quá 5 ngày làm việc thì nhắc lại theo quy trình của Phòng Kế hoạch Tài chính.' },
         cond:[[0,'Đã nhận đủ sao kê của ngày','Sao kê ngày 23/09 nhận lúc 24/09 07:28'],
-              [0,'Số dòng và tổng tiền trên sao kê cân nhau','Ngân hàng gửi 313 dòng, hệ thống đọc đủ 313'],
+              [0,'Tệp sao kê đọc được đủ và tự cân','Ngân hàng khai 313 bút toán, hệ thống đọc đủ 313'],
               [0,'Không còn mục ngân hàng có mà hệ thống chưa có','Không có mục nào'],
               [1,'Không còn mục lệch số tiền','Còn 1 mục, 250.000 đ, đang chờ ngân hàng trả lời'],
               [0,'Không còn giao dịch nào đang xử lý dở','Tất cả đã xử lý xong']],
@@ -300,9 +307,9 @@ var RC = {
         ft:'blocked' },
 
   d22:{ title:'Đối soát ngày 22/09/2026', sub:'Sao kê nhận lúc 23/09/2026 07:30', date:'22/09/2026',
-        m:['5.901.700.000','5.901.700.000','0'], ok:'341 bút toán', st:['ok','Đã đóng sổ 23/09 09:15'],
+        m:['5.900.000.000','5.900.000.000','0'], ok:'341 bút toán', st:['ok','Đã đóng sổ 23/09 09:15'],
         cond:[[0,'Đã nhận đủ sao kê của ngày','Sao kê ngày 22/09 nhận lúc 23/09 07:30'],
-              [0,'Số dòng và tổng tiền trên sao kê cân nhau','Ngân hàng gửi 341 dòng, hệ thống đọc đủ 341'],
+              [0,'Tệp sao kê đọc được đủ và tự cân','Ngân hàng khai 341 bút toán, hệ thống đọc đủ 341'],
               [0,'Không còn mục ngân hàng có mà hệ thống chưa có','Không có mục nào'],
               [0,'Không còn mục lệch số tiền','Không có mục nào'],
               [0,'Không còn giao dịch nào đang xử lý dở','Tất cả đã xử lý xong']],
@@ -314,23 +321,24 @@ var RC = {
         ft:'closed' },
 
   d21:{ title:'Đối soát ngày 21/09/2026', sub:'Sao kê nhận lúc 22/09/2026 07:31', date:'21/09/2026',
-        m:['5.144.900.000','5.144.900.000','0'], ok:'298 bút toán', st:['ok','Đã đóng sổ 22/09 10:40'],
+        m:['5.140.000.000','5.140.000.000','0'], ok:'298 bút toán', st:['ok','Đã đóng sổ 22/09 10:40'],
         problem:{ type:'ok', title:'Mục chênh lệch đã được giải trình trước khi đóng sổ',
-          body:'Ngày này từng có 1 mục <b>Hệ thống có, ngân hàng chưa có</b> trị giá 17.500.000 đ. Ngân hàng xác nhận đã thu hồi bút toán, hệ thống ghi bút toán đảo tương ứng nên hai bên cân lại.',
-          todo:'Không còn việc gì. Hồ sơ giải trình lưu trong phần Diễn biến bên dưới.' },
+          body:'Ngày này từng có 1 mục <b>Hệ thống có, ngân hàng chưa có</b> trị giá 17.500.000 đ của sinh viên Hoàng Anh Tuấn. Ngân hàng xác nhận đã thu hồi bút toán, hệ thống ghi bút toán đảo tương ứng nên <b>số liệu hai bên cân lại và đóng sổ được</b>.',
+          todo:'Về đối soát thì không còn việc gì. Nhưng <b>phần tiền đã trừ vào khoản phải thu của sinh viên thì chưa đảo được</b>, công nợ của em ấy hiện vẫn sai. Việc đó theo dõi riêng ở màn Ngoại lệ, không liên quan tới việc đóng sổ ngày này.' },
         cond:[[0,'Đã nhận đủ sao kê của ngày','Nhận bản gửi lần 2 lúc 22/09 07:31, có bút toán thu hồi'],
-              [0,'Số dòng và tổng tiền trên sao kê cân nhau','Ngân hàng gửi 299 dòng, hệ thống đọc đủ 299'],
+              [0,'Tệp sao kê đọc được đủ và tự cân','Ngân hàng khai 299 bút toán, hệ thống đọc đủ 299'],
               [0,'Không còn mục ngân hàng có mà hệ thống chưa có','Không có mục nào'],
-              [0,'Không còn mục hệ thống có mà ngân hàng chưa có','1 mục đã giải trình xong bằng bút toán đảo'],
+              [0,'Không còn mục hệ thống có mà ngân hàng chưa có','1 mục đã giải trình bằng bút toán đảo, số liệu hai bên cân'],
               [0,'Không còn mục lệch số tiền','Không có mục nào'],
               [0,'Không còn giao dịch nào đang xử lý dở','Tất cả đã xử lý xong']],
-        diff:[['ok','Hệ thống có, ngân hàng chưa có','17.500.000 đ','Sinh viên 23040544 Hoàng Anh Tuấn. Ngân hàng xác nhận đã thu hồi bút toán ngày 21/09','Đã giải trình: hệ thống ghi bút toán đảo lúc 21/09 16:58, hai bên cân lại']],
+        diff:[['ok','Hệ thống có, ngân hàng chưa có','17.500.000 đ','Sinh viên 23040544 Hoàng Anh Tuấn. Ngân hàng xác nhận đã thu hồi bút toán ngày 21/09','Đã giải trình ở mức giao dịch: hệ thống ghi bút toán đảo lúc 21/09 16:58 nên hai bên cân lại. Phần trừ vào khoản phải thu của sinh viên vẫn chờ xử lý tay, xem ở màn Ngoại lệ']],
         tl:[['done','Hệ thống chốt số liệu của ngày','21/09/2026 23:30'],
             ['done','Nhận sao kê lần 1, phát hiện 1 mục hệ thống có mà ngân hàng chưa có','22/09/2026 07:31'],
             ['done','Ngân hàng xác nhận đã thu hồi bút toán','22/09/2026 09:20'],
-            ['done','Hệ thống ghi bút toán đảo, hai bên cân lại','22/09/2026 09:35 · Trần Văn Bình'],
+            ['done','Hệ thống ghi bút toán đảo, số liệu hai bên cân lại','22/09/2026 09:35 · Trần Văn Bình'],
+            ['warn','Phần trừ vào khoản phải thu của sinh viên chưa đảo được','Chuyển sang màn Ngoại lệ để xử lý tay'],
             ['done','Đóng sổ · Nguyễn Thị Hương','22/09/2026 10:40']],
-        ft:'closed' }
+        linkEx:1, ft:'closed' }
 };
 
 function openRc(key) {
@@ -394,7 +402,8 @@ function openRc(key) {
     ft.innerHTML = '<button class="btn" onclick="location.href=\'exceptions.html\'">Mở màn Ngoại lệ</button>' +
                    '<button class="btn btn-primary" disabled title="Còn điều kiện chưa đạt">Đóng sổ</button>';
   } else if (r.ft === 'closed') {
-    ft.innerHTML = '<button class="btn" onclick="notReady(\'Xuất biên bản đối soát\')">Xuất biên bản</button>' +
+    ft.innerHTML = (r.linkEx ? '<button class="btn" onclick="location.href=\'exceptions.html\'">Xem việc còn tồn</button>' : '') +
+                   '<button class="btn" onclick="notReady(\'Xuất biên bản đối soát\')">Xuất biên bản</button>' +
                    '<button class="btn btn-danger" onclick="notReady(\'Mở lại đợt đối soát\')">Mở lại đợt</button>';
   } else {
     ft.innerHTML = '<span style="font-size:12px;color:#67748A;align-self:center">Không có thao tác nào cần làm lúc này</span>';

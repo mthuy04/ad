@@ -39,6 +39,7 @@
           <div class="it"><div class="l">Việc đang mở</div><div class="v warn">14</div><div class="s">Chưa xử lý xong</div></div>
           <div class="it"><div class="l">Quá hạn xử lý</div><div class="v err">3</div><div class="s">Chờ trên 3 ngày</div></div>
           <div class="it"><div class="l">Tiền chưa vào công nợ sinh viên</div><div class="v">96.400.000 đ</div><div class="s">Của 7 giao dịch chưa gắn khoản</div></div>
+          <div class="it"><div class="l">Công nợ đang ghi sai</div><div class="v err">17.500.000 đ</div><div class="s">Ngân hàng đã thu hồi mà chưa trừ lại</div></div>
         </div>
 
         <div class="chips" data-target="tbl-ex">
@@ -182,6 +183,15 @@
           </div>
         </div>
 
+        <div class="note warn">
+          <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+          <div><span class="nt">Hai chiều sai lệch tiền, đừng lẫn với nhau</span>
+          <b>Tiền chưa vào công nợ</b> là tiền Nhà trường đã nhận nhưng sinh viên vẫn bị ghi là còn nợ. Thiệt cho sinh viên,
+          dễ dẫn tới khiếu nại. <b>Công nợ ghi sai</b> là sinh viên được ghi đã nộp trong khi tiền không có hoặc đã bị
+          ngân hàng lấy lại. Thiệt cho Nhà trường và nguy hiểm hơn, vì sinh viên có thể được xét tốt nghiệp trong khi
+          thực tế vẫn còn nợ. Chiều thứ hai luôn phải xử lý trước.</div>
+        </div>
+
         <div class="note info">
           <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
           <div><span class="nt">Vì sao những việc này không tự xử lý được</span>
@@ -278,7 +288,7 @@ var EX = {
        lv:['err','Phải xử lý ngay'], blk:['warn','Có, ngày 24/09 chưa đóng sổ được'], own:'Nguyễn Thị Hương',
        todo:['warn','Kiểm tra và bổ sung giao dịch vào hệ thống',
          'Sao kê BIDV ngày 24/09 có một bút toán 6.440.000 đ lúc 23:58 mà hệ thống chưa nhận được báo có. Giao dịch sát giờ chốt sổ nên nhiều khả năng rơi vào khoảng chuyển ngày.',
-         'Đối chiếu chứng từ với ngân hàng, xác nhận là tiền thật rồi bổ sung giao dịch. Xong việc này mới đóng sổ ngày 24/09 được.'],
+         'Xin ủy nhiệm chi gốc từ ngân hàng, xác nhận là tiền thật, rồi cho hệ thống nạp bổ sung bút toán đó từ tệp sao kê. Cán bộ không gõ tay số tiền. Xong việc này mới đóng sổ ngày 24/09 được.'],
        info:[['Nguồn phát sinh','Đối soát với sao kê BIDV'],['Ngày nghiệp vụ','24/09/2026'],
              ['Thời điểm bút toán','24/09/2026 23:58'],['Ảnh hưởng','Chặn đóng sổ ngày 24/09']],
        tl:[['done','Nhận sao kê ngân hàng ngày 24/09','25/09/2026 07:32'],
@@ -313,15 +323,16 @@ var EX = {
   e4:{ title:'Không đảo được bút toán tự động', sub:'Giao dịch ngày 21/09/2026', amt:'-17.500.000 đ', amtl:'Số tiền ngân hàng thu hồi',
        lv:['err','Phải xử lý ngay'], blk:['mute','Không, sổ ngày 21/09 đã đóng'], own:'Trần Văn Bình',
        todo:['err','Xử lý tay theo hướng dẫn của Phòng Kế hoạch Tài chính',
-         'Ngân hàng thu hồi giao dịch 17.500.000 đ của sinh viên Hoàng Anh Tuấn. Tiền gốc đã trừ vào học phí và phần thừa 200.000 đ đã chuyển sang kỳ sau, nên đảo tự động sẽ làm số dư của sinh viên bị âm.',
+         'Ngân hàng thu hồi giao dịch 17.500.000 đ của sinh viên Hoàng Anh Tuấn. Hệ thống <b>đã ghi bút toán đảo ở mức giao dịch</b> nên sổ đối soát ngày 21/09 cân và đã đóng. Nhưng <b>phần tiền đã trừ vào khoản phải thu thì chưa đảo được</b>: tiền gốc đã vào học phí và phần thừa 200.000 đ đã chuyển sang kỳ sau, đảo tự động sẽ làm số dư của sinh viên bị âm. Hiện công nợ vẫn ghi là em ấy đã nộp, trong khi tiền đã bị ngân hàng lấy lại.',
          'Liên hệ sinh viên và ngân hàng làm rõ, sau đó lập bút toán điều chỉnh tay. Không tự sửa số liệu trong cơ sở dữ liệu.'],
        info:[['Nguồn phát sinh','Giao dịch bị ngân hàng thu hồi'],['Sinh viên','Hoàng Anh Tuấn, 23040544'],
              ['Tiền gốc đã trừ vào','Học phí chính quy học kỳ 1'],['Phần thừa đã chuyển','200.000 đ sang học kỳ 2'],
-             ['Đối soát ngày 21/09','Đã khớp và đã đóng sổ, vì ngân hàng xác nhận thu hồi']],
+             ['Đối soát ngày 21/09','Đã khớp và đã đóng sổ, vì bút toán đảo đã ghi ở mức giao dịch'],
+             ['Rủi ro nếu để lâu','Công nợ đang ghi thiếu 17.500.000 đ so với thực tế, sinh viên có thể được xét tốt nghiệp nhầm']],
        tl:[['done','Ngân hàng báo thu hồi giao dịch','21/09/2026 16:58'],
            ['done','Hệ thống dừng lại, không đảo tự động','21/09/2026 16:58'],
            ['done','Đối soát ngày 21/09 đã giải trình xong và đóng sổ','22/09/2026 10:40'],
-           ['warn','Công nợ của sinh viên vẫn chờ xử lý tay','Đã 4 ngày']],
+           ['warn','Công nợ của sinh viên vẫn chưa được chỉnh','Đã 4 ngày, đây là số tiền thật đang ghi sai']],
        go:['transactions.html','Mở giao dịch liên quan'] },
 
   e5:{ title:'Không xác định được sinh viên nào nộp', sub:'Giao dịch ngày 25/09/2026', amt:'17.500.000 đ',
