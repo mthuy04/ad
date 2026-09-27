@@ -1,389 +1,100 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nhắc hạn — Hệ thống quản lý thu học phí ULIS</title>
-<meta name="description" content="Hệ thống quản trị học phí nội bộ — Trường Đại học Ngoại ngữ, Đại học Quốc gia Hà Nội"/>
-<link rel="stylesheet" href="../css/styles.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nhắc hạn · Hệ thống quản lý thu học phí ULIS</title>
+<link rel="stylesheet" href="../css/ulis.css">
 </head>
-
-<body>
-<div id="toast-container"></div>
-
-<!-- ===================== SESSION EXPIRED MODAL ===================== -->
-<div class="overlay" id="modal-session-expired">
-  <div class="modal modal-sm">
-    <div class="modal-hd">
-      <h2>Phiên đăng nhập hết hạn</h2>
-    </div>
-    <div class="modal-body" style="text-align:center;padding:24px 18px;">
-      <div class="confirm-icon" style="margin:0 auto 12px;background:var(--warn-bg);">
-        <svg width="18" height="18" fill="none" viewBox="0 0 20 20" stroke="var(--warning)" stroke-width="1.8">
-          <path d="M10 2L2 17h16L10 2zM10 8v4M10 14v1.5"/>
-        </svg>
-      </div>
-      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">Phiên đăng nhập đã hết hạn</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Vui lòng đăng nhập lại để tiếp tục sử dụng hệ thống.</div>
-      <button class="btn btn-primary" onclick="location.href='../index.html'">Đăng nhập lại</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== CONFIRM: LƯU CẤU HÌNH NHẮC HẠN ===================== -->
-<div class="overlay" id="modal-confirm-save-reminder">
-  <div class="modal modal-sm">
-    <div class="modal-hd">
-      <h2>Xác nhận lưu cấu hình</h2>
-      <button class="btn-x" onclick="closeModal('modal-confirm-save-reminder')">
-        <svg viewBox="0 0 20 20">
-          <path d="M5 5l10 10M15 5L5 15"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-body">
-      <div style="font-size:12.5px;color:var(--text);margin-bottom:8px;">
-        Xác nhận lưu cấu hình nhắc hạn cho kỳ thu HK1/2025–2026?
-      </div>
-      <div class="sys-warn-bar" style="margin-bottom:0;">
-        Lịch gửi sẽ áp dụng cho các khoản phải thu còn phải nộp và chưa bị hủy.
-      </div>
-    </div>
-
-    <div class="modal-ft">
-      <button class="btn btn-secondary" onclick="closeModal('modal-confirm-save-reminder')">Hủy</button>
-      <button class="btn btn-primary" onclick="closeModal('modal-confirm-save-reminder');showToast('Đã lưu cấu hình nhắc hạn.','success')">
-        Lưu cấu hình
-      </button>
-    </div>
-  </div>
-</div>
-
+<body data-page="reminders" data-crumb="Quản lý" data-title="Nhắc hạn">
+<div id="toasts"></div>
 <div id="app">
-
-  <!-- ===================== SIDEBAR ===================== -->
-  <nav id="sidebar">
-    <div class="sidebar-brand">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="../assets/ulis-logo.png" alt="ULIS" style="height:36px;object-fit:contain;flex-shrink:0;" onerror="this.style.display='none'"/>
-        <div>
-          <div class="brand-inst" style="font-size:11.5px;font-weight:600;">Trường Đại học Ngoại ngữ</div>
-          <div class="brand-vnu">Đại học Quốc gia Hà Nội</div>
-        </div>
-      </div>
-      <div class="brand-sep" style="margin:10px 0 0;"></div>
-    </div>
-
-    <div class="sidebar-nav">
-      <div class="sidebar-group-label">Nghiệp vụ</div>
-
-      <a class="nav-item" href="overview.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/>
-          <rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/>
-          <rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/>
-          <rect x="9" y="9" width="5.5" height="5.5" rx="1"/>
-        </svg>
-        Tổng quan
-      </a>
-
-      <a class="nav-item" href="tuition-config.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 4h12M2 8h8M2 12h10"/>
-        </svg>
-        Cấu hình học phí
-      </a>
-
-      <a class="nav-item" href="student-tuition.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M9 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V7M9 2l5 5M9 2v5h5"/>
-        </svg>
-        Dữ liệu học phí
-      </a>
-
-      <a class="nav-item" href="receivables.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M13 5H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V6a1 1 0 00-1-1zM11 5V3a2 2 0 00-4 0v2"/>
-        </svg>
-        Khoản phải thu
-      </a>
-
-      <a class="nav-item" href="payment-requests.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <rect x="1.5" y="3.5" width="13" height="9" rx="1"/>
-          <path d="M1.5 6.5h13"/>
-        </svg>
-        Yêu cầu thanh toán
-      </a>
-
-      <a class="nav-item" href="transactions.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 8h12M10 4l4 4-4 4M6 4L2 8l4 4"/>
-        </svg>
-        Giao dịch
-      </a>
-
-      <a class="nav-item" href="reconciliation.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M2 3h5v10H2zM9 3h5v10H9M5 8h6"/>
-        </svg>
-        Đối soát BIDV
-      </a>
-
-      <a class="nav-item" href="exceptions.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M8 2L1 14h14L8 2zM8 6v4M8 11v1.5"/>
-        </svg>
-        Ngoại lệ
-      </a>
-
-      <div class="sidebar-group-label">Quản lý</div>
-
-      <a class="nav-item" href="reports.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M3 2h10v12H3zM6 6h4M6 9h4M6 12h2"/>
-        </svg>
-        Báo cáo
-      </a>
-
-      <a class="nav-item active" href="reminders.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <path d="M8 1a5 5 0 015 5c0 4 2 5 2 5H1s2-1 2-5a5 5 0 015-5zM6.5 13.5a1.5 1.5 0 003 0"/>
-        </svg>
-        Nhắc hạn
-      </a>
-
-      <div class="sidebar-group-label">Cấu hình</div>
-
-      <a class="nav-item" href="system-config.html">
-        <svg class="nav-icon" viewBox="0 0 16 16">
-          <circle cx="8" cy="8" r="2.5"/>
-          <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.2 3.2l1.4 1.4M11.4 11.4l1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4"/>
-        </svg>
-        Cấu hình hệ thống
-      </a>
-    </div>
-  </nav>
-
-  <!-- ===================== MAIN ===================== -->
+  <nav id="sidebar"></nav>
   <div id="main">
-
-    <!-- ===================== TOPBAR ===================== -->
-    <header id="topbar">
-      <div class="topbar-crumb" style="display:flex;flex-direction:column;gap:1px;">
-        <div style="font-size:10px;font-weight:500;color:var(--muted-lt);letter-spacing:.2px;">Hệ thống quản lý thu học phí</div>
-        <div style="display:flex;align-items:center;gap:5px;">
-          <span class="crumb-root">Quản lý</span>
-          <span class="crumb-sep"> / </span>
-          <span class="crumb-page">Nhắc hạn</span>
-        </div>
-      </div>
-
-      <div class="topbar-user topbar-user-wrap">
-        <div class="user-menu-trigger" id="userMenuTrigger" onclick="toggleUserMenu()">
-          <div class="topbar-user-info">
-            <div class="topbar-user-dept">Phòng Kế hoạch Tài chính</div>
-            <div class="topbar-user-role">Cán bộ KHTC &nbsp;&bull;&nbsp; Nguyễn Thị Hương</div>
-          </div>
-          <div class="topbar-avatar">NH</div>
-        </div>
-
-        <div class="user-dropdown" id="userDropdown">
-          <div class="user-dropdown-header">
-            <div class="udh-name">Nguyễn Thị Hương</div>
-            <div class="udh-role">Phòng KHTC — Cán bộ quản trị</div>
-          </div>
-
-          <div class="user-menu-item" onclick="closeUserMenu();showToast('Vui lòng liên hệ quản trị viên để được hỗ trợ.','info')">
-            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
-              <circle cx="8" cy="5" r="3"/>
-              <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
-            </svg>
-            Thông tin tài khoản
-          </div>
-
-          <div class="user-menu-item" onclick="closeUserMenu();showToast('Vui lòng liên hệ quản trị viên để được hỗ trợ.','info')">
-            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="7" width="12" height="8" rx="1"/>
-              <path d="M5 7V5a3 3 0 016 0v2"/>
-            </svg>
-            Đổi mật khẩu
-          </div>
-
-          <hr class="user-menu-sep"/>
-
-          <div class="user-menu-item danger" onclick="location.href='../index.html'">
-            <svg width="13" height="13" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
-              <path d="M10 11l4-3-4-3M5 8h9M6 3H3a1 1 0 00-1 1v8a1 1 0 001 1h3"/>
-            </svg>
-            Đăng xuất
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ===================== CONTENT ===================== -->
+    <header id="topbar"></header>
     <div id="content">
-      <div class="page-body">
+      <div class="wrap">
 
-        <!-- PAGE HEADER -->
-        <div class="page-header">
+        <div class="phead">
           <div>
-            <h1>Nhắc hạn nộp học phí</h1>
-            <div class="page-header-sub">Cấu hình lịch gửi thông báo theo khoản phải thu còn phải nộp và theo dõi kết quả gửi</div>
+            <h1>Nhắc hạn</h1>
+            <p>Hệ thống tự gửi email nhắc sinh viên nộp học phí theo mốc đã đặt. Mỗi email nhắc đúng một khoản thu,
+               không gộp nhiều khoản vào một thư.</p>
           </div>
-
-          <div class="page-header-actions">
-            <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi email kiểm tra.','success')">Gửi kiểm tra</button>
-            <button class="btn btn-primary btn-sm" onclick="openModal('modal-confirm-save-reminder')">Lưu cấu hình</button>
-          </div>
-        </div>
-
-        <!-- SUMMARY CARDS -->
-        <div class="stat-row">
-          <div class="stat-card">
-            <div class="stat-card-label">Khoản cần nhắc hạn</div>
-            <div class="stat-card-value">487</div>
-            <div class="stat-card-sub">còn phải nộp HK1/2025–2026</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-card-label">Đã gửi trong kỳ</div>
-            <div class="stat-card-value c-success">1.382</div>
-            <div class="stat-card-sub">email gửi thành công</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-card-label">Lỗi gửi</div>
-            <div class="stat-card-value c-error">6</div>
-            <div class="stat-card-sub">cần kiểm tra địa chỉ email</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-card-label">Mốc tiếp theo</div>
-            <div class="stat-card-value c-primary">30/10</div>
-            <div class="stat-card-sub">trước hạn 7 ngày</div>
+          <div class="phead-act">
+            <button class="btn" onclick="notReady('Xuất lịch sử gửi')">Xuất Excel</button>
+            <button class="btn btn-primary" onclick="openModal('m-policy')">Tạo chính sách nhắc</button>
           </div>
         </div>
 
-        <!-- FILTER BAR -->
-        <div class="filter-bar">
-          <div class="filter-field">
-            <label>Năm học</label>
-            <select>
-              <option selected>2025–2026</option>
-              <option>2024–2025</option>
-              <option>2023–2024</option>
-            </select>
-          </div>
-
-          <div class="filter-field">
-            <label>Kỳ thu</label>
-            <select>
-              <option selected>HK1/2025–2026</option>
-              <option>Đợt 1/2025–2026</option>
-              <option>HK phụ/2024–2025</option>
-            </select>
-          </div>
-
-          <div class="filter-field">
-            <label>Khoản mục</label>
-            <select>
-              <option>Tất cả</option>
-              <option>Học phí</option>
-              <option>Bảo hiểm y tế</option>
-              <option>Khoản thu khác</option>
-            </select>
-          </div>
-
-          <div class="filter-field">
-            <label>Trạng thái khoản</label>
-            <select>
-              <option>Tất cả</option>
-              <option>Chưa thu</option>
-              <option>Thu một phần</option>
-              <option>Quá hạn</option>
-            </select>
-          </div>
-
-          <div class="filter-field">
-            <label>Mốc nhắc</label>
-            <select>
-              <option>Tất cả</option>
-              <option>Trước hạn 14 ngày</option>
-              <option>Trước hạn 7 ngày</option>
-              <option>Trước hạn 1 ngày</option>
-              <option>Sau hạn</option>
-            </select>
-          </div>
-
-          <div class="filter-actions">
-            <button class="btn btn-primary btn-sm">Áp dụng</button>
-            <button class="btn btn-secondary btn-sm">Đặt lại</button>
-          </div>
+        <div class="srcbar">
+          <span class="dot"></span>
+          <span>Đang chạy <b>1 chính sách</b> cho kỳ thu học phí chính quy học kỳ 1</span>
+          <span class="sep"></span>
+          <span>Lượt gửi gần nhất <b>25/09/2026 08:00</b></span>
+          <span class="sep"></span>
+          <span>Mốc kế tiếp <b>17/10/2026</b>, trước hạn 14 ngày</span>
         </div>
 
-        <!-- TABS -->
-        <div class="tab-bar">
-          <div class="tab-item active" id="tab-rem-config" onclick="switchReminderTab('config')">Cấu hình lịch gửi</div>
-          <div class="tab-item" id="tab-rem-history" onclick="switchReminderTab('history')">Lịch sử gửi</div>
+        <div class="tabs">
+          <button class="tab on" data-tab-group="rm" data-tab="policy" onclick="showTab('rm','policy')">Chính sách nhắc</button>
+          <button class="tab" data-tab-group="rm" data-tab="tpl" onclick="showTab('rm','tpl')">Mẫu email</button>
+          <button class="tab" data-tab-group="rm" data-tab="log" onclick="showTab('rm','log')">Lịch sử gửi</button>
         </div>
 
-        <!-- ===================== TAB CONFIG ===================== -->
-        <div class="tab-pane active" id="pane-rem-config">
+        <!-- ================= CHÍNH SÁCH ================= -->
+        <div class="pane on" data-pane-group="rm" data-pane="policy">
 
-          <!-- SCHEDULE OVERVIEW -->
-          <div class="section-block" style="margin-bottom:14px;">
-            <div class="section-head">
-              <span class="section-title">Lịch nhắc hạn kỳ thu HK1/2025–2026</span>
-              <span class="badge bg-info">Hạn xử lý: 06/11/2025</span>
+          <div class="note warn">
+            <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+            <div><span class="nt">Bộ mốc nhắc hiện tại mới là bộ dùng thử, Nhà trường chưa phê duyệt</span>
+            Ba mốc trước hạn 14 ngày, 7 ngày và 1 ngày đang để tạm cho việc chạy thử. Trước khi chạy thật cần
+            Phòng Kế hoạch Tài chính chốt mốc nào, gửi lúc mấy giờ, và có nhắc sau hạn hay không.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Danh sách chính sách nhắc</h2>
+              <div class="sub">Mỗi kỳ thu chỉ áp dụng một chính sách tại một thời điểm. Chính sách đang chạy không sửa trực tiếp, muốn đổi thì tạo bản mới.</div></div>
             </div>
-
-            <div class="section-body">
-              <div class="table-wrap mb-0">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Mốc nhắc</th>
-                      <th>Ngày gửi</th>
-                      <th>Đối tượng nhận</th>
-                      <th>Điều kiện lọc</th>
-                      <th>Trạng thái</th>
-                    </tr>
-                  </thead>
-
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" style="min-width:1040px">
+                  <thead><tr>
+                    <th style="min-width:215px">Tên chính sách</th>
+                    <th style="min-width:225px">Áp cho kỳ thu nào</th>
+                    <th style="min-width:210px">Mốc nhắc</th>
+                    <th style="min-width:150px">Thời gian áp dụng</th>
+                    <th style="min-width:145px">Tình trạng</th>
+                    <th class="r" style="min-width:86px">Thao tác</th>
+                  </tr></thead>
                   <tbody>
                     <tr>
-                      <td class="fw600">Trước hạn 14 ngày</td>
-                      <td class="dim">23/10/2025 08:00</td>
-                      <td>Sinh viên còn phải nộp</td>
-                      <td>Còn phải nộp &gt; 0, khoản chưa hủy</td>
-                      <td><span class="badge bg-success">Đã gửi</span></td>
+                      <td><div class="t-main">Nhắc học phí chính quy học kỳ 1</div>
+                          <div class="t-sub">Bộ mốc dùng thử</div></td>
+                      <td>Học phí chính quy học kỳ 1, năm học 2026-2027</td>
+                      <td><div class="t-main">Trước hạn 14, 7 và 1 ngày</div><div class="t-sub">Gửi lúc 08:00, không nhắc sau hạn</div></td>
+                      <td><div class="t-main">Từ 20/09/2026</div><div class="t-sub">Đến 31/10/2026</div></td>
+                      <td><span class="bg ok">Đang chạy</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openPol('p1')">Chi tiết</button></td>
                     </tr>
-
                     <tr>
-                      <td class="fw600">Trước hạn 7 ngày</td>
-                      <td class="dim">30/10/2025 08:00</td>
-                      <td>Sinh viên còn phải nộp</td>
-                      <td>Còn phải nộp &gt; 0, chưa có yêu cầu thanh toán thành công</td>
-                      <td><span class="badge bg-info">Đang chờ</span></td>
+                      <td><div class="t-main">Nhắc học lại và học cải thiện</div>
+                          <div class="t-sub">Đang soạn, chưa chạy</div></td>
+                      <td>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</td>
+                      <td><div class="t-main">Trước hạn 7 và 2 ngày</div><div class="t-sub">Gửi lúc 09:00</div></td>
+                      <td><div class="t-main">Chưa đặt</div><div class="t-sub">Chưa áp dụng</div></td>
+                      <td><span class="bg info">Bản nháp</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openPol('p2')">Chi tiết</button></td>
                     </tr>
-
                     <tr>
-                      <td class="fw600">Trước hạn 1 ngày</td>
-                      <td class="dim">05/11/2025 08:00</td>
-                      <td>Sinh viên còn phải nộp</td>
-                      <td>Còn phải nộp &gt; 0, chưa tất toán</td>
-                      <td><span class="badge bg-neutral">Chưa đến lịch</span></td>
-                    </tr>
-
-                    <tr>
-                      <td class="fw600">Sau hạn</td>
-                      <td class="dim">07/11/2025 08:00</td>
-                      <td>Sinh viên quá hạn</td>
-                      <td>Còn phải nộp &gt; 0, quá hạn xử lý</td>
-                      <td><span class="badge bg-neutral">Chưa đến lịch</span></td>
+                      <td><div class="t-main">Nhắc học phí học kỳ 2 năm 2025-2026</div>
+                          <div class="t-sub">Đã dùng xong</div></td>
+                      <td>Học phí chính quy học kỳ 2, năm học 2025-2026</td>
+                      <td><div class="t-main">Trước hạn 10 và 3 ngày</div><div class="t-sub">Gửi lúc 08:00</div></td>
+                      <td><div class="t-main">01/03/2026</div><div class="t-sub">Đến 15/04/2026</div></td>
+                      <td><span class="bg mute">Đã ngừng</span></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openPol('p3')">Chi tiết</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -391,525 +102,207 @@
             </div>
           </div>
 
-          <!-- 14 DAYS -->
-          <div class="acc-card open" id="acc-14">
-            <div class="acc-head" onclick="toggleAcc('acc-14')">
-              <label class="toggle-sw" onclick="event.stopPropagation();">
-                <input type="checkbox" checked/>
-                <span class="toggle-sl"></span>
-              </label>
-
-              <span class="acc-title">Trước hạn 14 ngày</span>
-              <span class="badge bg-success" style="margin-right:6px;">Bật</span>
-              <span class="acc-subject">Thông báo nhắc nộp học phí HK1/2025–2026</span>
-              <span class="acc-meta">Ngày gửi: 23/10/2025 08:00</span>
-              <span class="acc-chevron">
-                <svg viewBox="0 0 16 16">
-                  <path d="M4 6l4 4 4-4"/>
-                </svg>
-              </span>
-            </div>
-
-            <div class="acc-body open" id="body-acc-14">
-              <div class="form-grid c2" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Tiêu đề email</label>
-                  <input type="text" value="[ULIS] Thông báo nhắc nộp học phí HK1/2025–2026"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Tên người gửi</label>
-                  <input type="text" value="Phòng Kế hoạch Tài chính — ULIS"/>
-                </div>
-              </div>
-
-              <div class="form-grid c3" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Thời điểm gửi</label>
-                  <input type="datetime-local" value="2025-10-23T08:00"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Khoản mục áp dụng</label>
-                  <select>
-                    <option selected>Học phí và khoản thu khác</option>
-                    <option>Chỉ học phí</option>
-                    <option>Chỉ khoản thu khác</option>
-                  </select>
-                </div>
-
-                <div class="form-field">
-                  <label>Điều kiện gửi</label>
-                  <select>
-                    <option selected>Còn phải nộp &gt; 0</option>
-                    <option>Chưa có yêu cầu thanh toán</option>
-                    <option>Chưa thanh toán thành công</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-grid" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Nội dung email</label>
-                  <textarea rows="6">Kính gửi {{studentName}} ({{studentCode}}),
-
-Theo dữ liệu khoản phải thu của kỳ {{termName}}, bạn còn khoản phải nộp với số tiền {{amountDue}} đồng.
-
-Hạn xử lý: {{dueDate}}.
-
-Bạn vui lòng đăng nhập Cổng sinh viên ULIS để kiểm tra chi tiết khoản phải nộp và thực hiện thanh toán theo hướng dẫn.
-
-Trân trọng,
-Phòng Kế hoạch Tài chính — Trường Đại học Ngoại ngữ, ĐHQGHN</textarea>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:8px;align-items:flex-end;">
-                <div class="form-field" style="flex:1;">
-                  <label>Email kiểm tra</label>
-                  <input type="email" value="khtc@ulis.vnu.edu.vn"/>
-                </div>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi email kiểm tra.','success')">Gửi kiểm tra</button>
-              </div>
-            </div>
+          <div class="note info">
+            <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+            <div><span class="nt">Hệ thống kiểm tra lại ngay trước khi gửi</span>
+            Đến giờ gửi, hệ thống xem lại từng sinh viên một lần nữa: khoản còn nợ không, hạn nộp có đổi không,
+            sinh viên có đang thanh toán dở không. Ai vừa nộp xong trong đêm sẽ không bị nhắc nhầm.</div>
           </div>
-
-          <!-- 7 DAYS -->
-          <div class="acc-card" id="acc-7">
-            <div class="acc-head" onclick="toggleAcc('acc-7')">
-              <label class="toggle-sw" onclick="event.stopPropagation();">
-                <input type="checkbox" checked/>
-                <span class="toggle-sl"></span>
-              </label>
-
-              <span class="acc-title">Trước hạn 7 ngày</span>
-              <span class="badge bg-success" style="margin-right:6px;">Bật</span>
-              <span class="acc-subject">Nhắc hạn nộp học phí — còn 7 ngày</span>
-              <span class="acc-meta">Ngày gửi: 30/10/2025 08:00</span>
-              <span class="acc-chevron">
-                <svg viewBox="0 0 16 16">
-                  <path d="M4 6l4 4 4-4"/>
-                </svg>
-              </span>
-            </div>
-
-            <div class="acc-body" id="body-acc-7">
-              <div class="form-grid c2" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Tiêu đề email</label>
-                  <input type="text" value="[ULIS] Nhắc hạn nộp học phí — Còn 7 ngày"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Tên người gửi</label>
-                  <input type="text" value="Phòng Kế hoạch Tài chính — ULIS"/>
-                </div>
-              </div>
-
-              <div class="form-grid c3" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Thời điểm gửi</label>
-                  <input type="datetime-local" value="2025-10-30T08:00"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Khoản mục áp dụng</label>
-                  <select>
-                    <option selected>Học phí và khoản thu khác</option>
-                    <option>Chỉ học phí</option>
-                    <option>Chỉ khoản thu khác</option>
-                  </select>
-                </div>
-
-                <div class="form-field">
-                  <label>Điều kiện gửi</label>
-                  <select>
-                    <option selected>Còn phải nộp &gt; 0</option>
-                    <option>Chưa thanh toán thành công</option>
-                    <option>Không có yêu cầu thanh toán đang hiệu lực</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-grid" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Nội dung email</label>
-                  <textarea rows="5">Kính gửi {{studentName}} ({{studentCode}}),
-
-Kỳ {{termName}} còn 7 ngày đến hạn xử lý. Số tiền còn phải nộp của bạn là {{amountDue}} đồng.
-
-Hạn xử lý: {{dueDate}}.
-
-Bạn vui lòng hoàn tất thanh toán trên Cổng sinh viên ULIS để tránh phát sinh tình trạng quá hạn.
-
-Trân trọng,
-Phòng Kế hoạch Tài chính — ULIS</textarea>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:8px;align-items:flex-end;">
-                <div class="form-field" style="flex:1;">
-                  <label>Email kiểm tra</label>
-                  <input type="email" value="khtc@ulis.vnu.edu.vn"/>
-                </div>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi email kiểm tra.','success')">Gửi kiểm tra</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 1 DAY -->
-          <div class="acc-card" id="acc-1">
-            <div class="acc-head" onclick="toggleAcc('acc-1')">
-              <label class="toggle-sw" onclick="event.stopPropagation();">
-                <input type="checkbox" checked/>
-                <span class="toggle-sl"></span>
-              </label>
-
-              <span class="acc-title">Trước hạn 1 ngày</span>
-              <span class="badge bg-success" style="margin-right:6px;">Bật</span>
-              <span class="acc-subject">Hạn nộp học phí là ngày mai</span>
-              <span class="acc-meta">Ngày gửi: 05/11/2025 08:00</span>
-              <span class="acc-chevron">
-                <svg viewBox="0 0 16 16">
-                  <path d="M4 6l4 4 4-4"/>
-                </svg>
-              </span>
-            </div>
-
-            <div class="acc-body" id="body-acc-1">
-              <div class="form-grid c2" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Tiêu đề email</label>
-                  <input type="text" value="[ULIS] Hạn nộp học phí là ngày mai"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Tên người gửi</label>
-                  <input type="text" value="Phòng Kế hoạch Tài chính — ULIS"/>
-                </div>
-              </div>
-
-              <div class="form-grid c3" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Thời điểm gửi</label>
-                  <input type="datetime-local" value="2025-11-05T08:00"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Khoản mục áp dụng</label>
-                  <select>
-                    <option selected>Học phí và khoản thu khác</option>
-                    <option>Chỉ học phí</option>
-                    <option>Chỉ khoản thu khác</option>
-                  </select>
-                </div>
-
-                <div class="form-field">
-                  <label>Điều kiện gửi</label>
-                  <select>
-                    <option selected>Còn phải nộp &gt; 0</option>
-                    <option>Chưa thanh toán thành công</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-grid" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Nội dung email</label>
-                  <textarea rows="5">Kính gửi {{studentName}} ({{studentCode}}),
-
-Ngày mai, {{dueDate}}, là hạn xử lý khoản phải nộp kỳ {{termName}}.
-
-Số tiền còn phải nộp: {{amountDue}} đồng.
-
-Bạn vui lòng đăng nhập Cổng sinh viên ULIS và hoàn tất thanh toán trong thời hạn quy định.
-
-Trân trọng,
-Phòng Kế hoạch Tài chính — ULIS</textarea>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:8px;align-items:flex-end;">
-                <div class="form-field" style="flex:1;">
-                  <label>Email kiểm tra</label>
-                  <input type="email" value="khtc@ulis.vnu.edu.vn"/>
-                </div>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi email kiểm tra.','success')">Gửi kiểm tra</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- AFTER DEADLINE -->
-          <div class="acc-card" id="acc-after">
-            <div class="acc-head" onclick="toggleAcc('acc-after')">
-              <label class="toggle-sw" onclick="event.stopPropagation();">
-                <input type="checkbox" checked/>
-                <span class="toggle-sl"></span>
-              </label>
-
-              <span class="acc-title">Sau hạn</span>
-              <span class="badge bg-success" style="margin-right:6px;">Bật</span>
-              <span class="acc-subject">Thông báo quá hạn khoản phải nộp</span>
-              <span class="acc-meta">Ngày gửi: 07/11/2025 08:00</span>
-              <span class="acc-chevron">
-                <svg viewBox="0 0 16 16">
-                  <path d="M4 6l4 4 4-4"/>
-                </svg>
-              </span>
-            </div>
-
-            <div class="acc-body" id="body-acc-after">
-              <div class="form-grid c2" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Tiêu đề email</label>
-                  <input type="text" value="[ULIS] Thông báo quá hạn khoản phải nộp"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Tên người gửi</label>
-                  <input type="text" value="Phòng Kế hoạch Tài chính — ULIS"/>
-                </div>
-              </div>
-
-              <div class="form-grid c3" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Thời điểm gửi</label>
-                  <input type="datetime-local" value="2025-11-07T08:00"/>
-                </div>
-
-                <div class="form-field">
-                  <label>Tần suất sau hạn</label>
-                  <select>
-                    <option selected>Gửi 1 lần sau hạn</option>
-                    <option>Gửi mỗi 3 ngày</option>
-                    <option>Gửi mỗi 7 ngày</option>
-                  </select>
-                </div>
-
-                <div class="form-field">
-                  <label>Điều kiện gửi</label>
-                  <select>
-                    <option selected>Quá hạn và còn phải nộp &gt; 0</option>
-                    <option>Còn phải nộp &gt; 0</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-grid" style="margin-bottom:10px;">
-                <div class="form-field">
-                  <label>Nội dung email</label>
-                  <textarea rows="5">Kính gửi {{studentName}} ({{studentCode}}),
-
-Theo dữ liệu hệ thống, khoản phải nộp kỳ {{termName}} của bạn đã quá hạn xử lý.
-
-Số tiền còn phải nộp: {{amountDue}} đồng.
-
-Bạn vui lòng đăng nhập Cổng sinh viên ULIS để kiểm tra thông tin chi tiết hoặc liên hệ Phòng Kế hoạch Tài chính để được hướng dẫn xử lý.
-
-Trân trọng,
-Phòng Kế hoạch Tài chính — ULIS</textarea>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:8px;align-items:flex-end;">
-                <div class="form-field" style="flex:1;">
-                  <label>Email kiểm tra</label>
-                  <input type="email" value="khtc@ulis.vnu.edu.vn"/>
-                </div>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi email kiểm tra.','success')">Gửi kiểm tra</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- VARIABLES -->
-          <div style="margin-top:10px;padding:9px 12px;background:var(--neutral-bg);border:1px solid var(--border);border-radius:var(--r);font-size:11.5px;color:var(--muted);">
-            Biến dữ liệu sử dụng trong nội dung email:
-            <code class="ref">&#123;&#123;studentName&#125;&#125;</code>
-            <code class="ref">&#123;&#123;studentCode&#125;&#125;</code>
-            <code class="ref">&#123;&#123;termName&#125;&#125;</code>
-            <code class="ref">&#123;&#123;amountDue&#125;&#125;</code>
-            <code class="ref">&#123;&#123;dueDate&#125;&#125;</code>
-            <code class="ref">&#123;&#123;paymentPortalUrl&#125;&#125;</code>
-          </div>
-
         </div>
 
-        <!-- ===================== TAB HISTORY ===================== -->
-        <div class="tab-pane" id="pane-rem-history">
-
-          <div class="table-wrap table-xwide">
-            <div class="table-toolbar">
-              <span class="table-title">Lịch sử gửi email nhắc hạn</span>
-              <span class="table-count">HK1/2025–2026 · 4 mốc nhắc</span>
-
-              <div class="table-toolbar-r">
-                <span class="c-muted fs-11">Hiển thị</span>
-                <select class="page-size-select">
-                  <option selected>20 dòng</option>
-                  <option>50 dòng</option>
-                  <option>100 dòng</option>
-                </select>
-              </div>
+        <!-- ================= MẪU EMAIL ================= -->
+        <div class="pane" data-pane-group="rm" data-pane="tpl">
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Mẫu email nhắc hạn</h2>
+              <div class="sub">Nội dung thư gửi cho sinh viên. Mẫu đang dùng không sửa trực tiếp, muốn đổi thì tạo phiên bản mới.</div></div>
+              <div class="card-hd-act"><button class="btn btn-sm btn-primary" onclick="notReady('Tạo mẫu email')">Tạo mẫu mới</button></div>
             </div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Ngày gửi</th>
-                  <th>Mốc nhắc</th>
-                  <th>Khoản mục</th>
-                  <th class="r">Dự kiến</th>
-                  <th class="r">Đã gửi</th>
-                  <th class="r">Lỗi</th>
-                  <th class="r">Không gửi</th>
-                  <th>Điều kiện lọc</th>
-                  <th>Người thực hiện</th>
-                  <th>Trạng thái</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td class="dim nowrap">23/10/2025 08:00</td>
-                  <td>Trước hạn 14 ngày</td>
-                  <td>Học phí</td>
-                  <td class="r">487</td>
-                  <td class="r c-success fw600">485</td>
-                  <td class="r c-error fw600">2</td>
-                  <td class="r">0</td>
-                  <td>Còn phải nộp &gt; 0</td>
-                  <td>Hệ thống</td>
-                  <td><span class="badge bg-success">Hoàn thành</span></td>
-                </tr>
-
-                <tr>
-                  <td class="dim nowrap">23/10/2025 08:10</td>
-                  <td>Trước hạn 14 ngày</td>
-                  <td>BHYT</td>
-                  <td class="r">176</td>
-                  <td class="r c-success fw600">176</td>
-                  <td class="r">0</td>
-                  <td class="r">0</td>
-                  <td>Còn phải nộp &gt; 0</td>
-                  <td>Hệ thống</td>
-                  <td><span class="badge bg-success">Hoàn thành</span></td>
-                </tr>
-
-                <tr>
-                  <td class="dim nowrap">30/10/2025 08:00</td>
-                  <td>Trước hạn 7 ngày</td>
-                  <td>Học phí</td>
-                  <td class="r">487</td>
-                  <td class="r c-success fw600">487</td>
-                  <td class="r">0</td>
-                  <td class="r">0</td>
-                  <td>Chưa thanh toán thành công</td>
-                  <td>Hệ thống</td>
-                  <td><span class="badge bg-success">Hoàn thành</span></td>
-                </tr>
-
-                <tr>
-                  <td class="dim nowrap">05/11/2025 08:00</td>
-                  <td>Trước hạn 1 ngày</td>
-                  <td>Học phí</td>
-                  <td class="r">412</td>
-                  <td class="r c-success fw600">410</td>
-                  <td class="r c-error fw600">2</td>
-                  <td class="r">0</td>
-                  <td>Còn phải nộp &gt; 0</td>
-                  <td>Hệ thống</td>
-                  <td><span class="badge bg-success">Hoàn thành</span></td>
-                </tr>
-
-                <tr>
-                  <td class="dim nowrap">07/11/2025 08:00</td>
-                  <td>Sau hạn</td>
-                  <td>Học phí</td>
-                  <td class="r">155</td>
-                  <td class="r c-success fw600">152</td>
-                  <td class="r c-error fw600">2</td>
-                  <td class="r c-warning fw600">1</td>
-                  <td>Quá hạn và còn phải nộp &gt; 0</td>
-                  <td>Hệ thống</td>
-                  <td><span class="badge bg-warning">Một phần</span></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="tbl-pagination">
-              <span>Hiển thị 1–5 / 5 bản ghi</span>
-
-              <div class="pg-nav">
-                <button class="pg-btn" disabled>&laquo;</button>
-                <button class="pg-btn active">1</button>
-                <button class="pg-btn" disabled>&raquo;</button>
-              </div>
-
-              <div class="pg-goto">
-                <span>Trang</span>
-                <input type="number" min="1" value="1"/>
-                <button class="btn btn-secondary btn-xs">Đi</button>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" style="min-width:920px">
+                  <thead><tr>
+                    <th style="min-width:230px">Tên mẫu</th>
+                    <th style="min-width:200px">Dùng cho mốc nào</th>
+                    <th style="min-width:110px">Phiên bản</th>
+                    <th style="min-width:140px">Tình trạng</th>
+                    <th style="min-width:165px">Cập nhật</th>
+                    <th class="r" style="min-width:86px">Thao tác</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="t-main">Nhắc trước hạn nộp học phí</div></td>
+                      <td>Trước hạn 14 ngày và 7 ngày</td>
+                      <td>Bản 2</td>
+                      <td><span class="bg ok">Đang dùng</span></td>
+                      <td><div class="t-main">20/09/2026</div><div class="t-sub">Nguyễn Thị Hương</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openModal('m-tpl')">Xem</button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="t-main">Nhắc gấp, còn một ngày</div></td>
+                      <td>Trước hạn 1 ngày</td>
+                      <td>Bản 1</td>
+                      <td><span class="bg ok">Đang dùng</span></td>
+                      <td><div class="t-main">20/09/2026</div><div class="t-sub">Nguyễn Thị Hương</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openModal('m-tpl')">Xem</button></td>
+                    </tr>
+                    <tr>
+                      <td><div class="t-main">Nhắc trước hạn nộp học phí</div><div class="t-sub">Bản cũ, đã thay thế</div></td>
+                      <td>Trước hạn 14 ngày và 7 ngày</td>
+                      <td>Bản 1</td>
+                      <td><span class="bg mute">Đã thay thế</span></td>
+                      <td><div class="t-main">02/09/2026</div><div class="t-sub">Trần Văn Bình</div></td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openModal('m-tpl')">Xem</button></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
 
-          <div class="table-wrap table-xwide" style="margin-top:14px;">
-            <div class="table-toolbar">
-              <span class="table-title">Danh sách sinh viên lỗi gửi gần nhất</span>
-              <span class="table-count">6 lỗi gửi</span>
-            </div>
+          <div class="note warn">
+            <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+            <div><span class="nt">Những thứ không được đưa vào email</span>
+            Tiêu đề thư không ghi số tiền và không ghi đầy đủ mã sinh viên, vì tiêu đề hiện ra ở màn hình khóa điện thoại.
+            Trong thư không đính mã thanh toán đang còn hiệu lực, không ghi số tài khoản đầy đủ, và chỉ đặt đường dẫn
+            về cổng sinh viên chính thức của Nhà trường.</div>
+          </div>
+        </div>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>Mã SV</th>
-                  <th>Họ tên</th>
-                  <th>Email</th>
-                  <th>Khoản mục</th>
-                  <th class="r">Còn phải nộp (đ)</th>
-                  <th>Mốc nhắc</th>
-                  <th>Lý do lỗi</th>
-                  <th>Trạng thái xử lý</th>
-                </tr>
-              </thead>
+        <!-- ================= LỊCH SỬ GỬI ================= -->
+        <div class="pane" data-pane-group="rm" data-pane="log">
 
-              <tbody>
-                <tr>
-                  <td class="fw600 nowrap">24031876</td>
-                  <td>Lê Đức Huy</td>
-                  <td class="c-muted">24031876@ulis.vnu.edu.vn</td>
-                  <td><span class="badge bg-info">Học phí</span></td>
-                  <td class="r fw600">10.500.000</td>
-                  <td>Sau hạn</td>
-                  <td>Hộp thư đầy</td>
-                  <td><span class="badge bg-warning">Chờ gửi lại</span></td>
-                </tr>
-
-                <tr>
-                  <td class="fw600 nowrap">23044518</td>
-                  <td>Bùi Thùy Dương</td>
-                  <td class="c-muted">23044518@ulis.vnu.edu.vn</td>
-                  <td><span class="badge bg-info">Học phí</span></td>
-                  <td class="r fw600">17.500.000</td>
-                  <td>Trước hạn 1 ngày</td>
-                  <td>Không phản hồi từ máy chủ email</td>
-                  <td><span class="badge bg-warning">Chờ gửi lại</span></td>
-                </tr>
-
-                <tr>
-                  <td class="fw600 nowrap">25011890</td>
-                  <td>Nguyễn Hoàng Nam</td>
-                  <td class="c-muted">25011890@ulis.vnu.edu.vn</td>
-                  <td><span class="badge bg-info">Học phí</span></td>
-                  <td class="r fw600">19.000.000</td>
-                  <td>Sau hạn</td>
-                  <td>Địa chỉ email không hợp lệ</td>
-                  <td><span class="badge bg-error">Cần cập nhật email</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="sumrow">
+            <div class="it"><div class="l">Đã gửi đi hôm nay</div><div class="v ok">2.284</div><div class="s">Mốc trước hạn 14 ngày</div></div>
+            <div class="it"><div class="l">Tạm hoãn, sẽ xét lại</div><div class="v">126</div><div class="s">Sinh viên đang nộp dở hoặc thiếu dữ liệu</div></div>
+            <div class="it"><div class="l">Không gửi được</div><div class="v warn">174</div><div class="s">Chủ yếu do thiếu địa chỉ email</div></div>
           </div>
 
+          <div class="chips" data-target="tbl-log">
+            <button class="chip on" data-filter="all"  onclick="pickChip(this)">Tất cả <span class="n">2.584</span></button>
+            <button class="chip"    data-filter="sent" onclick="pickChip(this)">Đã gửi đi <span class="n">2.284</span></button>
+            <button class="chip"    data-filter="unk"  onclick="pickChip(this)">Chưa rõ đã tới chưa <span class="n">38</span></button>
+            <button class="chip"    data-filter="defer" onclick="pickChip(this)">Tạm hoãn <span class="n">126</span></button>
+            <button class="chip"    data-filter="fail" onclick="pickChip(this)">Không gửi được <span class="n">174</span></button>
+          </div>
+
+          <div class="filters f-4x">
+            <div class="field f-search">
+              <label>Tìm sinh viên</label>
+              <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+              <input class="inp" placeholder="Nhập mã sinh viên hoặc họ tên" oninput="filterTable(this,'tbl-log')">
+            </div>
+            <div class="field">
+              <label>Mốc nhắc</label>
+              <select class="sel"><option>Tất cả mốc</option><option>Trước hạn 14 ngày</option><option>Trước hạn 7 ngày</option><option>Trước hạn 1 ngày</option></select>
+            </div>
+            <div class="field"><label>Từ ngày</label><input class="inp" value="20/09/2026"></div>
+            <div class="field"><label>Đến ngày</label><input class="inp" value="25/09/2026"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div><h2>Lịch sử gửi nhắc</h2>
+              <div class="sub">Đang hiển thị <b data-count-for="tbl-log">7</b> trên 2.584 lượt</div></div>
+            </div>
+            <div class="card-bd flush">
+              <div class="tbl-wrap">
+                <table class="tbl" id="tbl-log" style="min-width:1000px">
+                  <thead><tr>
+                    <th style="min-width:180px">Sinh viên</th>
+                    <th style="min-width:180px">Khoản được nhắc</th>
+                    <th style="min-width:145px">Mốc nhắc</th>
+                    <th style="min-width:180px">Gửi tới</th>
+                    <th class="w2" style="min-width:160px">Kết quả</th>
+                    <th style="min-width:130px">Thời điểm</th>
+                    <th class="r" style="min-width:86px">Thao tác</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr data-tags="sent">
+                      <td><div class="t-main">Nguyễn Minh Anh</div><div class="t-sub">23041205</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">23041205@vnu.edu.vn</td>
+                      <td><span class="bg ok">Đã tới hộp thư</span></td>
+                      <td>25/09 08:00</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l1')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="sent">
+                      <td><div class="t-main">Trần Quốc Việt</div><div class="t-sub">25040211</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">25040211@vnu.edu.vn</td>
+                      <td><span class="bg ok">Đã tới hộp thư</span></td>
+                      <td>25/09 08:00</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l1')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="unk">
+                      <td><div class="t-main">Bùi Thanh Tùng</div><div class="t-sub">24040155</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">24040155@vnu.edu.vn</td>
+                      <td><span class="bg info">Đã gửi, chưa rõ đã tới chưa</span></td>
+                      <td>25/09 08:01</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l2')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="fail">
+                      <td><div class="t-main">Lý Minh Khôi</div><div class="t-sub">25041277</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td><span style="color:var(--warn)">Chưa có địa chỉ email</span></td>
+                      <td><span class="bg warn">Không gửi được</span></td>
+                      <td>25/09 08:00</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l3')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="fail">
+                      <td><div class="t-main">Vương Thị Thu</div><div class="t-sub">22041455</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">22041455@vnu.edu.vn</td>
+                      <td><span class="bg err">Hộp thư không tồn tại</span></td>
+                      <td>25/09 08:02</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l4')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="defer">
+                      <td><div class="t-main">Vũ Khánh Linh</div><div class="t-sub">24041530</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">24041530@vnu.edu.vn</td>
+                      <td><span class="bg mute">Tạm hoãn, sẽ xét lại</span></td>
+                      <td>25/09 08:00</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l5')">Chi tiết</button></td>
+                    </tr>
+                    <tr data-tags="defer">
+                      <td><div class="t-main">Hoàng Đức Trung</div><div class="t-sub">25040677</div></td>
+                      <td><div class="t-main">Học phí chính quy</div><div class="t-sub">Học kỳ 1</div></td>
+                      <td>Trước hạn 14 ngày</td>
+                      <td class="t-code">25040677@vnu.edu.vn</td>
+                      <td><span class="bg mute">Tạm hoãn, sẽ xét lại</span></td>
+                      <td>25/09 08:00</td>
+                      <td class="t-act"><button class="btn btn-sm" onclick="openLog('l6')">Chi tiết</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tfoot">
+                <div>Hiển thị 1 đến 7 trong 2.584 lượt</div>
+                <div class="pager">
+                  <button class="pg" disabled>‹</button>
+                  <button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button>
+                  <span style="padding:0 4px">…</span><button class="pg">370</button>
+                  <button class="pg">›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="note info">
+            <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+            <div><span class="nt">Gửi đi không có nghĩa là sinh viên đã nhận được</span>
+            Hệ thống chỉ ghi <b>Đã tới hộp thư</b> khi nhà cung cấp email xác nhận. Nếu chưa có xác nhận thì ghi
+            <b>Đã gửi, chưa rõ đã tới chưa</b> chứ không tự coi là thành công. Hệ thống cũng không theo dõi được
+            sinh viên có mở thư ra đọc hay không.</div>
+          </div>
         </div>
 
       </div>
@@ -917,6 +310,333 @@ Phòng Kế hoạch Tài chính — ULIS</textarea>
   </div>
 </div>
 
-<script src="../js/common.js"></script>
+<!-- ======================= NGĂN CHI TIẾT LƯỢT GỬI ======================= -->
+<div class="dov" id="ov-d-log"></div>
+<aside class="drw" id="d-log">
+  <div class="drw-hd">
+    <div><h2 id="lg-name"></h2><div class="sub" id="lg-sub"></div></div>
+    <button class="x" onclick="closeDrawer('d-log')">✕</button>
+  </div>
+  <div class="drw-bd">
+    <div class="sec" id="lg-problem" style="display:none">
+      <div class="sec-t">Việc cần làm</div>
+      <div id="lg-problem-body"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">Kết quả gửi</div>
+      <div class="axes">
+        <div class="axis-row"><span class="axis-k">Tình trạng</span><span id="lg-st" class="bg ok"></span></div>
+        <div class="axis-row"><span class="axis-k">Gửi tới</span><span id="lg-to" style="font-size:12.5px;font-weight:600"></span></div>
+        <div class="axis-row"><span class="axis-k">Mốc nhắc</span><span id="lg-ms" style="font-size:12.5px;font-weight:600"></span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-t">Khoản được nhắc</div>
+      <dl class="dl" id="lg-info"></dl>
+    </div>
+    <div class="sec">
+      <div class="sec-t">Diễn biến</div>
+      <div class="tl" id="lg-tl"></div>
+    </div>
+  </div>
+  <div class="drw-ft" id="lg-ft"></div>
+</aside>
+
+<!-- ======================= NGĂN CHI TIẾT CHÍNH SÁCH ======================= -->
+<div class="dov" id="ov-d-pol"></div>
+<aside class="drw" id="d-pol">
+  <div class="drw-hd">
+    <div><h2 id="pl-name"></h2><div class="sub" id="pl-sub"></div></div>
+    <button class="x" onclick="closeDrawer('d-pol')">✕</button>
+  </div>
+  <div class="drw-bd">
+    <div class="sec">
+      <div class="sec-t">Mốc nhắc</div>
+      <div class="mini-wrap" id="pl-ms"></div>
+      <p class="hint">Mốc tính theo số ngày so với hạn nộp của khoản thu. Sinh viên đã nộp đủ trước mốc thì không bị nhắc.</p>
+    </div>
+    <div class="sec">
+      <div class="sec-t">Thông tin chính sách</div>
+      <dl class="dl" id="pl-info"></dl>
+    </div>
+    <div class="sec">
+      <div class="sec-t">Trường hợp không gửi</div>
+      <div class="mini-wrap">
+        <table class="mini">
+          <thead><tr><th>Tình huống của sinh viên</th><th>Hệ thống làm gì</th></tr></thead>
+          <tbody>
+            <tr><td>Đã nộp đủ hoặc không còn nợ</td><td>Không gửi nữa</td></tr>
+            <tr><td>Đang thanh toán dở trên cổng</td><td>Tạm hoãn, xét lại ở lượt sau</td></tr>
+            <tr><td>Khoản đang chờ bổ sung thông tin</td><td>Tạm hoãn, xét lại ở lượt sau</td></tr>
+            <tr><td>Kỳ thu đã đóng hoặc khoản đã hủy</td><td>Không gửi nữa</td></tr>
+            <tr><td>Chưa có địa chỉ email hợp lệ</td><td>Không gửi, đưa vào danh sách cần bổ sung email</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="drw-ft" id="pl-ft"></div>
+</aside>
+
+<!-- ======================= HỘP THOẠI MẪU EMAIL ======================= -->
+<div class="mov" id="m-tpl">
+  <div class="mdl wide">
+    <div class="mdl-hd">
+      <div><h2>Nhắc trước hạn nộp học phí</h2>
+      <div class="sub">Bản 2, đang dùng cho mốc trước hạn 14 ngày và 7 ngày</div></div>
+      <button class="x" onclick="closeModal('m-tpl')">✕</button>
+    </div>
+    <div class="mdl-bd">
+      <div class="field" style="margin-bottom:13px">
+        <label>Tiêu đề thư</label>
+        <input class="inp" value="Thông báo nhắc nộp học phí học kỳ 1, năm học 2026-2027">
+        <p class="hint">Không đưa số tiền và mã sinh viên đầy đủ vào tiêu đề.</p>
+      </div>
+      <div class="field" style="margin-bottom:13px">
+        <label>Nội dung thư</label>
+        <textarea class="inp" rows="9">Kính gửi em [Họ và tên],
+
+Phòng Kế hoạch Tài chính xin thông báo khoản học phí [Tên khoản thu] của em còn phải nộp [Số tiền còn phải nộp], hạn nộp là [Hạn nộp].
+
+Em vui lòng đăng nhập cổng sinh viên để nộp học phí.
+
+Đây là thư tự động, em không trả lời thư này. Nếu cần hỗ trợ, em liên hệ Phòng Kế hoạch Tài chính, phòng 205 nhà A1, điện thoại 024.6297.7098.
+
+Số liệu trong thư tính đến [Thời điểm số liệu].</textarea>
+      </div>
+      <div class="mini-wrap">
+        <table class="mini">
+          <thead><tr><th>Biến được dùng</th><th>Lấy từ đâu</th></tr></thead>
+          <tbody>
+            <tr><td>[Họ và tên]</td><td>Hồ sơ sinh viên</td></tr>
+            <tr><td>[Tên khoản thu]</td><td>Khoản phải thu</td></tr>
+            <tr><td>[Số tiền còn phải nộp]</td><td>Khoản phải thu, lấy tại thời điểm gửi</td></tr>
+            <tr><td>[Hạn nộp]</td><td>Kỳ thu</td></tr>
+            <tr><td>[Thời điểm số liệu]</td><td>Hệ thống</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note info" style="margin-top:13px">
+        <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+        <div><span class="nt">Chỉ dùng được các biến trong danh sách trên</span>
+        Viết tên biến khác thì hệ thống báo lỗi khi lưu, tránh trường hợp thư gửi đi còn nguyên dấu ngoặc.</div>
+      </div>
+    </div>
+    <div class="mdl-ft">
+      <button class="btn" onclick="closeModal('m-tpl')">Đóng</button>
+      <button class="btn" onclick="notReady('Gửi thử về hộp thư cán bộ')">Gửi thử cho tôi</button>
+      <button class="btn btn-primary" onclick="notReady('Tạo phiên bản mới của mẫu')">Tạo phiên bản mới</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= HỘP THOẠI TẠO CHÍNH SÁCH ======================= -->
+<div class="mov" id="m-policy">
+  <div class="mdl">
+    <div class="mdl-hd">
+      <div><h2>Tạo chính sách nhắc</h2>
+      <div class="sub">Đặt mốc nhắc và giờ gửi cho một kỳ thu</div></div>
+      <button class="x" onclick="closeModal('m-policy')">✕</button>
+    </div>
+    <div class="mdl-bd">
+      <div class="field" style="margin-bottom:13px">
+        <label>Tên chính sách <span class="req">*</span></label>
+        <input class="inp" placeholder="Ví dụ: Nhắc học phí chính quy học kỳ 2">
+      </div>
+      <div class="field" style="margin-bottom:13px">
+        <label>Áp cho kỳ thu <span class="req">*</span></label>
+        <select class="sel">
+          <option>Học phí chính quy học kỳ 1, năm học 2026-2027</option>
+          <option>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</option>
+        </select>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Mốc nhắc trước hạn <span class="req">*</span></label>
+          <input class="inp" value="14, 7, 1" placeholder="Số ngày, cách nhau bằng dấu phẩy"></div>
+        <div class="field"><label>Giờ gửi <span class="req">*</span></label>
+          <select class="sel"><option>08:00</option><option>09:00</option><option>14:00</option></select></div>
+      </div>
+      <div class="field" style="margin-top:13px">
+        <label>Có nhắc sau khi quá hạn không</label>
+        <select class="sel"><option>Không nhắc sau hạn</option><option>Nhắc sau hạn 3 ngày một lần, tối đa 3 lần</option></select>
+        <p class="hint">Chỉ nhắc sau hạn khi kỳ thu còn mở và sinh viên vẫn nộp được.</p>
+      </div>
+      <div class="note warn" style="margin-top:14px">
+        <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+        <div><span class="nt">Chính sách đã chạy thì không sửa được nữa</span>
+        Muốn đổi mốc hoặc giờ gửi thì tạo bản mới và cho chạy thay bản cũ, để còn tra lại được lượt nhắc nào theo mốc nào.</div>
+      </div>
+    </div>
+    <div class="mdl-ft">
+      <button class="btn" onclick="closeModal('m-policy')">Hủy</button>
+      <button class="btn btn-primary" onclick="closeModal('m-policy');toast('Đã lưu chính sách nhắc ở dạng bản nháp.','ok')">Lưu bản nháp</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/ulis.js"></script>
+<script>
+var LOG = {
+  l1:{ name:'Nguyễn Minh Anh', sub:'23041205, nhắc lúc 25/09/2026 08:00',
+       st:['ok','Đã tới hộp thư'], to:'23041205@vnu.edu.vn', ms:'Trước hạn 14 ngày',
+       info:[['Khoản được nhắc','Học phí chính quy học kỳ 1'],['Còn phải nộp lúc gửi','17.500.000 đ'],
+             ['Hạn nộp','31/10/2026'],['Mẫu email','Nhắc trước hạn nộp học phí, bản 2']],
+       tl:[['done','Hệ thống kiểm tra lại điều kiện nhắc','25/09/2026 08:00'],
+           ['done','Gửi thư cho nhà cung cấp email','25/09/2026 08:00'],
+           ['done','Nhà cung cấp xác nhận thư đã tới hộp thư','25/09/2026 08:01']],
+       ft:'none' },
+
+  l2:{ name:'Bùi Thanh Tùng', sub:'24040155, nhắc lúc 25/09/2026 08:01',
+       st:['info','Đã gửi, chưa rõ đã tới chưa'], to:'24040155@vnu.edu.vn', ms:'Trước hạn 14 ngày',
+       problem:['info','Nhà cung cấp email chưa xác nhận',
+         'Thư đã chuyển đi nhưng chưa có phản hồi xác nhận đã tới hộp thư. Hệ thống không tự coi là thành công.',
+         'Không cần gửi lại ngay. Hệ thống sẽ hỏi lại nhà cung cấp, nếu sau 24 giờ vẫn chưa rõ thì mới tính phương án khác.'],
+       info:[['Khoản được nhắc','Học phí chính quy học kỳ 1'],['Còn phải nộp lúc gửi','19.000.000 đ'],
+             ['Hạn nộp','31/10/2026'],['Mẫu email','Nhắc trước hạn nộp học phí, bản 2']],
+       tl:[['done','Hệ thống kiểm tra lại điều kiện nhắc','25/09/2026 08:01'],
+           ['done','Gửi thư cho nhà cung cấp email','25/09/2026 08:01'],
+           ['now','Chờ nhà cung cấp xác nhận','Hệ thống tự hỏi lại']],
+       ft:'none' },
+
+  l3:{ name:'Lý Minh Khôi', sub:'25041277, lượt nhắc lúc 25/09/2026 08:00',
+       st:['warn','Không gửi được'], to:'Chưa có địa chỉ email', ms:'Trước hạn 14 ngày',
+       problem:['warn','Hồ sơ sinh viên chưa có địa chỉ email',
+         'Hệ thống không tự ghép mã sinh viên với tên miền để đoán địa chỉ, vì đoán sai sẽ gửi thư có thông tin công nợ tới người khác.',
+         'Đề nghị phòng Đào tạo bổ sung địa chỉ email vào hồ sơ sinh viên. Sau khi có, hệ thống sẽ nhắc ở mốc kế tiếp.'],
+       info:[['Khoản được nhắc','Học phí chính quy học kỳ 1'],['Còn phải nộp','19.000.000 đ'],
+             ['Hạn nộp','31/10/2026'],['Đơn vị cần xử lý','Phòng Đào tạo và Công tác người học']],
+       tl:[['done','Hệ thống kiểm tra lại điều kiện nhắc','25/09/2026 08:00'],
+           ['warn','Dừng lại vì không có địa chỉ email hợp lệ','25/09/2026 08:00']],
+       ft:'report' },
+
+  l4:{ name:'Vương Thị Thu', sub:'22041455, lượt nhắc lúc 25/09/2026 08:02',
+       st:['err','Hộp thư không tồn tại'], to:'22041455@vnu.edu.vn', ms:'Trước hạn 14 ngày',
+       problem:['err','Nhà cung cấp báo hộp thư không tồn tại',
+         'Địa chỉ trong hồ sơ không dùng được. Hệ thống tạm ngừng gửi tới địa chỉ này để không bị nhà cung cấp đánh dấu là thư rác.',
+         'Đề nghị phòng Đào tạo xác minh và cập nhật lại địa chỉ email của sinh viên. Trong lúc chờ, nhắc sinh viên qua khoa.'],
+       info:[['Khoản được nhắc','Học phí chính quy học kỳ 1'],['Còn phải nộp','17.500.000 đ'],
+             ['Hạn nộp','31/10/2026'],['Đơn vị cần xử lý','Phòng Đào tạo và Công tác người học']],
+       tl:[['done','Gửi thư cho nhà cung cấp email','25/09/2026 08:02'],
+           ['warn','Nhà cung cấp báo hộp thư không tồn tại','25/09/2026 08:02'],
+           ['done','Tạm ngừng gửi tới địa chỉ này','25/09/2026 08:02']],
+       ft:'report' },
+
+  l5:{ name:'Vũ Khánh Linh', sub:'24041530, lượt nhắc lúc 25/09/2026 08:00',
+       st:['mute','Tạm hoãn, sẽ xét lại'], to:'24041530@vnu.edu.vn', ms:'Trước hạn 14 ngày',
+       problem:['info','Sinh viên đang thanh toán dở nên chưa nhắc',
+         'Ngay trước giờ gửi, sinh viên có mã thanh toán còn hiệu lực trên cổng. Gửi thư nhắc lúc này dễ làm sinh viên tưởng nộp hỏng rồi nộp lại lần hai.',
+         'Không cần làm gì. Hệ thống xét lại ở mốc kế tiếp, nếu lúc đó sinh viên đã nộp xong thì thôi không nhắc.'],
+       info:[['Khoản được nhắc','Học phí chính quy học kỳ 1'],['Còn phải nộp','19.000.000 đ'],
+             ['Hạn nộp','31/10/2026'],['Mốc xét lại','Trước hạn 7 ngày, tức 24/10/2026']],
+       tl:[['done','Hệ thống kiểm tra lại điều kiện nhắc','25/09/2026 08:00'],
+           ['done','Phát hiện sinh viên đang có mã thanh toán còn hiệu lực','25/09/2026 08:00'],
+           ['now','Tạm hoãn, chờ mốc kế tiếp','Xét lại ngày 24/10/2026']],
+       ft:'none' },
+
+  l6:{ name:'Hoàng Đức Trung', sub:'25040677, lượt nhắc lúc 25/09/2026 08:00',
+       st:['mute','Tạm hoãn, sẽ xét lại'], to:'25040677@vnu.edu.vn', ms:'Trước hạn 14 ngày',
+       problem:['warn','Khoản thu chưa tính được nên chưa nhắc',
+         'Sinh viên chưa có khoản phải thu vì chưa rõ còn học hay đã bảo lưu trong kỳ. Chưa có số tiền thì không thể nhắc nộp bao nhiêu.',
+         'Bổ sung tình trạng học tập ở màn Dữ liệu học phí. Xong việc đó thì khoản thu được tính và hệ thống nhắc ở mốc kế tiếp.'],
+       info:[['Khoản được nhắc','Chưa có khoản phải thu'],['Còn phải nộp','Chưa tính được'],
+             ['Hạn nộp','31/10/2026'],['Đơn vị cần xử lý','Phòng Đào tạo và Công tác người học']],
+       tl:[['done','Hệ thống kiểm tra lại điều kiện nhắc','25/09/2026 08:00'],
+           ['warn','Dừng lại vì khoản thu chưa tính được','25/09/2026 08:00']],
+       ft:'data' }
+};
+
+function openLog(key) {
+  var r = LOG[key];
+  document.getElementById('lg-name').textContent = r.name;
+  document.getElementById('lg-sub').textContent = r.sub;
+  var st = document.getElementById('lg-st');
+  st.className = 'bg ' + r.st[0]; st.textContent = r.st[1];
+  document.getElementById('lg-to').textContent = r.to;
+  document.getElementById('lg-ms').textContent = r.ms;
+
+  var pb = document.getElementById('lg-problem');
+  if (r.problem) {
+    pb.style.display = '';
+    document.getElementById('lg-problem-body').innerHTML =
+      '<div class="note ' + r.problem[0] + '">' +
+      '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>' +
+      '<div><span class="nt">' + r.problem[1] + '</span>' + r.problem[2] +
+      '<div style="margin-top:7px"><b>Cần làm: </b>' + r.problem[3] + '</div></div></div>';
+  } else { pb.style.display = 'none'; }
+
+  document.getElementById('lg-info').innerHTML = r.info.map(function (x) {
+    return '<dt>' + x[0] + '</dt><dd>' + x[1] + '</dd>';
+  }).join('');
+  document.getElementById('lg-tl').innerHTML = r.tl.map(function (x) {
+    return '<div class="tl-i ' + x[0] + '"><div class="tl-t">' + x[1] + '</div><div class="tl-m">' + x[2] + '</div></div>';
+  }).join('');
+
+  var ft = document.getElementById('lg-ft');
+  if (r.ft === 'report') {
+    ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'reports.html\'">Mở danh sách cần bổ sung</button>';
+  } else if (r.ft === 'data') {
+    ft.innerHTML = '<button class="btn btn-primary" onclick="location.href=\'student-tuition.html\'">Mở dữ liệu học phí</button>';
+  } else {
+    ft.innerHTML = '<span style="font-size:12px;color:#67748A;align-self:center">Không có thao tác nào cần làm lúc này</span>';
+  }
+  openDrawer('d-log');
+}
+
+var POL = {
+  p1:{ name:'Nhắc học phí chính quy học kỳ 1', sub:'Đang chạy, bộ mốc dùng thử',
+       ms:[['Trước hạn 14 ngày','17/10/2026','08:00','Chưa tới'],
+           ['Trước hạn 7 ngày','24/10/2026','08:00','Chưa tới'],
+           ['Trước hạn 1 ngày','30/10/2026','08:00','Chưa tới']],
+       info:[['Áp cho kỳ thu','Học phí chính quy học kỳ 1, năm học 2026-2027'],
+             ['Hạn nộp của kỳ','31/10/2026'],['Nhắc sau hạn','Không nhắc'],
+             ['Thời gian áp dụng','Từ 20/09/2026 đến 31/10/2026'],
+             ['Mẫu email','Nhắc trước hạn nộp học phí bản 2, và Nhắc gấp còn một ngày bản 1'],
+             ['Người tạo','Nguyễn Thị Hương, 20/09/2026']],
+       ft:'stop' },
+  p2:{ name:'Nhắc học lại và học cải thiện', sub:'Bản nháp, chưa chạy',
+       ms:[['Trước hạn 7 ngày','Chưa đặt','09:00','Chưa áp dụng'],
+           ['Trước hạn 2 ngày','Chưa đặt','09:00','Chưa áp dụng']],
+       info:[['Áp cho kỳ thu','Học lại và học cải thiện học kỳ 1, năm học 2026-2027'],
+             ['Hạn nộp của kỳ','22/09/2026, đã qua'],['Nhắc sau hạn','Chưa chọn'],
+             ['Thời gian áp dụng','Chưa đặt'],['Mẫu email','Chưa chọn'],
+             ['Người tạo','Trần Văn Bình, 22/09/2026']],
+       ft:'draft' },
+  p3:{ name:'Nhắc học phí học kỳ 2 năm 2025-2026', sub:'Đã ngừng sử dụng',
+       ms:[['Trước hạn 10 ngày','05/04/2026','08:00','Đã gửi 2.410 lượt'],
+           ['Trước hạn 3 ngày','12/04/2026','08:00','Đã gửi 1.180 lượt']],
+       info:[['Áp cho kỳ thu','Học phí chính quy học kỳ 2, năm học 2025-2026'],
+             ['Hạn nộp của kỳ','15/04/2026'],['Nhắc sau hạn','Không nhắc'],
+             ['Thời gian áp dụng','Từ 01/03/2026 đến 15/04/2026'],
+             ['Mẫu email','Nhắc trước hạn nộp học phí bản 1'],
+             ['Người tạo','Trần Văn Bình, 28/02/2026']],
+       ft:'copy' }
+};
+
+function openPol(key) {
+  var r = POL[key];
+  document.getElementById('pl-name').textContent = r.name;
+  document.getElementById('pl-sub').textContent = r.sub;
+  document.getElementById('pl-ms').innerHTML =
+    '<table class="mini"><thead><tr><th>Mốc</th><th>Ngày gửi</th><th>Giờ gửi</th><th>Tình trạng</th></tr></thead><tbody>' +
+    r.ms.map(function (x) {
+      return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td>' + x[2] + '</td><td>' + x[3] + '</td></tr>';
+    }).join('') + '</tbody></table>';
+  document.getElementById('pl-info').innerHTML = r.info.map(function (x) {
+    return '<dt>' + x[0] + '</dt><dd>' + x[1] + '</dd>';
+  }).join('');
+
+  var ft = document.getElementById('pl-ft');
+  if (r.ft === 'stop') {
+    ft.innerHTML = '<button class="btn" onclick="notReady(\'Sao chép thành bản nháp mới\')">Sao chép</button>' +
+                   '<button class="btn btn-danger" onclick="notReady(\'Ngừng chính sách nhắc\')">Ngừng sử dụng</button>';
+  } else if (r.ft === 'draft') {
+    ft.innerHTML = '<button class="btn" onclick="notReady(\'Sửa bản nháp\')">Sửa bản nháp</button>' +
+                   '<button class="btn btn-primary" onclick="notReady(\'Cho chính sách chạy\')">Cho chạy</button>';
+  } else {
+    ft.innerHTML = '<button class="btn btn-primary" onclick="notReady(\'Sao chép thành bản nháp mới\')">Sao chép thành bản mới</button>';
+  }
+  openDrawer('d-pol');
+}
+</script>
 </body>
 </html>

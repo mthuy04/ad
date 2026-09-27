@@ -449,6 +449,52 @@ table.mini td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:6
   .rp-layout{grid-template-columns:1fr}
 }
 
+/* ============================ MÀN TỔNG QUAN ============================ */
+.ov2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+
+/* Danh sách việc cần làm */
+.todo{display:flex;align-items:center;gap:13px;padding:12px 16px;border-bottom:1px solid #EEF2F7}
+.todo:last-child{border-bottom:none}
+.todo:hover{background:var(--surface-2)}
+.todo .n{
+  min-width:52px;text-align:center;font-size:19px;font-weight:750;letter-spacing:-.3px;
+  font-variant-numeric:tabular-nums;
+}
+.todo .n.err{color:var(--err)} .todo .n.warn{color:var(--warn)} .todo .n.ok{color:var(--ok)}
+.todo .tx{flex:1;min-width:0}
+.todo .tx b{display:block;font-size:12.8px;font-weight:650}
+.todo .tx span{display:block;margin-top:2px;font-size:11.5px;color:var(--muted)}
+
+/* Biểu đồ cột đơn giản, không dùng thư viện ngoài */
+.cols{display:flex;align-items:flex-end;gap:10px;height:150px;padding:6px 2px 0}
+.cols .c{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%}
+.cols .bar2{width:100%;max-width:46px;border-radius:5px 5px 0 0;background:var(--primary);opacity:.85}
+.cols .c:hover .bar2{opacity:1}
+.cols .lb{font-size:10.5px;color:var(--muted);white-space:nowrap}
+.cols .vl{font-size:11px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums}
+
+/* Danh sách tiến độ theo khoa */
+.prog{padding:11px 16px;border-bottom:1px solid #EEF2F7}
+.prog:last-child{border-bottom:none}
+.prog-hd{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;margin-bottom:6px}
+.prog-hd b{font-weight:650}
+.prog-hd span{color:var(--muted);font-variant-numeric:tabular-nums}
+.prog-tr{height:7px;border-radius:999px;background:var(--neutral-bg);overflow:hidden}
+.prog-fl{height:100%;border-radius:999px;background:var(--ok)}
+.prog-fl.low{background:var(--warn)}
+
+/* Dải mốc sắp tới */
+.miles{display:flex;gap:0;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
+.miles .m{flex:1;min-width:150px;padding:13px 16px;border-right:1px solid var(--border)}
+.miles .m:last-child{border-right:none}
+.miles .m.now{background:var(--primary-soft)}
+.miles .d{font-size:15px;font-weight:750;letter-spacing:-.2px}
+.miles .t{margin-top:3px;font-size:12px;font-weight:600;color:var(--text-2)}
+.miles .s{margin-top:2px;font-size:11px;color:var(--muted)}
+
+@media (max-width:1040px){ .ov2{grid-template-columns:1fr} }
+
 /* ============================ TOAST ============================ */
 #toasts{position:fixed;top:16px;right:16px;z-index:90;display:flex;flex-direction:column;gap:8px}
 .toast{
