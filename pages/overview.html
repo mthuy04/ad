@@ -18,183 +18,291 @@
         <div class="phead">
           <div>
             <h1>Tổng quan</h1>
-            <p>Tình hình thu học phí của kỳ và những việc đang chờ xử lý. Mỗi con số đều bấm được để mở thẳng
-               màn xử lý tương ứng.</p>
+            <p>Tình hình thu học phí của kỳ và những việc đang chờ xử lý.</p>
+            <div class="pmeta">
+              <span class="dot"></span>
+              <span>Số liệu tính đến <b>25/09/2026 09:45</b></span>
+              <span class="sep"></span>
+              <span>Hạn nộp <b>31/10/2026</b>, còn 36 ngày</span>
+              <span class="sep"></span>
+              <span><b>8.196</b> khoản phải thu trong kỳ</span>
+            </div>
           </div>
           <div class="phead-act">
-            <select class="sel" style="width:300px">
+            <select class="sel" style="width:290px">
               <option>Học phí chính quy học kỳ 1, năm học 2026-2027</option>
               <option>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</option>
             </select>
           </div>
         </div>
 
-        <div class="srcbar">
-          <span class="dot"></span>
-          <span>Số liệu tính đến <b>25/09/2026 09:45</b></span>
-          <span class="sep"></span>
-          <span>Hạn nộp của kỳ <b>31/10/2026</b>, còn 36 ngày</span>
-          <span class="sep"></span>
-          <span><b>8.196</b> khoản phải thu trong kỳ</span>
-        </div>
-
         <div class="sumrow">
           <div class="it"><div class="l">Tổng phải thu</div><div class="v">141,1 tỷ đ</div><div class="s">Của 8.196 sinh viên</div></div>
           <div class="it"><div class="l">Đã thu</div><div class="v ok">97,4 tỷ đ</div><div class="s">5.612 sinh viên đã nộp đủ</div></div>
           <div class="it"><div class="l">Còn phải thu</div><div class="v warn">43,7 tỷ đ</div><div class="s">2.584 sinh viên chưa nộp đủ</div></div>
-          <div class="it"><div class="l">Tỷ lệ đã thu</div><div class="v">69,0%</div><div class="s">Còn 36 ngày tới hạn nộp</div></div>
+          <div class="it"><div class="l">Tỷ lệ đã thu</div><div class="v">69,0%</div><div class="s">Vượt tiến độ theo lịch của kỳ</div></div>
         </div>
 
-        <div class="ov2">
+        <!-- ===== HÀNG 1: TIẾN ĐỘ THU VÀ CƠ CẤU ===== -->
+        <div class="cgrid c13">
 
-          <!-- ================= VIỆC CẦN LÀM ================= -->
           <div class="card" style="margin-bottom:0">
             <div class="card-hd">
-              <div><h2>Việc đang chờ xử lý</h2>
-              <div class="sub">Sắp theo mức độ gấp. Bấm vào dòng để mở màn xử lý.</div></div>
+              <div><h2>Tiến độ thu của kỳ</h2>
+              <div class="sub">Số tiền đã thu cộng dồn từ đầu kỳ, so với lịch thu đều tới hạn nộp</div></div>
             </div>
-            <div class="card-bd flush">
+            <div class="card-bd">
+              <svg class="ln" viewBox="0 0 520 190" preserveAspectRatio="xMidYMid meet" role="img"
+                   aria-label="Biểu đồ tiến độ thu cộng dồn, đang ở 97,4 tỷ đồng so với lịch thu đều là 56,4 tỷ đồng">
+                <line class="grid" x1="34" y1="150" x2="500" y2="150"/>
+                <line class="grid" x1="34" y1="115" x2="500" y2="115"/>
+                <line class="grid" x1="34" y1="80" x2="500" y2="80"/>
+                <line class="grid" x1="34" y1="45" x2="500" y2="45"/>
+                <text class="axis" x="28" y="153" text-anchor="end">0</text>
+                <text class="axis" x="28" y="118" text-anchor="end">40</text>
+                <text class="axis" x="28" y="83" text-anchor="end">80</text>
+                <text class="axis" x="28" y="48" text-anchor="end">120</text>
 
-              <div class="todo" style="cursor:pointer" onclick="location.href='reconciliation.html'">
-                <span class="n err">3</span>
-                <div class="tx"><b>Chênh lệch đối soát đang chặn đóng sổ</b>
-                <span>Hai ngày 23/09 và 24/09 chưa đóng sổ được</span></div>
-                <span class="bg err">Phải xử lý ngay</span>
-              </div>
+                <path class="goal" d="M34,150 L490,27.7"/>
+                <path class="area" d="M34,150 L72,139.3 L110,125.1 L148,108.8 L163,96.4 L186,84.2 L201,75 L216,65.6 L216,150 Z"/>
+                <path class="real" d="M34,150 L72,139.3 L110,125.1 L148,108.8 L163,96.4 L186,84.2 L201,75 L216,65.6"/>
+                <circle class="pt" cx="216" cy="65.6" r="4.5"/>
 
-              <div class="todo" style="cursor:pointer" onclick="location.href='transactions.html'">
-                <span class="n err">7</span>
-                <div class="tx"><b>Giao dịch chưa gắn được vào khoản nào</b>
-                <span>96.400.000 đ đang treo, trong đó 3 giao dịch quá 3 ngày</span></div>
-                <span class="bg err">Phải xử lý ngay</span>
-              </div>
+                <text class="axis" x="34" y="168" text-anchor="middle">01/09</text>
+                <text class="axis" x="148" y="168" text-anchor="middle">16/09</text>
+                <text class="axis" x="216" y="168" text-anchor="middle">25/09</text>
+                <text class="axis" x="360" y="168" text-anchor="middle">14/10</text>
+                <text class="axis" x="490" y="168" text-anchor="middle">31/10</text>
+                <text class="axis" x="34" y="185">Đơn vị: tỷ đồng</text>
 
-              <div class="todo" style="cursor:pointer" onclick="location.href='exceptions.html'">
-                <span class="n warn">14</span>
-                <div class="tx"><b>Ngoại lệ cần cán bộ xem và quyết</b>
-                <span>3 việc đã quá hạn xử lý, 2 việc chưa phân công</span></div>
-                <span class="bg warn">Cần xử lý</span>
-              </div>
-
-              <div class="todo" style="cursor:pointer" onclick="location.href='student-tuition.html'">
-                <span class="n warn">252</span>
-                <div class="tx"><b>Sinh viên chưa đủ căn cứ tính học phí</b>
-                <span>Chưa có khoản phải thu, phần lớn cần phòng Đào tạo bổ sung dữ liệu</span></div>
-                <span class="bg warn">Cần xử lý</span>
-              </div>
-
-              <div class="todo" style="cursor:pointer" onclick="location.href='tuition-config.html'">
-                <span class="n warn">18</span>
-                <div class="tx"><b>Sinh viên chưa có mức thu trong khung học phí</b>
-                <span>Khóa QH.2026 nhóm ngành Ả Rập, cần bổ sung quy tắc</span></div>
-                <span class="bg warn">Cần xử lý</span>
-              </div>
-
-              <div class="todo" style="cursor:pointer" onclick="location.href='receivables.html'">
-                <span class="n">2</span>
-                <div class="tx"><b>Khoản có tiền thừa chưa chọn cách xử lý</b>
-                <span>13.375.000 đ đang giữ của sinh viên</span></div>
-                <span class="bg mute">Theo dõi tiếp</span>
-              </div>
-
-              <div class="todo" style="cursor:pointer" onclick="location.href='reminders.html'">
-                <span class="n">174</span>
-                <div class="tx"><b>Sinh viên không nhắc được qua email</b>
-                <span>Chủ yếu do hồ sơ chưa có địa chỉ email</span></div>
-                <span class="bg mute">Theo dõi tiếp</span>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- ================= TIẾN ĐỘ ================= -->
-          <div>
-            <div class="card">
-              <div class="card-hd">
-                <div><h2>Tiền về 7 ngày gần nhất</h2>
-                <div class="sub">Đơn vị tỷ đồng, gồm cả nộp qua mã thanh toán và chuyển khoản trực tiếp</div></div>
-              </div>
-              <div class="card-bd">
-                <div class="cols">
-                  <div class="c"><span class="vl">4,25</span><div class="bar2" style="height:72%"></div><span class="lb">19/09</span></div>
-                  <div class="c"><span class="vl">4,59</span><div class="bar2" style="height:78%"></div><span class="lb">20/09</span></div>
-                  <div class="c"><span class="vl">5,14</span><div class="bar2" style="height:87%"></div><span class="lb">21/09</span></div>
-                  <div class="c"><span class="vl">5,90</span><div class="bar2" style="height:100%"></div><span class="lb">22/09</span></div>
-                  <div class="c"><span class="vl">4,81</span><div class="bar2" style="height:82%"></div><span class="lb">23/09</span></div>
-                  <div class="c"><span class="vl">5,23</span><div class="bar2" style="height:89%"></div><span class="lb">24/09</span></div>
-                  <div class="c"><span class="vl">5,60</span><div class="bar2" style="height:95%"></div><span class="lb">25/09</span></div>
-                </div>
-                <p class="hint" style="margin-top:10px">Tổng 7 ngày: <b>35.520.000.000 đ</b> của 2.140 giao dịch.</p>
-              </div>
-            </div>
-
-            <div class="card" style="margin-bottom:0">
-              <div class="card-hd">
-                <div><h2>Ba khoa thu chậm nhất</h2>
-                <div class="sub">Tỷ lệ đã thu trên tổng phải thu của khoa</div></div>
-                <div class="card-hd-act"><button class="btn-link" onclick="location.href='reports.html'">Xem đủ 9 khoa</button></div>
-              </div>
-              <div class="card-bd flush">
-                <div class="prog">
-                  <div class="prog-hd"><b>Khoa NN và VH Ả Rập</b><span>55,3%, còn 2.811.000.000 đ</span></div>
-                  <div class="prog-tr"><div class="prog-fl low" style="width:55.3%"></div></div>
-                </div>
-                <div class="prog">
-                  <div class="prog-hd"><b>Khoa NN và VH Hàn Quốc</b><span>65,6%, còn 6.810.000.000 đ</span></div>
-                  <div class="prog-tr"><div class="prog-fl" style="width:65.6%"></div></div>
-                </div>
-                <div class="prog">
-                  <div class="prog-hd"><b>Khoa NN và VH Nhật Bản</b><span>67,7%, còn 6.690.000.000 đ</span></div>
-                  <div class="prog-tr"><div class="prog-fl" style="width:67.7%"></div></div>
-                </div>
-                <div class="prog" style="background:var(--surface-2)">
-                  <div class="prog-hd"><b>Toàn trường</b><span>69,0%, còn 43.717.000.000 đ</span></div>
-                  <div class="prog-tr"><div class="prog-fl" style="width:69%"></div></div>
-                </div>
+                <line x1="216" y1="20" x2="216" y2="150" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="3 3"/>
+                <text class="axis" x="222" y="30" style="fill:#1F5FA8;font-weight:700">Hôm nay 97,4</text>
+                <text class="axis" x="410" y="44" text-anchor="middle" style="paint-order:stroke;stroke:#fff;stroke-width:3.5">Lịch thu đều tới hạn nộp</text>
+              </svg>
+              <div class="note ok" style="margin-top:6px">
+                <svg class="ic" viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5L13 5"/></svg>
+                <div><span class="nt">Đang vượt tiến độ</span>
+                Qua 24 trên 60 ngày của kỳ, nếu thu đều thì mới được 56,4 tỷ. Thực tế đã thu 97,4 tỷ, nhanh hơn 41 tỷ.
+                Sinh viên thường nộp dồn vào tuần cuối nên phần còn lại vẫn cần theo dõi.</div>
               </div>
             </div>
           </div>
 
+          <div class="card" style="margin-bottom:0">
+            <div class="card-hd">
+              <div><h2>Cơ cấu khoản phải thu</h2>
+              <div class="sub">Theo tình trạng nộp tiền của sinh viên</div></div>
+            </div>
+            <div class="card-bd">
+              <div class="dn">
+                <svg width="150" height="150" viewBox="0 0 150 150" role="img"
+                     aria-label="Biểu đồ tròn cơ cấu khoản phải thu: đã nộp đủ 68,1 phần trăm, chưa nộp 28,1 phần trăm, nộp thiếu 3,5 phần trăm, có tiền thừa 0,4 phần trăm">
+                  <circle cx="75" cy="75" r="54" fill="none" stroke="#EEF2F7" stroke-width="22"/>
+                  <circle cx="75" cy="75" r="54" fill="none" stroke="#0F7A54" stroke-width="22"
+                          stroke-dasharray="231.1 108.2" stroke-dashoffset="0" transform="rotate(-90 75 75)"/>
+                  <circle cx="75" cy="75" r="54" fill="none" stroke="#E0A93C" stroke-width="22"
+                          stroke-dasharray="95.3 244" stroke-dashoffset="-231.1" transform="rotate(-90 75 75)"/>
+                  <circle cx="75" cy="75" r="54" fill="none" stroke="#1F5FA8" stroke-width="22"
+                          stroke-dasharray="11.9 327.4" stroke-dashoffset="-326.4" transform="rotate(-90 75 75)"/>
+                  <circle cx="75" cy="75" r="54" fill="none" stroke="#8B5CF6" stroke-width="22"
+                          stroke-dasharray="1.4 337.9" stroke-dashoffset="-338.3" transform="rotate(-90 75 75)"/>
+                  <text class="dn-mid" x="75" y="73" text-anchor="middle">8.196</text>
+                  <text class="dn-sub" x="75" y="89" text-anchor="middle">khoản phải thu</text>
+                </svg>
+                <div class="lg">
+                  <div class="lg-row"><span class="lg-dot" style="background:#0F7A54"></span>
+                    <span class="lg-nm">Đã nộp đủ</span><span class="lg-vl">5.578</span><span class="lg-pc">68,1%</span></div>
+                  <div class="lg-row"><span class="lg-dot" style="background:#E0A93C"></span>
+                    <span class="lg-nm">Chưa nộp</span><span class="lg-vl">2.301</span><span class="lg-pc">28,1%</span></div>
+                  <div class="lg-row"><span class="lg-dot" style="background:#1F5FA8"></span>
+                    <span class="lg-nm">Nộp thiếu</span><span class="lg-vl">283</span><span class="lg-pc">3,5%</span></div>
+                  <div class="lg-row"><span class="lg-dot" style="background:#8B5CF6"></span>
+                    <span class="lg-nm">Có tiền thừa</span><span class="lg-vl">34</span><span class="lg-pc">0,4%</span></div>
+                  <div class="lg-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:8px">
+                    <span class="lg-nm" style="font-weight:650;color:var(--text)">Tổng</span>
+                    <span class="lg-vl">8.196</span><span class="lg-pc">100%</span></div>
+                </div>
+              </div>
+              <button class="btn btn-sm" style="width:100%;margin-top:10px" onclick="location.href='receivables.html'">Mở danh sách khoản phải thu</button>
+            </div>
+          </div>
         </div>
 
-        <div style="margin-top:14px">
-          <div class="card-hd" style="border:none;padding:0 0 10px">
-            <div><h2 style="font-size:14.5px;font-weight:650">Mốc sắp tới của kỳ thu</h2></div>
-          </div>
-          <div class="miles">
-            <div class="m now">
-              <div class="d">Hằng ngày</div>
-              <div class="t">Đối soát với ngân hàng</div>
-              <div class="s">Sao kê về khoảng 07:30 sáng</div>
+        <!-- ===== HÀNG 2: TIỀN VỀ VÀ THEO KHOA ===== -->
+        <div class="cgrid c31">
+
+          <div class="card" style="margin-bottom:0">
+            <div class="card-hd">
+              <div><h2>Tiền về 7 ngày gần nhất</h2>
+              <div class="sub">Đơn vị tỷ đồng</div></div>
             </div>
-            <div class="m">
-              <div class="d">17/10</div>
-              <div class="t">Nhắc lần 1</div>
-              <div class="s">Trước hạn 14 ngày</div>
-            </div>
-            <div class="m">
-              <div class="d">24/10</div>
-              <div class="t">Nhắc lần 2</div>
-              <div class="s">Trước hạn 7 ngày</div>
-            </div>
-            <div class="m">
-              <div class="d">30/10</div>
-              <div class="t">Nhắc lần 3</div>
-              <div class="s">Trước hạn 1 ngày</div>
-            </div>
-            <div class="m">
-              <div class="d">31/10</div>
-              <div class="t">Hạn nộp học phí</div>
-              <div class="s">Còn 36 ngày</div>
+            <div class="card-bd">
+              <div class="stk">
+                <div class="c"><span class="vl">4,25</span><div class="col" style="height:72%"><div class="s2" style="height:3.1%"></div><div class="s1" style="height:96.9%"></div></div><span class="lb">19/09</span></div>
+                <div class="c"><span class="vl">4,59</span><div class="col" style="height:78%"><div class="s2" style="height:3.1%"></div><div class="s1" style="height:96.9%"></div></div><span class="lb">20/09</span></div>
+                <div class="c"><span class="vl">5,14</span><div class="col" style="height:87%"><div class="s2" style="height:3.2%"></div><div class="s1" style="height:96.8%"></div></div><span class="lb">21/09</span></div>
+                <div class="c"><span class="vl">5,90</span><div class="col" style="height:100%"><div class="s2" style="height:3.1%"></div><div class="s1" style="height:96.9%"></div></div><span class="lb">22/09</span></div>
+                <div class="c"><span class="vl">4,81</span><div class="col" style="height:82%"><div class="s2" style="height:3.6%"></div><div class="s1" style="height:96.4%"></div></div><span class="lb">23/09</span></div>
+                <div class="c"><span class="vl">5,23</span><div class="col" style="height:89%"><div class="s2" style="height:4.1%"></div><div class="s1" style="height:95.9%"></div></div><span class="lb">24/09</span></div>
+                <div class="c"><span class="vl">5,60</span><div class="col" style="height:95%"><div class="s2" style="height:3.4%"></div><div class="s1" style="height:96.6%"></div></div><span class="lb">25/09</span></div>
+              </div>
+              <div class="lg" style="margin-top:12px">
+                <div class="lg-row"><span class="lg-dot" style="background:#1F5FA8"></span>
+                  <span class="lg-nm">Nộp bằng mã thanh toán trên cổng</span><span class="lg-vl">34,32 tỷ</span><span class="lg-pc">96,6%</span></div>
+                <div class="lg-row"><span class="lg-dot" style="background:#7FB4E4"></span>
+                  <span class="lg-nm">Sinh viên tự chuyển khoản</span><span class="lg-vl">1,20 tỷ</span><span class="lg-pc">3,4%</span></div>
+              </div>
+              <p class="hint" style="margin-top:8px">Tổng 7 ngày <b>35,52 tỷ đồng</b> của 2.140 giao dịch. Tỷ lệ nộp qua cổng càng cao
+                 thì càng ít phải xử lý tay, vì tiền chuyển khoản tự do mới hay không gắn được khoản.</p>
             </div>
           </div>
+
+          <div class="card" style="margin-bottom:0">
+            <div class="card-hd">
+              <div><h2>Tiến độ thu theo khoa</h2>
+              <div class="sub">Sắp từ thấp lên cao để thấy khoa cần chú ý trước</div></div>
+              <div class="card-hd-act"><button class="btn-link" onclick="location.href='reports.html'">Xem báo cáo đầy đủ</button></div>
+            </div>
+            <div class="card-bd flush">
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Ả Rập</b><span>55,3%, còn 2,8 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl low" style="width:55.3%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Hàn Quốc</b><span>65,6%, còn 6,8 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:65.6%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Nhật Bản</b><span>67,7%, còn 6,7 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:67.7%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Trung Quốc</b><span>68,9%, còn 7,5 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:68.9%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Nga</b><span>69,7%, còn 1,4 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:69.7%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Đức</b><span>70,3%, còn 2,2 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:70.3%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Pháp</b><span>70,7%, còn 2,7 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:70.7%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa NN và VH Anh</b><span>71,8%, còn 9,8 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:71.8%"></div></div>
+              </div>
+              <div class="prog">
+                <div class="prog-hd"><b>Khoa Sư phạm tiếng Anh</b><span>73,4%, còn 3,7 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:73.4%"></div></div>
+              </div>
+              <div class="prog" style="background:var(--surface-2)">
+                <div class="prog-hd"><b>Toàn trường</b><span>69,0%, còn 43,7 tỷ</span></div>
+                <div class="prog-tr"><div class="prog-fl" style="width:69%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== HÀNG 3: ĐỐI SOÁT VÀ VIỆC CẦN LÀM ===== -->
+        <div class="card">
+          <div class="card-hd">
+            <div><h2>Đối soát với ngân hàng 7 ngày gần nhất</h2>
+            <div class="sub">Ngày nào chưa đóng sổ được thì còn chênh lệch phải xử lý</div></div>
+            <div class="card-hd-act"><button class="btn-link" onclick="location.href='reconciliation.html'">Mở màn đối soát</button></div>
+          </div>
+          <div class="card-bd">
+            <div class="rdays">
+              <div class="rday ok"><div class="d">19/09</div><div class="s">Đã đóng sổ</div></div>
+              <div class="rday ok"><div class="d">20/09</div><div class="s">Đã đóng sổ</div></div>
+              <div class="rday ok"><div class="d">21/09</div><div class="s">Đã đóng sổ</div></div>
+              <div class="rday ok"><div class="d">22/09</div><div class="s">Đã đóng sổ</div></div>
+              <div class="rday warn"><div class="d">23/09</div><div class="s">Còn 1 mục chênh 250.000 đ</div></div>
+              <div class="rday warn"><div class="d">24/09</div><div class="s">Còn 2 mục chênh 6.690.000 đ</div></div>
+              <div class="rday mute"><div class="d">25/09</div><div class="s">Chờ sao kê ngân hàng</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div><h2>Việc đang chờ xử lý</h2>
+            <div class="sub">Sắp theo mức độ gấp. Bấm vào dòng để mở màn xử lý.</div></div>
+          </div>
+          <div class="card-bd flush">
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='reconciliation.html'">
+              <span class="n err">3</span>
+              <div class="tx"><b>Chênh lệch đối soát đang chặn đóng sổ</b>
+              <span>Hai ngày 23/09 và 24/09 chưa đóng sổ được</span></div>
+              <span class="bg err">Phải xử lý ngay</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='transactions.html'">
+              <span class="n err">7</span>
+              <div class="tx"><b>Giao dịch chưa gắn được vào khoản nào</b>
+              <span>96.400.000 đ đang treo, trong đó 3 giao dịch quá 3 ngày</span></div>
+              <span class="bg err">Phải xử lý ngay</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='exceptions.html'">
+              <span class="n warn">14</span>
+              <div class="tx"><b>Ngoại lệ cần cán bộ xem và quyết</b>
+              <span>3 việc đã quá hạn xử lý, 2 việc chưa phân công</span></div>
+              <span class="bg warn">Cần xử lý</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='student-tuition.html'">
+              <span class="n warn">252</span>
+              <div class="tx"><b>Sinh viên chưa đủ căn cứ tính học phí</b>
+              <span>Chưa có khoản phải thu, phần lớn cần phòng Đào tạo bổ sung dữ liệu</span></div>
+              <span class="bg warn">Cần xử lý</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='tuition-config.html'">
+              <span class="n warn">18</span>
+              <div class="tx"><b>Sinh viên chưa có mức thu trong khung học phí</b>
+              <span>Khóa QH.2026 nhóm ngành Ả Rập, cần bổ sung quy tắc</span></div>
+              <span class="bg warn">Cần xử lý</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='receivables.html'">
+              <span class="n">2</span>
+              <div class="tx"><b>Khoản có tiền thừa chưa chọn cách xử lý</b>
+              <span>13.375.000 đ đang giữ của sinh viên</span></div>
+              <span class="bg mute">Theo dõi tiếp</span>
+            </div>
+
+            <div class="todo" style="cursor:pointer" onclick="location.href='reminders.html'">
+              <span class="n">174</span>
+              <div class="tx"><b>Sinh viên không nhắc được qua email</b>
+              <span>Chủ yếu do hồ sơ chưa có địa chỉ email</span></div>
+              <span class="bg mute">Theo dõi tiếp</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-hd" style="border:none;padding:0 0 10px">
+          <div><h2 style="font-size:14.5px;font-weight:650">Mốc sắp tới của kỳ thu</h2></div>
+        </div>
+        <div class="miles">
+          <div class="m now"><div class="d">Hằng ngày</div><div class="t">Đối soát với ngân hàng</div><div class="s">Sao kê về khoảng 07:30 sáng</div></div>
+          <div class="m"><div class="d">17/10</div><div class="t">Nhắc lần 1</div><div class="s">Trước hạn 14 ngày</div></div>
+          <div class="m"><div class="d">24/10</div><div class="t">Nhắc lần 2</div><div class="s">Trước hạn 7 ngày</div></div>
+          <div class="m"><div class="d">30/10</div><div class="t">Nhắc lần 3</div><div class="s">Trước hạn 1 ngày</div></div>
+          <div class="m"><div class="d">31/10</div><div class="t">Hạn nộp học phí</div><div class="s">Còn 36 ngày</div></div>
         </div>
 
         <div class="note info" style="margin-top:14px">
           <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
-          <div><span class="nt">Vì sao tổng phải thu có thể còn tăng</span>
+          <div><span class="nt">Vì sao tổng phải thu còn có thể tăng</span>
           Hiện còn 252 sinh viên chưa đủ căn cứ tính nên chưa có khoản phải thu, số tiền của các em chưa nằm trong
-          141,1 tỷ đồng ở trên. Khi bổ sung xong dữ liệu, tổng phải thu sẽ tăng và tỷ lệ đã thu sẽ giảm một chút
+          141,1 tỷ đồng ở trên. Khi bổ sung xong dữ liệu, tổng phải thu sẽ tăng và tỷ lệ đã thu giảm một chút
           rồi mới tăng trở lại khi các em nộp.</div>
         </div>
 

@@ -552,6 +552,52 @@ table.tbl thead th.sortable.on .sx{opacity:1}
   body{background:#fff}
 }
 
+/* ---- Lưới biểu đồ ---- */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.cgrid.c13{grid-template-columns:1.25fr .75fr}
+.cgrid.c31{grid-template-columns:.75fr 1.25fr}
+
+/* ---- Biểu đồ tròn ---- */
+.dn{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.dn svg{flex-shrink:0}
+.dn-mid{font-size:22px;font-weight:750;letter-spacing:-.5px}
+.dn-sub{font-size:10.5px;fill:var(--muted)}
+.lg{flex:1;min-width:170px}
+.lg-row{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:12.3px}
+.lg-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.lg-nm{flex:1;color:var(--text-2)}
+.lg-vl{font-weight:700;font-variant-numeric:tabular-nums}
+.lg-pc{width:46px;text-align:right;color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+
+/* ---- Biểu đồ đường ---- */
+.ln{width:100%;height:auto}
+.ln .grid{stroke:#EDF1F6;stroke-width:1}
+.ln .axis{fill:var(--muted-2);font-size:9.5px}
+.ln .real{fill:none;stroke:var(--primary);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.ln .area{fill:var(--primary);opacity:.09}
+.ln .goal{fill:none;stroke:var(--muted-2);stroke-width:1.5;stroke-dasharray:5 4}
+.ln .pt{fill:#fff;stroke:var(--primary);stroke-width:2.5}
+
+/* ---- Cột chồng cho tiền về theo ngày ---- */
+.stk{display:flex;align-items:flex-end;gap:9px;height:142px;padding-top:4px}
+.stk .c{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.stk .col{width:100%;max-width:42px;display:flex;flex-direction:column;justify-content:flex-end;border-radius:5px 5px 0 0;overflow:hidden}
+.stk .s1{background:var(--primary);opacity:.88}
+.stk .s2{background:#7FB4E4}
+.stk .lb{font-size:10px;color:var(--muted);white-space:nowrap}
+.stk .vl{font-size:10.5px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums}
+
+/* ---- Dải tình hình đối soát theo ngày ---- */
+.rdays{display:flex;gap:7px}
+.rday{flex:1;padding:9px 6px;border-radius:var(--r);text-align:center;border:1px solid}
+.rday .d{font-size:11.5px;font-weight:700}
+.rday .s{margin-top:3px;font-size:10px;line-height:1.3}
+.rday.ok{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}
+.rday.warn{background:var(--warn-bg);border-color:var(--warn-bd);color:var(--warn)}
+.rday.mute{background:var(--neutral-bg);border-color:var(--border);color:var(--muted)}
+
+@media (max-width:1180px){ .cgrid,.cgrid.c13,.cgrid.c31{grid-template-columns:1fr} }
+
 /* ============================ TOAST ============================ */
 #toasts{position:fixed;top:16px;right:16px;z-index:90;display:flex;flex-direction:column;gap:8px}
 .toast{
