@@ -422,6 +422,31 @@ table.mini td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:6
 .cond-t{font-size:12.6px;font-weight:600}
 .cond-m{margin-top:2px;font-size:11.5px;color:var(--muted)}
 
+/* ============================ MÀN BÁO CÁO ============================ */
+.rp-layout{display:grid;grid-template-columns:292px 1fr;gap:14px;align-items:start}
+.rp-side{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-1);overflow:hidden}
+.rp-group{padding:11px 14px 5px;font-size:10.5px;font-weight:750;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.rp-item{
+  display:block;width:100%;text-align:left;padding:10px 14px;border:none;background:none;
+  border-left:3px solid transparent;transition:.12s;
+}
+.rp-item:hover{background:var(--surface-2)}
+.rp-item.on{background:var(--primary-soft);border-left-color:var(--primary)}
+.rp-item .t{font-size:12.8px;font-weight:650;color:var(--text);line-height:1.35}
+.rp-item.on .t{color:var(--primary)}
+.rp-item .s{margin-top:2px;font-size:11.2px;color:var(--muted);line-height:1.4}
+
+/* Thanh tỷ lệ trong bảng báo cáo */
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{width:62px;height:6px;border-radius:999px;background:var(--neutral-bg);overflow:hidden;flex-shrink:0}
+.bar .fill{height:100%;border-radius:999px;background:var(--ok)}
+.bar .fill.low{background:var(--warn)}
+.bar .num{font-size:12px;font-weight:650;font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+
+@media (max-width:1040px){
+  .rp-layout{grid-template-columns:1fr}
+}
+
 /* ============================ TOAST ============================ */
 #toasts{position:fixed;top:16px;right:16px;z-index:90;display:flex;flex-direction:column;gap:8px}
 .toast{
