@@ -18,8 +18,8 @@
         <div class="phead">
           <div>
             <h1>Báo cáo</h1>
-            <p>Chọn báo cáo cần xem, đặt phạm vi rồi tải về hoặc gửi cho khoa. Số liệu lấy tại thời điểm xem,
-               không phải số cố định của một lần chốt.</p>
+            <p>Chọn báo cáo cần xem, đặt phạm vi rồi tải về. Số liệu là ảnh chụp tại thời điểm ghi bên dưới,
+               hệ thống làm mới 30 phút một lần.</p>
           </div>
         </div>
 
@@ -27,9 +27,11 @@
           <span class="dot"></span>
           <span>Số liệu tính đến <b>25/09/2026 08:16</b></span>
           <span class="sep"></span>
-          <span>Nguồn: dữ liệu học phí, khoản phải thu và giao dịch của hệ thống</span>
+          <span>Lần làm mới tiếp theo khoảng <b>08:46</b></span>
           <span class="grow"></span>
-          <button class="btn-link" onclick="showTab('rp','history')">Xem lịch sử xuất báo cáo</button>
+          <button class="btn-link" onclick="toast('Đang làm mới số liệu báo cáo.','ok')">Làm mới ngay</button>
+          <span class="sep"></span>
+          <button class="btn-link" onclick="showTab('rp','history')">Lịch sử xuất báo cáo</button>
         </div>
 
         <div class="tabs">
@@ -39,65 +41,35 @@
 
         <!-- ================= XEM VÀ TẢI ================= -->
         <div class="pane on" data-pane-group="rp" data-pane="make">
-
-          <!-- Phạm vi áp cho báo cáo đang chọn -->
-          <div class="card">
-            <div class="card-bd">
-              <div class="filters f-4x" style="margin-bottom:0">
-                <div class="field">
-                  <label>Kỳ thu</label>
-                  <select class="sel" id="f-period" onchange="render()">
-                    <option>Học phí chính quy học kỳ 1, năm học 2026-2027</option>
-                    <option>Học lại và học cải thiện học kỳ 1, năm học 2026-2027</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Khoa</label>
-                  <select class="sel" id="f-fac" onchange="render()">
-                    <option>Tất cả khoa</option>
-                    <option>Khoa NN và VH Anh</option>
-                    <option>Khoa Sư phạm tiếng Anh</option>
-                    <option>Khoa NN và VH Trung Quốc</option>
-                    <option>Khoa NN và VH Nhật Bản</option>
-                    <option>Khoa NN và VH Hàn Quốc</option>
-                  </select>
-                </div>
-                <div class="field"><label>Từ ngày</label><input class="inp" id="f-from" value="01/09/2026" onchange="render()"></div>
-                <div class="field"><label>Đến ngày</label><input class="inp" id="f-to" value="25/09/2026" onchange="render()"></div>
-              </div>
-              <p class="hint" style="margin-top:9px" id="f-note"></p>
-            </div>
-          </div>
-
           <div class="rp-layout">
 
-            <!-- Danh sách báo cáo -->
             <nav class="rp-side" id="rp-list"></nav>
 
-            <!-- Xem trước -->
             <div>
+              <!-- Bộ lọc thay đổi theo từng báo cáo -->
+              <div class="card">
+                <div class="card-bd">
+                  <div class="filters" id="rv-filters" style="margin-bottom:0"></div>
+                  <p class="hint" style="margin-top:9px" id="rv-scope"></p>
+                </div>
+              </div>
+
               <div class="card" style="margin-bottom:0">
                 <div class="card-hd">
                   <div>
                     <h2 id="rv-name">Tình hình thu học phí theo khoa</h2>
                     <div class="sub" id="rv-desc"></div>
                   </div>
-                  <div class="card-hd-act">
-                    <button class="btn btn-sm" onclick="openModal('m-send')">Gửi cho khoa</button>
-                    <button class="btn btn-sm" onclick="exportReport('PDF')">Tải PDF</button>
-                    <button class="btn btn-sm btn-primary" onclick="exportReport('Excel')">Tải Excel</button>
-                  </div>
+                  <div class="card-hd-act" id="rv-actions"></div>
                 </div>
 
-                <div class="card-bd" id="rv-note-box" style="padding-bottom:0"></div>
+                <div class="card-bd" id="rv-top" style="padding-bottom:0"></div>
 
                 <div class="card-bd flush">
                   <div class="tbl-wrap">
                     <table class="tbl" id="rv-table"></table>
                   </div>
-                  <div class="tfoot">
-                    <div id="rv-foot">Xem trước hiển thị một phần số liệu. Bản tải về có đầy đủ các dòng.</div>
-                  </div>
+                  <div class="tfoot"><div id="rv-foot"></div></div>
                 </div>
               </div>
             </div>
@@ -110,57 +82,81 @@
           <div class="card">
             <div class="card-hd">
               <div><h2>Lịch sử xuất báo cáo</h2>
-              <div class="sub">Ghi lại ai đã xuất báo cáo nào, với phạm vi nào, để đối chiếu khi cần</div></div>
+              <div class="sub">Mỗi lần xuất được giữ lại nguyên bản. Bản đã gửi ra ngoài phòng phải tra lại được đúng tệp gốc.</div></div>
             </div>
             <div class="card-bd flush">
               <div class="tbl-wrap">
-                <table class="tbl" style="min-width:960px">
+                <table class="tbl" style="min-width:1160px">
                   <thead><tr>
-                    <th style="min-width:145px">Thời điểm</th>
-                    <th style="min-width:250px">Báo cáo</th>
-                    <th style="min-width:260px">Phạm vi</th>
-                    <th style="min-width:100px">Định dạng</th>
-                    <th style="min-width:160px">Người thực hiện</th>
-                    <th class="r" style="min-width:90px">Thao tác</th>
+                    <th style="min-width:135px">Lúc xuất</th>
+                    <th style="min-width:230px">Báo cáo</th>
+                    <th style="min-width:240px">Phạm vi đã chọn</th>
+                    <th class="w2" style="min-width:125px">Số liệu tính đến</th>
+                    <th style="min-width:90px">Định dạng</th>
+                    <th style="min-width:145px">Người xuất</th>
+                    <th class="r" style="min-width:210px">Thao tác</th>
                   </tr></thead>
                   <tbody>
                     <tr>
                       <td>25/09/2026 08:40</td>
                       <td><div class="t-main">Danh sách sinh viên chưa nộp đủ</div></td>
                       <td>Học kỳ 1, tất cả khoa</td>
+                      <td><b>25/09/2026 08:16</b></td>
                       <td>Excel</td>
                       <td>Nguyễn Thị Hương</td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Tải lại bản đã xuất')">Tải lại</button></td>
+                      <td class="t-act">
+                        <button class="btn btn-sm" onclick="notReady('Tải lại bản gốc')">Tải lại bản gốc</button>
+                        <button class="btn btn-sm" onclick="notReady('Chạy lại với số mới')">Chạy lại</button>
+                      </td>
                     </tr>
                     <tr>
                       <td>24/09/2026 16:55</td>
                       <td><div class="t-main">Tình hình thu học phí theo khoa</div></td>
                       <td>Học kỳ 1, tất cả khoa</td>
+                      <td><b>24/09/2026 16:46</b></td>
                       <td>PDF</td>
                       <td>Nguyễn Thị Hương</td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Tải lại bản đã xuất')">Tải lại</button></td>
+                      <td class="t-act">
+                        <button class="btn btn-sm" onclick="notReady('Tải lại bản gốc')">Tải lại bản gốc</button>
+                        <button class="btn btn-sm" onclick="notReady('Chạy lại với số mới')">Chạy lại</button>
+                      </td>
                     </tr>
                     <tr>
                       <td>24/09/2026 09:12</td>
                       <td><div class="t-main">Danh sách sinh viên chưa nộp đủ</div>
-                          <div class="t-sub">Đã gửi email cho Khoa NN và VH Hàn Quốc</div></td>
+                          <div class="t-sub">Đã gửi email cho Khoa NN và VH Hàn Quốc, 1 người nhận</div></td>
                       <td>Học kỳ 1, Khoa NN và VH Hàn Quốc</td>
+                      <td><b>24/09/2026 08:46</b></td>
                       <td>Excel</td>
                       <td>Trần Văn Bình</td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Tải lại bản đã xuất')">Tải lại</button></td>
+                      <td class="t-act">
+                        <button class="btn btn-sm" onclick="notReady('Tải lại bản gốc')">Tải lại bản gốc</button>
+                        <button class="btn btn-sm" onclick="notReady('Chạy lại với số mới')">Chạy lại</button>
+                      </td>
                     </tr>
                     <tr>
                       <td>23/09/2026 14:20</td>
                       <td><div class="t-main">Tiền chưa gắn được vào khoản nào</div></td>
                       <td>Từ 01/09/2026 đến 23/09/2026</td>
+                      <td><b>23/09/2026 14:16</b></td>
                       <td>Excel</td>
                       <td>Trần Văn Bình</td>
-                      <td class="t-act"><button class="btn btn-sm" onclick="notReady('Tải lại bản đã xuất')">Tải lại</button></td>
+                      <td class="t-act">
+                        <button class="btn btn-sm" onclick="notReady('Tải lại bản gốc')">Tải lại bản gốc</button>
+                        <button class="btn btn-sm" onclick="notReady('Chạy lại với số mới')">Chạy lại</button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+          </div>
+
+          <div class="note info">
+            <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
+            <div><span class="nt">Hai nút khác nhau, đừng nhầm</span>
+            <b>Tải lại bản gốc</b> cho ra đúng tệp đã xuất hôm đó, dùng khi khoa thắc mắc một con số trong bản đã nhận.
+            <b>Chạy lại</b> cho ra số mới nhất của hôm nay, dùng khi cần bản cập nhật.</div>
           </div>
         </div>
 
@@ -169,234 +165,457 @@
   </div>
 </div>
 
-<!-- ======================= HỘP THOẠI GỬI CHO KHOA ======================= -->
+<!-- ======================= HỘP THOẠI GỬI ======================= -->
 <div class="mov" id="m-send">
   <div class="mdl">
     <div class="mdl-hd">
-      <div><h2>Gửi báo cáo cho khoa</h2>
-      <div class="sub" id="sd-name">Danh sách sinh viên chưa nộp đủ</div></div>
+      <div><h2 id="sd-title">Gửi báo cáo cho khoa</h2>
+      <div class="sub" id="sd-name"></div></div>
       <button class="x" onclick="closeModal('m-send')">✕</button>
     </div>
     <div class="mdl-bd">
       <div class="field" style="margin-bottom:13px">
         <label>Gửi tới <span class="req">*</span></label>
-        <select class="sel">
-          <option>Tất cả các khoa, mỗi khoa nhận phần của khoa mình</option>
-          <option>Khoa NN và VH Anh</option>
-          <option>Khoa Sư phạm tiếng Anh</option>
-          <option>Khoa NN và VH Trung Quốc</option>
-          <option>Khoa NN và VH Nhật Bản</option>
-          <option>Khoa NN và VH Hàn Quốc</option>
-        </select>
-        <p class="hint">Mỗi khoa chỉ nhận danh sách sinh viên của khoa mình.</p>
+        <select class="sel" id="sd-to" onchange="updSend()"></select>
+      </div>
+      <div class="mini-wrap" style="margin-bottom:13px">
+        <table class="mini"><tbody id="sd-preview"></tbody></table>
       </div>
       <div class="field" style="margin-bottom:13px">
         <label>Tiêu đề email</label>
-        <input class="inp" value="Danh sách sinh viên chưa nộp đủ học phí học kỳ 1, năm học 2026-2027">
+        <input class="inp" id="sd-subject">
       </div>
       <div class="field">
         <label>Nội dung kèm theo</label>
-        <textarea class="inp" rows="3">Kính gửi các khoa, Phòng Kế hoạch Tài chính xin gửi danh sách sinh viên chưa nộp đủ học phí học kỳ 1. Đề nghị các khoa hỗ trợ nhắc sinh viên hoàn thành trước ngày 31/10/2026.</textarea>
+        <textarea class="inp" id="sd-body" rows="3"></textarea>
       </div>
-      <div class="note info" style="margin-top:14px">
-        <svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>
-        <div><span class="nt">Số liệu trong email là số tại thời điểm gửi</span>
-        Sinh viên nộp sau thời điểm này sẽ không được cập nhật vào bản đã gửi. Lần gửi được ghi vào lịch sử xuất báo cáo.</div>
+      <div class="note warn" style="margin-top:14px">
+        <svg class="ic" viewBox="0 0 16 16"><path d="M8 2L1.5 13.5h13zM8 6.5v3.5M8 11.6v.5"/></svg>
+        <div><span class="nt">Đây là thao tác gửi thông tin sinh viên ra ngoài phòng</span>
+        Mỗi đơn vị chỉ nhận phần của đơn vị mình. Số liệu trong tệp là số tại thời điểm gửi, sinh viên nộp sau đó
+        sẽ không được cập nhật vào bản đã gửi. Lần gửi được ghi vào lịch sử xuất báo cáo kèm người nhận.</div>
       </div>
     </div>
     <div class="mdl-ft">
       <button class="btn" onclick="closeModal('m-send')">Hủy</button>
-      <button class="btn btn-primary" onclick="closeModal('m-send');toast('Đã gửi báo cáo cho các khoa.','ok')">Gửi email</button>
+      <button class="btn" onclick="notReady('Xem trước bản của một đơn vị')">Xem trước một bản</button>
+      <button class="btn btn-primary" id="sd-go">Gửi email</button>
     </div>
   </div>
 </div>
 
 <script src="../js/ulis.js"></script>
 <script>
-/* Mỗi báo cáo tự khai cột và dòng của mình, nên đổi báo cáo là đổi hẳn bảng */
+/* ============================================================
+   Dữ liệu gốc giữ ở dạng số, mọi tổng và tỷ lệ đều tính ra từ
+   chính các dòng đang hiển thị, nên lọc là số tổng đổi theo.
+   ============================================================ */
+
+var KHOA = ['Khoa NN và VH Anh','Khoa Sư phạm tiếng Anh','Khoa NN và VH Trung Quốc',
+            'Khoa NN và VH Nhật Bản','Khoa NN và VH Hàn Quốc','Khoa NN và VH Pháp',
+            'Khoa NN và VH Đức','Khoa NN và VH Nga','Khoa NN và VH Ả Rập'];
+
+var EMAIL = {
+  'Khoa NN và VH Anh':'khoaanh@ulis.vnu.edu.vn',
+  'Khoa Sư phạm tiếng Anh':'khoaspta@ulis.vnu.edu.vn',
+  'Khoa NN và VH Trung Quốc':'khoatq@ulis.vnu.edu.vn',
+  'Khoa NN và VH Nhật Bản':'khoanb@ulis.vnu.edu.vn',
+  'Khoa NN và VH Hàn Quốc':'khoahq@ulis.vnu.edu.vn',
+  'Khoa NN và VH Pháp':'khoaphap@ulis.vnu.edu.vn',
+  'Khoa NN và VH Đức':'khoaduc@ulis.vnu.edu.vn',
+  'Khoa NN và VH Nga':'khoanga@ulis.vnu.edu.vn',
+  'Khoa NN và VH Ả Rập':'khoaarap@ulis.vnu.edu.vn'
+};
+
+/* Số sinh viên chưa nộp đủ của từng khoa, dùng cho hộp thoại gửi */
+var NO_DU = {'Khoa NN và VH Anh':612,'Khoa Sư phạm tiếng Anh':298,'Khoa NN và VH Trung Quốc':404,
+             'Khoa NN và VH Nhật Bản':354,'Khoa NN và VH Hàn Quốc':360,'Khoa NN và VH Pháp':142,
+             'Khoa NN và VH Đức':118,'Khoa NN và VH Nga':119,'Khoa NN và VH Ả Rập':177};
+
 var REPORTS = [
   { g:'Thu học phí' },
 
   { id:'r1', name:'Tình hình thu học phí theo khoa',
-    short:'Tổng phải thu, đã thu và còn phải thu của từng khoa',
+    short:'Phải thu, đã thu và còn phải thu của từng khoa',
     desc:'Dùng để báo cáo Ban Giám hiệu và theo dõi tiến độ thu của kỳ',
-    cols:[['Khoa',''],['Số sinh viên','r'],['Phải thu','r'],['Đã thu','r'],['Còn phải thu','r'],['Tỷ lệ đã thu','r']],
+    src:'Khoản phải thu và giao dịch đã gắn khoản',
+    filters:['period','fac','asof'],
+    sort:{col:5,dir:1},
+    cols:[{t:'Khoa'},{t:'Sinh viên có khoản phải thu',a:'r',n:1},{t:'Phải thu (đ)',a:'r',m:1},
+          {t:'Đã thu (đ)',a:'r',m:1},{t:'Còn phải thu (đ)',a:'r',m:1,calc:[2,3]},{t:'Tỷ lệ đã thu',a:'r',pct:[3,2]}],
     rows:[
-      ['Khoa NN và VH Anh','1.842','32,2 tỷ','23,1 tỷ','9,1 tỷ',['bar',71.7]],
-      ['Khoa Sư phạm tiếng Anh','1.126','18,4 tỷ','13,5 tỷ','4,9 tỷ',['bar',73.4]],
-      ['Khoa NN và VH Trung Quốc','1.284','24,4 tỷ','16,8 tỷ','7,6 tỷ',['bar',68.9]],
-      ['Khoa NN và VH Nhật Bản','1.095','19,2 tỷ','13,0 tỷ','6,2 tỷ',['bar',67.7]],
-      ['Khoa NN và VH Hàn Quốc','1.048','18,9 tỷ','12,4 tỷ','6,5 tỷ',['bar',65.6]],
-      ['Khoa NN và VH Pháp','686','12,3 tỷ','8,7 tỷ','3,6 tỷ',['bar',70.7]],
-      ['Khoa NN và VH Nga','592','8,9 tỷ','6,2 tỷ','2,7 tỷ',['bar',69.7]],
-      ['Khoa NN và VH Ả Rập','523','8,5 tỷ','4,7 tỷ','3,8 tỷ',['bar',55.3]]],
-    sum:['Toàn trường','8.196','142,8 tỷ','98,4 tỷ','44,4 tỷ',['bar',68.9]],
-    note:['info','Khoa NN và VH Ả Rập đang thấp hơn hẳn các khoa khác',
-      'Trong 523 sinh viên của khoa có 18 sinh viên khóa QH.2026 chưa có khoản phải thu, do khung học phí chưa khai mức thu cho nhóm ngành này. Số liệu sẽ tự đúng lại sau khi bổ sung mức thu.'],
-    foot:'Hiển thị đủ 8 khoa của hệ đại học chính quy.' },
+      ['Khoa NN và VH Anh',1842,34815000000,24987000000],
+      ['Khoa Sư phạm tiếng Anh',1126,13905000000,10203000000],
+      ['Khoa NN và VH Trung Quốc',1284,24225000000,16680000000],
+      ['Khoa NN và VH Nhật Bản',1095,20710000000,14020000000],
+      ['Khoa NN và VH Hàn Quốc',1048,19805000000,12995000000],
+      ['Khoa NN và VH Pháp',486,9180000000,6494000000],
+      ['Khoa NN và VH Đức',400,7560000000,5316000000],
+      ['Khoa NN và VH Nga',392,4620000000,3219000000],
+      ['Khoa NN và VH Ả Rập',523,6285000000,3474000000]],
+    total:'auto', totalLabel:'Toàn trường',
+    note:['warn','Khoa NN và VH Ả Rập có tỷ lệ thu thấp nhất, chênh gần 10 điểm so với các khoa còn lại',
+      'Chưa rõ nguyên nhân, cần trao đổi với khoa. Đây là việc riêng, không liên quan tới mục dữ liệu chưa đầy đủ bên dưới.'],
+    note2:['info','Báo cáo chưa đầy đủ: 18 sinh viên chưa được lập khoản phải thu',
+      'Đều thuộc khóa QH.2026 nhóm ngành Ả Rập, do khung học phí chưa khai mức thu cho nhóm này. Số sinh viên và số tiền của 18 em <b>chưa nằm trong bảng</b>. Khi khai xong mức thu, phần Phải thu sẽ tăng thêm còn Đã thu chưa đổi, nên tỷ lệ của khoa sẽ giảm tiếp rồi mới tăng dần khi các em nộp.'],
+    foot:'Bảng hiển thị đủ 9 khoa của hệ đại học chính quy, dòng Toàn trường là tổng của các dòng đang hiển thị.' },
 
   { id:'r2', name:'Danh sách sinh viên chưa nộp đủ',
     short:'Từng sinh viên còn nợ, số tiền và hạn nộp',
-    desc:'Dùng để gửi về khoa nhắc sinh viên, hoặc làm căn cứ khóa tài khoản cổng sinh viên',
-    cols:[['Sinh viên',''],['Khoa',''],['Phải nộp','r'],['Đã nộp','r'],['Còn phải nộp','r'],['Hạn nộp','']],
+    desc:'Dùng để gửi về khoa nhắc sinh viên hoàn thành trước hạn',
+    src:'Khoản phải thu của các kỳ thu còn mở',
+    filters:['periodOpen','fac','due','asof'],
+    share:{ kind:'khoa', title:'Gửi danh sách cho khoa',
+            subject:'Danh sách sinh viên chưa nộp đủ học phí học kỳ 1, năm học 2026-2027',
+            body:'Kính gửi các khoa, Phòng Kế hoạch Tài chính xin gửi danh sách sinh viên chưa nộp đủ học phí học kỳ 1. Đề nghị các khoa hỗ trợ nhắc sinh viên hoàn thành trước ngày 31/10/2026.' },
+    cols:[{t:'Sinh viên'},{t:'Khoa'},{t:'Kỳ thu'},{t:'Phải nộp (đ)',a:'r',m:1},{t:'Đã nộp (đ)',a:'r',m:1},
+          {t:'Còn phải nộp (đ)',a:'r',m:1},{t:'Hạn nộp'}],
     rows:[
-      ['Nguyễn Minh Anh|23041205','NN và VH Anh','17.500.000','0','17.500.000','31/10/2026'],
-      ['Phạm Thu Hà|23040912','NN và VH Hàn Quốc','17.500.000','10.000.000','7.500.000','31/10/2026'],
-      ['Trần Quốc Việt|25040211','NN và VH Pháp','19.000.000','0','19.000.000','31/10/2026'],
-      ['Vũ Khánh Linh|24041530','NN và VH Trung Quốc','19.000.000','0','19.000.000','31/10/2026'],
-      ['Bùi Thanh Tùng|24040155','NN và VH Anh','19.000.000','0','19.000.000','31/10/2026'],
-      ['Ngô Bảo Châu|24040733','NN và VH Hàn Quốc','19.000.000','0','19.000.000','31/10/2026']],
-    sum:['Tổng 2.584 sinh viên','','66,3 tỷ','21,9 tỷ','44,4 tỷ',''],
-    foot:'Xem trước 6 trong 2.584 sinh viên. Bản tải về có đầy đủ.' },
+      ['Nguyễn Minh Anh|23041205','Khoa NN và VH Anh','Học phí chính quy học kỳ 1',17500000,0,17500000,'31/10/2026'],
+      ['Phạm Thu Hà|23040912','Khoa NN và VH Hàn Quốc','Học phí chính quy học kỳ 1',17500000,10000000,7500000,'31/10/2026'],
+      ['Trần Quốc Việt|25040211','Khoa NN và VH Đức','Học phí chính quy học kỳ 1',19000000,0,19000000,'31/10/2026'],
+      ['Vũ Khánh Linh|24041530','Khoa NN và VH Trung Quốc','Học phí chính quy học kỳ 1',19000000,0,19000000,'31/10/2026'],
+      ['Bùi Thanh Tùng|24040155','Khoa NN và VH Anh','Học phí chính quy học kỳ 1',19000000,0,19000000,'31/10/2026'],
+      ['Nguyễn Thị Mai|24041902','Khoa NN và VH Hàn Quốc','Học lại và học cải thiện',6440000,0,6440000,'22/09/2026, đã quá hạn']],
+    sample:{ n:2584, sum:'2.584 sinh viên, còn phải nộp 43.717.000.000 đ' },
+    foot:'Bảng hiển thị 6 dòng đầu. Số tổng ở trên là của toàn bộ báo cáo, không phải tổng của 6 dòng này.' },
 
-  { id:'r3', name:'Miễn giảm và điều chỉnh',
-    short:'Các khoản được giảm hoặc tăng, kèm lý do và người duyệt',
+  { id:'r3', name:'Điều chỉnh khoản phải thu',
+    short:'Khoản được giảm hoặc tăng, kèm căn cứ và người thực hiện',
     desc:'Dùng để giải trình khi kiểm tra, mọi điều chỉnh đều có căn cứ đi kèm',
-    cols:[['Thời điểm',''],['Sinh viên',''],['Nội dung điều chỉnh',''],['Số tiền','r'],['Người thực hiện','']],
+    src:'Bút toán điều chỉnh trên khoản phải thu',
+    filters:['period','fac','adjtype','range'],
+    cols:[{t:'Thời điểm'},{t:'Sinh viên'},{t:'Khoa'},{t:'Nội dung và căn cứ'},
+          {t:'Số trước (đ)',a:'r',m:1},{t:'Số sau (đ)',a:'r',m:1},{t:'Người thực hiện'}],
     rows:[
-      ['22/09/2026 15:40','Nguyễn Hải Yến|22041002','Miễn giảm 50% diện chính sách','giảm 5.775.000','Trần Văn Bình'],
-      ['21/09/2026 10:05','Lê Thị Vân Anh|23040477','Miễn giảm 70% diện chính sách','giảm 8.085.000','Trần Văn Bình'],
-      ['20/09/2026 14:22','Đặng Quốc Khánh|24041088','Sinh viên bảo lưu từ giữa kỳ','giảm 7.600.000','Nguyễn Thị Hương'],
-      ['18/09/2026 09:30','Hoàng Thị Lan|22040915','Bổ sung học phần đăng ký muộn','tăng 1.840.000','Nguyễn Thị Hương']],
-    sum:['Tổng 47 lượt điều chỉnh','','','giảm 284,6 triệu',''],
-    foot:'Xem trước 4 trong 47 lượt điều chỉnh của kỳ thu này.' },
+      ['22/09/2026 15:40','Nguyễn Hải Yến|22041002','Khoa Sư phạm tiếng Anh','Miễn giảm 50% diện chính sách|Quyết định miễn giảm ngày 22/09/2026',11550000,5775000,'Trần Văn Bình'],
+      ['21/09/2026 10:05','Lê Thị Vân Anh|23040477','Khoa NN và VH Anh','Miễn giảm 70% diện chính sách|Quyết định miễn giảm ngày 21/09/2026',11550000,3465000,'Trần Văn Bình'],
+      ['20/09/2026 14:22','Đặng Quốc Khánh|24041088','Khoa NN và VH Nhật Bản','Sinh viên bảo lưu từ giữa kỳ|Quyết định cho bảo lưu ngày 19/09/2026',19000000,11400000,'Nguyễn Thị Hương'],
+      ['18/09/2026 09:30','Hoàng Thị Lan|22040915','Khoa NN và VH Trung Quốc','Bổ sung học phần đăng ký muộn|Đề nghị của khoa ngày 17/09/2026',17500000,19340000,'Nguyễn Thị Hương']],
+    sample:{ n:47, sum:'47 lượt điều chỉnh, giảm ròng 284.600.000 đ' },
+    foot:'Bảng hiển thị 4 lượt gần nhất. Số tổng ở trên là của toàn bộ báo cáo.' },
 
   { g:'Tiền về và đối soát' },
 
   { id:'r4', name:'Tổng hợp tiền về theo ngày',
     short:'Số tiền và số giao dịch ngân hàng báo về mỗi ngày',
     desc:'Dùng để đối chiếu với sổ sách kế toán của Nhà trường',
-    cols:[['Ngày',''],['Số giao dịch','r'],['Nộp bằng mã thanh toán','r'],['Chuyển khoản trực tiếp','r'],['Tổng tiền về','r']],
+    src:'Giao dịch ngân hàng đã báo về',
+    filters:['range','channel'],
+    cols:[{t:'Ngày'},{t:'Số giao dịch',a:'r',n:1},{t:'Nộp bằng mã thanh toán (đ)',a:'r',m:1},
+          {t:'Chuyển khoản trực tiếp (đ)',a:'r',m:1},{t:'Tổng tiền về (đ)',a:'r',m:1}],
     rows:[
-      ['25/09/2026','316','5,41 tỷ','190 triệu','5,60 tỷ'],
-      ['24/09/2026','292','5,02 tỷ','215 triệu','5,23 tỷ'],
-      ['23/09/2026','313','4,64 tỷ','172 triệu','4,81 tỷ'],
-      ['22/09/2026','341','5,72 tỷ','181 triệu','5,90 tỷ'],
-      ['21/09/2026','299','4,98 tỷ','165 triệu','5,14 tỷ'],
-      ['20/09/2026','276','4,45 tỷ','143 triệu','4,59 tỷ']],
-    sum:['Tổng 7 ngày','2.140','35,84 tỷ','1,32 tỷ','37,16 tỷ'],
-    foot:'Xem trước 6 trong 7 ngày của khoảng thời gian đang chọn.' },
+      ['25/09/2026',316,5410000000,190000000,5600000000],
+      ['24/09/2026',292,5015000000,215000000,5230000000],
+      ['23/09/2026',313,4638000000,172000000,4810000000],
+      ['22/09/2026',341,5719000000,181000000,5900000000],
+      ['21/09/2026',299,4975000000,165000000,5140000000],
+      ['20/09/2026',276,4447000000,143000000,4590000000],
+      ['19/09/2026',303,4118000000,132000000,4250000000]],
+    total:'auto', totalLabel:'Tổng 7 ngày',
+    foot:'Bảng hiển thị đủ 7 ngày trong khoảng đang chọn.' },
 
   { id:'r5', name:'Tiền chưa gắn được vào khoản nào',
-    short:'Tiền đã về nhưng chưa trừ được cho sinh viên nào',
+    short:'Tiền đã về nhưng chưa trừ cho sinh viên nào',
     desc:'Cần xử lý sớm vì đây là tiền đang treo, chưa vào công nợ của sinh viên',
-    cols:[['Ngày về',''],['Nội dung chuyển khoản',''],['Số tiền','r'],['Vướng ở đâu',''],['Số ngày treo','r']],
+    src:'Giao dịch chưa gắn khoản',
+    filters:['range','aging'],
+    cols:[{t:'Ngày về'},{t:'Nội dung chuyển khoản'},{t:'Số tiền (đ)',a:'r',m:1},
+          {t:'Vướng ở đâu'},{t:'Số ngày treo',a:'r',n:1}],
     rows:[
-      ['25/09/2026','NGUYEN VAN A CK HOC PHI','17.500.000','Không có mã sinh viên trong nội dung','0'],
-      ['24/09/2026','Nguyễn Thị Mai 24041902','6.440.000','Sinh viên đang nợ 2 khoản, chưa rõ nộp khoản nào','1'],
-      ['23/09/2026','CK HOC PHI KY 1','19.000.000','Không có thông tin nhận dạng sinh viên','2'],
-      ['21/09/2026','LE VAN HUNG NOP HP','17.500.000','Trùng tên với 3 sinh viên, chưa xác minh được','4'],
-      ['19/09/2026','HOC PHI THANG 9','11.550.000','Không có thông tin nhận dạng sinh viên','6']],
-    sum:['Tổng 7 giao dịch','','96,4 triệu','',''],
-    note:['warn','Có 2 giao dịch treo quá 5 ngày',
-      'Tiền treo lâu dễ dẫn tới sinh viên khiếu nại là đã nộp mà vẫn báo nợ. Đề nghị liên hệ sinh viên để xác minh và gắn khoản.'],
-    foot:'Xem trước 5 trong 7 giao dịch chưa gắn khoản.' },
+      ['25/09/2026','NGUYEN VAN A CK HOC PHI',17500000,'Không có mã sinh viên trong nội dung',0],
+      ['24/09/2026','Nguyen Thi Mai 24041902',6440000,'Sinh viên đang nợ 2 khoản, chưa rõ nộp khoản nào',1],
+      ['23/09/2026','CK HOC PHI KY 1',19000000,'Không có thông tin nhận dạng sinh viên',2],
+      ['22/09/2026','NOP TIEN HOC',19000000,'Không có thông tin nhận dạng sinh viên',3],
+      ['21/09/2026','LE VAN HUNG NOP HP',17500000,'Trùng tên với 3 sinh viên, chưa xác minh được',4],
+      ['19/09/2026','HOC PHI THANG 9',11550000,'Không có thông tin nhận dạng sinh viên',6],
+      ['19/09/2026','TT HP SV',5410000,'Số tiền không khớp khoản nào của sinh viên',6]],
+    total:'auto', totalLabel:'Tổng 7 giao dịch',
+    note:['warn','Có 3 giao dịch treo quá 3 ngày',
+      'Tiền treo lâu dễ dẫn tới sinh viên khiếu nại là đã nộp mà hệ thống vẫn báo nợ. Đề nghị liên hệ sinh viên để xác minh rồi gắn khoản.'],
+    foot:'Bảng hiển thị đủ 7 giao dịch chưa gắn khoản trong khoảng đang chọn.' },
 
   { id:'r6', name:'Nộp thừa và cách xử lý',
     short:'Sinh viên có tiền thừa, đã chuyển kỳ sau hay chờ hoàn',
     desc:'Dùng để theo dõi tiền của sinh viên đang giữ tại Nhà trường',
-    cols:[['Sinh viên',''],['Lý do phát sinh',''],['Tiền thừa','r'],['Đã xử lý','r'],['Còn phải xử lý','r'],['Cách xử lý','']],
+    src:'Khoản phải thu có số nộp thừa',
+    filters:['period','fac','ovstatus'],
+    cols:[{t:'Sinh viên'},{t:'Khoa'},{t:'Lý do phát sinh'},{t:'Tiền thừa (đ)',a:'r',m:1},
+          {t:'Đã xử lý (đ)',a:'r',m:1},{t:'Còn phải xử lý (đ)',a:'r',m:1},{t:'Cách xử lý'}],
     rows:[
-      ['Nguyễn Hải Yến|22041002','Miễn giảm duyệt sau khi đã nộp','5.775.000','0','5.775.000','Chưa chọn cách xử lý'],
-      ['Lê Thị Vân Anh|23040477','Miễn giảm duyệt sau khi đã nộp','8.085.000','8.085.000','0','Đã chuyển sang học kỳ 2'],
-      ['Đặng Quốc Khánh|24041088','Bảo lưu giữa kỳ','7.600.000','0','7.600.000','Đang chờ hoàn tiền'],
-      ['Trịnh Gia Bảo|23041330','Chuyển khoản dư so với số phải nộp','450.000','450.000','0','Đã chuyển sang học kỳ 2']],
-    sum:['Tổng 34 sinh viên','','218,4 triệu','96,2 triệu','122,2 triệu',''],
-    foot:'Xem trước 4 trong 34 sinh viên có tiền thừa.' },
+      ['Nguyễn Hải Yến|22041002','Khoa Sư phạm tiếng Anh','Miễn giảm duyệt sau khi đã nộp',5775000,0,5775000,'Chưa chọn cách xử lý'],
+      ['Lê Thị Vân Anh|23040477','Khoa NN và VH Anh','Miễn giảm duyệt sau khi đã nộp',8085000,8085000,0,'Đã chuyển sang học kỳ 2'],
+      ['Đặng Quốc Khánh|24041088','Khoa NN và VH Nhật Bản','Bảo lưu giữa kỳ',7600000,0,7600000,'Đang chờ hoàn tiền'],
+      ['Trịnh Gia Bảo|23041330','Khoa NN và VH Trung Quốc','Chuyển khoản dư so với số phải nộp',450000,450000,0,'Đã chuyển sang học kỳ 2']],
+    sample:{ n:34, sum:'34 sinh viên, còn phải xử lý 122.200.000 đ' },
+    foot:'Bảng hiển thị 4 trường hợp gần nhất. Số tổng ở trên là của toàn bộ báo cáo.' },
 
   { id:'r7', name:'Kết quả đối soát với ngân hàng',
     short:'Từng ngày khớp bao nhiêu, còn chênh lệch gì',
     desc:'Dùng để làm biên bản đối soát định kỳ với BIDV',
-    cols:[['Ngày',''],['Bút toán khớp','r'],['Mục chênh lệch','r'],['Số tiền chênh','r'],['Tình trạng','']],
+    src:'Kết quả so khớp với sao kê cuối ngày của BIDV',
+    filters:['range','recstatus'],
+    cols:[{t:'Ngày nghiệp vụ'},{t:'Bút toán khớp',a:'r',n:1},{t:'Mục chênh lệch',a:'r',n:1},
+          {t:'Số tiền chênh (đ)',a:'r',m:1},{t:'Tình trạng'}],
     rows:[
-      ['25/09/2026','Chưa chạy','Chưa có','Chưa có','badge|mute|Chờ sao kê ngân hàng'],
-      ['24/09/2026','289','3','7.440.000','badge|warn|Còn chênh lệch'],
-      ['23/09/2026','312','1','250.000','badge|warn|Còn chênh lệch'],
-      ['22/09/2026','341','0','0','badge|ok|Đã đóng sổ'],
-      ['21/09/2026','298','1','0','badge|ok|Đã đóng sổ'],
-      ['20/09/2026','276','0','0','badge|ok|Đã đóng sổ']],
-    sum:['Tổng 7 ngày','1.770','5','7,69 triệu',''],
-    foot:'Ngày 21/09 từng có một mục chênh lệch, đã giải trình xong trước khi đóng sổ.' },
+      ['24/09/2026',289,3,7440000,'badge|warn|Còn chênh lệch'],
+      ['23/09/2026',312,1,250000,'badge|warn|Còn chênh lệch'],
+      ['22/09/2026',341,0,0,'badge|ok|Đã đóng sổ'],
+      ['21/09/2026',298,1,0,'badge|ok|Đã đóng sổ, đã giải trình'],
+      ['20/09/2026',276,0,0,'badge|ok|Đã đóng sổ'],
+      ['19/09/2026',254,0,0,'badge|ok|Đã đóng sổ']],
+    total:'auto', totalLabel:'Tổng 6 ngày',
+    foot:'Ngày 25/09 chưa có sao kê ngân hàng nên chưa nằm trong bảng. Ngày 21/09 từng có một mục chênh lệch, đã giải trình xong trước khi đóng sổ.' },
+
+  { id:'r8', name:'Giao dịch bị đảo',
+    short:'Tiền đã ghi nhận rồi bị ngân hàng thu hồi',
+    desc:'Dùng cho kiểm toán và cho Phòng Kế hoạch Tài chính theo dõi tiền đã vào rồi lại ra',
+    src:'Giao dịch có bút toán đảo',
+    filters:['range'],
+    cols:[{t:'Ngày đảo'},{t:'Sinh viên'},{t:'Số tiền bị thu hồi (đ)',a:'r',m:1},
+          {t:'Lý do ngân hàng báo'},{t:'Tình trạng xử lý'}],
+    rows:[
+      ['21/09/2026','Hoàng Anh Tuấn|23040544',17500000,'Lệnh chuyển tiền bị thu hồi theo yêu cầu người nộp','badge|warn|Cần kiểm tra thủ công'],
+      ['14/09/2026','Phan Đức Duy|24040961',11550000,'Ngân hàng ghi nhận trùng, hủy một bút toán','badge|ok|Đã đảo xong'],
+      ['09/09/2026','Vương Thị Thu|22041455',19000000,'Lệnh chuyển tiền bị thu hồi theo yêu cầu người nộp','badge|ok|Đã đảo xong']],
+    total:'auto', totalLabel:'Tổng 3 giao dịch',
+    note:['warn','Một giao dịch chưa đảo được tự động',
+      'Tiền gốc đã trừ vào học phí và phần thừa đã chuyển sang kỳ sau, nếu đảo tự động thì số dư của sinh viên sẽ bị âm. Xem chi tiết ở màn Giao dịch.'],
+    foot:'Bảng hiển thị đủ 3 giao dịch bị đảo trong khoảng đang chọn.' },
+
+  { g:'Chất lượng dữ liệu' },
+
+  { id:'r9', name:'Danh sách cần bổ sung',
+    short:'Sinh viên chưa đủ căn cứ để tính học phí',
+    desc:'Gửi phòng Đào tạo và Công tác người học để bổ sung dữ liệu gốc, đây không phải việc của Phòng Kế hoạch Tài chính',
+    src:'Dữ liệu học phí lấy từ CSDL phần mềm đào tạo',
+    filters:['period','fac','errgroup'],
+    share:{ kind:'daotao', title:'Gửi danh sách cho đơn vị xử lý',
+            subject:'Danh sách sinh viên chưa đủ căn cứ tính học phí học kỳ 1, năm học 2026-2027',
+            body:'Kính gửi phòng Đào tạo và Công tác người học, Phòng Kế hoạch Tài chính xin gửi danh sách sinh viên chưa đủ căn cứ tính học phí. Đề nghị đơn vị hỗ trợ bổ sung dữ liệu để hệ thống tính được học phí cho các em.' },
+    cols:[{t:'Sinh viên'},{t:'Khoa'},{t:'Thiếu thông tin gì'},{t:'Cần ai xử lý'},{t:'Chờ từ ngày'}],
+    rows:[
+      ['Trần Thị Bích Ngọc|24040388','Khoa NN và VH Anh','Đang học 2 chương trình, chưa rõ tính theo chương trình nào','Phòng Đào tạo','25/09/2026'],
+      ['Hoàng Đức Trung|25040677','Khoa NN và VH Pháp','Chưa rõ sinh viên còn học hay đã bảo lưu trong kỳ','Phòng Đào tạo','25/09/2026'],
+      ['Đỗ Quang Huy|26041044','Khoa NN và VH Ả Rập','Khung học phí chưa khai mức thu cho nhóm ngành','Phòng Kế hoạch Tài chính','25/09/2026'],
+      ['Nguyễn Gia Hân|26041088','Khoa NN và VH Ả Rập','Khung học phí chưa khai mức thu cho nhóm ngành','Phòng Kế hoạch Tài chính','25/09/2026'],
+      ['Lý Minh Khôi|25041277','Khoa NN và VH Nhật Bản','Số tín chỉ của học phần để trống trong dữ liệu nguồn','TT Quản trị đại học số','24/09/2026']],
+    sample:{ n:252, sum:'252 sinh viên chưa đủ căn cứ tính, trong đó 18 em do thiếu mức thu' },
+    note:['info','Đây là danh sách đi kèm dòng Báo cáo chưa đầy đủ ở báo cáo tình hình thu',
+      'Số sinh viên trong danh sách này chưa có khoản phải thu, nên chưa nằm trong bất kỳ con số tiền nào của các báo cáo khác.'],
+    foot:'Bảng hiển thị 5 trường hợp gần nhất. Số tổng ở trên là của toàn bộ báo cáo.' },
+
+  { id:'r10', name:'Chi tiết căn cứ tính của một sinh viên',
+    short:'Vì sao sinh viên phải nộp đúng số tiền đó',
+    desc:'Mở ra khi sinh viên hoặc khoa hỏi lại số tiền, in ra được để trả lời bằng văn bản',
+    src:'Đăng ký học phần và quy tắc học phí đã áp dụng',
+    filters:['student','period'],
+    cols:[{t:'Nội dung'},{t:'Quy tắc áp dụng'},{t:'Cách tính'},{t:'Thành tiền (đ)',a:'r',m:1}],
+    rows:[
+      ['Học phí chính quy','Học phí tháng cho QH.2022 và QH.2023','3.500.000 đ mỗi tháng, thu 5 tháng',17500000]],
+    total:'auto', totalLabel:'Số phải nộp',
+    note:['info','Đang xem sinh viên Nguyễn Minh Anh, mã 23041205',
+      'Khóa QH.2023, ngành Ngôn ngữ Anh, chương trình chuẩn, đang học trong kỳ. Mức thu lấy theo khung học phí năm 2026-2027, chốt tại ngày 01/09/2026.'],
+    foot:'Đổi mã sinh viên ở ô bên trên để xem sinh viên khác.' },
 
   { g:'Quản trị' },
 
-  { id:'r8', name:'Nhật ký thao tác của cán bộ',
-    short:'Ai làm gì, lúc nào, trên khoản nào',
+  { id:'r11', name:'Nhật ký thao tác của cán bộ',
+    short:'Ai làm gì, lúc nào, trên đối tượng nào',
     desc:'Dùng khi cần truy lại một thay đổi hoặc phục vụ kiểm tra nội bộ',
-    cols:[['Thời điểm',''],['Người thực hiện',''],['Việc đã làm',''],['Đối tượng',''],['Lý do đã ghi','']],
+    src:'Nhật ký thao tác của hệ thống',
+    filters:['actor','action','range'],
+    cols:[{t:'Thời điểm'},{t:'Người thực hiện'},{t:'Việc đã làm'},{t:'Đối tượng'},{t:'Lý do đã ghi'}],
     rows:[
       ['25/09/2026 08:15','Nguyễn Thị Hương','Lấy dữ liệu từ hệ đào tạo','Học kỳ 1, 8.214 sinh viên','Cập nhật số liệu đầu ngày'],
       ['24/09/2026 17:20','Nguyễn Thị Hương','Áp dụng khung học phí 2026-2027','Khung học phí năm 2026-2027','Theo Quyết định mức thu học phí từ năm 2026'],
       ['24/09/2026 16:40','Trần Văn Bình','Nhập đăng ký từ tệp Excel','412 dòng học lại','Danh sách khoa gửi về'],
       ['22/09/2026 15:40','Trần Văn Bình','Điều chỉnh giảm khoản phải thu','Nguyễn Hải Yến, 22041002','Miễn giảm 50% diện chính sách'],
       ['22/09/2026 10:40','Nguyễn Thị Hương','Đóng sổ đối soát','Ngày nghiệp vụ 21/09/2026','Đã giải trình xong mục chênh lệch']],
-    sum:null,
-    foot:'Xem trước 5 trong 1.284 thao tác của khoảng thời gian đang chọn.' }
+    sample:{ n:1284, sum:'1.284 thao tác trong khoảng đang chọn' },
+    foot:'Bảng hiển thị 5 thao tác gần nhất. Số tổng ở trên là của toàn bộ báo cáo.' }
 ];
 
+/* ---------------- Khai báo từng loại bộ lọc ---------------- */
+var FILTERS = {
+  period:{ lb:'Kỳ thu', opts:['Học phí chính quy học kỳ 1, năm học 2026-2027','Học lại và học cải thiện học kỳ 1, năm học 2026-2027'] },
+  periodOpen:{ lb:'Kỳ thu', opts:['Tất cả kỳ thu còn mở','Học phí chính quy học kỳ 1, năm học 2026-2027','Học lại và học cải thiện học kỳ 1, năm học 2026-2027'] },
+  fac:{ lb:'Khoa', opts:['Tất cả khoa'].concat(KHOA), filterCol:true },
+  asof:{ lb:'Tính đến ngày', input:'25/09/2026' },
+  range:{ lb:'range' },
+  due:{ lb:'Tình trạng hạn nộp', opts:['Tất cả','Còn hạn','Sắp đến hạn','Đã quá hạn'] },
+  adjtype:{ lb:'Loại điều chỉnh', opts:['Tất cả','Miễn giảm','Bảo lưu','Bổ sung học phần','Sửa sai sót dữ liệu'] },
+  channel:{ lb:'Cách nộp', opts:['Tất cả','Nộp bằng mã thanh toán','Chuyển khoản trực tiếp'] },
+  aging:{ lb:'Số ngày treo', opts:['Tất cả','Từ 3 ngày trở lên','Từ 7 ngày trở lên'] },
+  ovstatus:{ lb:'Tình trạng xử lý', opts:['Tất cả','Chưa chọn cách xử lý','Đã chuyển kỳ sau','Đang chờ hoàn tiền','Đã hoàn xong'] },
+  recstatus:{ lb:'Tình trạng đối soát', opts:['Tất cả','Còn chênh lệch','Đã đóng sổ'] },
+  errgroup:{ lb:'Nhóm thiếu thông tin', opts:['Tất cả','Chưa rõ chương trình','Chưa rõ tình trạng học tập','Thiếu mức thu','Thiếu dữ liệu học phần'] },
+  actor:{ lb:'Người thực hiện', opts:['Tất cả cán bộ','Nguyễn Thị Hương','Trần Văn Bình'] },
+  action:{ lb:'Loại thao tác', opts:['Tất cả','Lấy dữ liệu','Nhập tệp','Điều chỉnh khoản thu','Cấu hình học phí','Đóng sổ đối soát'] },
+  student:{ lb:'Mã sinh viên', input:'23041205' }
+};
+
 var current = 'r1';
+var state = {};
 
+function cur() { return REPORTS.filter(function (x) { return x.id === current; })[0]; }
+function val(k) { var e = document.getElementById('flt-' + k); return e ? e.value : ''; }
+
+/* ---------------- Dựng bộ lọc theo báo cáo ---------------- */
+function buildFilters() {
+  var r = cur(), html = '', n = 0;
+  r.filters.forEach(function (k) {
+    var f = FILTERS[k];
+    if (k === 'range') {
+      html += fld('Từ ngày', '<input class="inp" id="flt-from" value="01/09/2026" onchange="render()">');
+      html += fld('Đến ngày', '<input class="inp" id="flt-to" value="25/09/2026" onchange="render()">');
+      n += 2; return;
+    }
+    if (f.input) {
+      html += fld(f.lb, '<input class="inp" id="flt-' + k + '" value="' + f.input + '" onchange="render()">');
+    } else {
+      html += fld(f.lb, '<select class="sel" id="flt-' + k + '" onchange="render()">' +
+        f.opts.map(function (o) { return '<option>' + o + '</option>'; }).join('') + '</select>');
+    }
+    n++;
+  });
+  var box = document.getElementById('rv-filters');
+  box.className = 'filters ' + (n >= 4 ? 'f-4x' : n === 3 ? 'f-3x' : 'f-2x');
+  box.innerHTML = html;
+}
+function fld(lb, inner) { return '<div class="field"><label>' + lb + '</label>' + inner + '</div>'; }
+
+/* ---------------- Dựng toàn bộ màn ---------------- */
 function render() {
-  var r = REPORTS.filter(function (x) { return x.id === current; })[0];
+  var r = cur();
 
-  /* Danh sách bên trái */
   document.getElementById('rp-list').innerHTML = REPORTS.map(function (x) {
     if (x.g) return '<div class="rp-group">' + x.g + '</div>';
     return '<button class="rp-item' + (x.id === current ? ' on' : '') + '" onclick="pick(\'' + x.id + '\')">' +
       '<div class="t">' + x.name + '</div><div class="s">' + x.short + '</div></button>';
   }).join('');
 
-  /* Tiêu đề và mô tả */
   document.getElementById('rv-name').textContent = r.name;
   document.getElementById('rv-desc').textContent = r.desc;
-  document.getElementById('sd-name').textContent = r.name;
 
-  /* Câu mô tả phạm vi đang áp */
-  var fac = document.getElementById('f-fac').value;
-  document.getElementById('f-note').innerHTML =
-    'Báo cáo đang lấy theo <b>' + document.getElementById('f-period').value + '</b>, ' +
-    (fac === 'Tất cả khoa' ? '<b>tất cả các khoa</b>' : '<b>' + fac + '</b>') +
-    ', từ <b>' + document.getElementById('f-from').value + '</b> đến <b>' + document.getElementById('f-to').value + '</b>.';
+  /* Nút thao tác, chỉ báo cáo được phép mới có nút gửi ra ngoài phòng */
+  var acts = '';
+  if (r.share) acts += '<button class="btn btn-sm" onclick="openSend()">' +
+    (r.share.kind === 'khoa' ? 'Gửi cho khoa' : 'Gửi cho đơn vị xử lý') + '</button>';
+  acts += '<button class="btn btn-sm" onclick="exportReport(\'PDF\')">Tải PDF</button>' +
+          '<button class="btn btn-sm btn-primary" onclick="exportReport(\'Excel\')">Tải Excel</button>';
+  document.getElementById('rv-actions').innerHTML = acts;
 
-  /* Lưu ý riêng của báo cáo */
-  var nb = document.getElementById('rv-note-box');
-  if (r.note) {
-    nb.style.display = '';
-    nb.innerHTML = '<div class="note ' + r.note[0] + '" style="margin-bottom:14px">' +
+  /* Câu nhắc lại phạm vi, ghép từ chính các ô lọc đang có */
+  var parts = [];
+  r.filters.forEach(function (k) {
+    if (k === 'range') { parts.push('từ <b>' + val('from') + '</b> đến <b>' + val('to') + '</b>'); return; }
+    parts.push(FILTERS[k].lb.toLowerCase() + ' <b>' + val(k) + '</b>');
+  });
+  var warn = '';
+  if (r.filters.indexOf('range') >= 0 && dmy(val('from')) > dmy(val('to'))) {
+    warn = ' <span style="color:var(--err);font-weight:650">Ngày bắt đầu đang sau ngày kết thúc, chưa lấy được số liệu.</span>';
+  }
+  document.getElementById('rv-scope').innerHTML =
+    'Nguồn số liệu: ' + r.src + '. Đang lấy theo ' + parts.join(', ') + '.' + warn;
+
+  /* Lọc dòng theo khoa nếu báo cáo có cột khoa */
+  var rows = r.rows.slice();
+  var facSel = r.filters.indexOf('fac') >= 0 ? val('fac') : 'Tất cả khoa';
+  var facCol = r.cols.map(function (c) { return c.t; }).indexOf('Khoa');
+  if (facSel && facSel !== 'Tất cả khoa' && facCol >= 0) {
+    rows = rows.filter(function (row) { return row[facCol] === facSel; });
+  }
+  if (warn) rows = [];
+
+  /* Sắp xếp */
+  if (r.sort) rows = sortRows(rows, r.sort, r.cols);
+
+  /* Khối chú thích và số tổng của toàn bộ báo cáo */
+  var top = '';
+  if (r.sample) {
+    top += '<div class="sumrow" style="margin-bottom:12px"><div class="it">' +
+      '<div class="l">Số tổng của toàn bộ báo cáo</div><div class="v" style="font-size:16px">' +
+      r.sample.sum + '</div><div class="s">Bảng bên dưới chỉ hiển thị một phần</div></div></div>';
+  }
+  ['note', 'note2'].forEach(function (key) {
+    if (!r[key]) return;
+    top += '<div class="note ' + r[key][0] + '" style="margin-bottom:12px">' +
       '<svg class="ic" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.5v4M8 5v.6"/></svg>' +
-      '<div><span class="nt">' + r.note[1] + '</span>' + r.note[2] + '</div></div>';
-  } else { nb.style.display = 'none'; }
+      '<div><span class="nt">' + r[key][1] + '</span>' + r[key][2] + '</div></div>';
+  });
+  var tb = document.getElementById('rv-top');
+  tb.style.display = top ? '' : 'none';
+  tb.innerHTML = top;
 
-  /* Bảng số liệu */
-  var head = '<thead><tr>' + r.cols.map(function (c) {
-    return '<th' + (c[1] === 'r' ? ' class="r"' : '') + '>' + c[0] + '</th>';
+  /* Bảng */
+  var head = '<thead><tr>' + r.cols.map(function (c, i) {
+    var arrow = r.sort && r.sort.col === i ? (r.sort.dir > 0 ? ' ↑' : ' ↓') : '';
+    return '<th' + (c.a === 'r' ? ' class="r w2"' : ' class="w2"') +
+      ' style="cursor:pointer" onclick="doSort(' + i + ')">' + c.t + arrow + '</th>';
   }).join('') + '</tr></thead>';
 
-  var body = '<tbody>' + r.rows.map(function (row) {
-    return '<tr>' + row.map(function (cell, i) { return td(cell, r.cols[i][1]); }).join('') + '</tr>';
-  }).join('');
-
-  if (r.sum) {
-    body += '<tr style="background:var(--surface-2);font-weight:700">' +
-      r.sum.map(function (cell, i) { return td(cell, r.cols[i][1], true); }).join('') + '</tr>';
+  var body = '<tbody>';
+  if (!rows.length) {
+    body += '<tr><td colspan="' + r.cols.length + '" style="padding:34px;text-align:center;color:var(--muted)">' +
+      (warn ? 'Chưa lấy được số liệu vì khoảng ngày chưa hợp lệ.'
+            : 'Không có dòng nào khớp bộ lọc đang chọn.') + '</td></tr>';
+  } else {
+    body += rows.map(function (row) {
+      return '<tr>' + r.cols.map(function (c, i) {
+        return td(c.calc ? row[c.calc[0]] - row[c.calc[1]] : row[i], c, c.pct ? [row[c.pct[0]], row[c.pct[1]]] : null);
+      }).join('') + '</tr>';
+    }).join('');
+    if (r.total === 'auto') body += totalRow(rows, r, facSel);
   }
   body += '</tbody>';
 
   var t = document.getElementById('rv-table');
-  t.style.minWidth = (r.cols.length * 150) + 'px';
+  t.style.minWidth = Math.max(760, r.cols.length * 158) + 'px';
   t.innerHTML = head + body;
-  document.getElementById('rv-foot').textContent = r.foot;
+
+  document.getElementById('rv-foot').textContent =
+    (facSel && facSel !== 'Tất cả khoa' && facCol >= 0)
+      ? 'Đang lọc theo ' + facSel + ', hiển thị ' + rows.length + ' dòng. Số tổng tính lại theo đúng các dòng đang hiển thị.'
+      : r.foot;
 }
 
-/* Một ô có thể là chữ thường, tên kèm mã sinh viên, thanh tỷ lệ hoặc nhãn trạng thái */
-function td(cell, align, bold) {
-  var cls = align === 'r' ? ' class="r"' : '';
+/* Dòng tổng luôn cộng từ chính các dòng đang hiển thị */
+function totalRow(rows, r, facSel) {
+  var label = (facSel && facSel !== 'Tất cả khoa' &&
+               r.cols.map(function (c) { return c.t; }).indexOf('Khoa') >= 0)
+    ? 'Tổng của ' + facSel : r.totalLabel;
+  var out = '<tr style="background:var(--surface-2)">';
+  r.cols.forEach(function (c, i) {
+    if (i === 0) { out += '<td style="font-weight:750">' + label + '</td>'; return; }
+    if (c.pct) {
+      var a = rows.reduce(function (s, x) { return s + x[c.pct[0]]; }, 0);
+      var b = rows.reduce(function (s, x) { return s + x[c.pct[1]]; }, 0);
+      out += td(0, c, [a, b]);
+      return;
+    }
+    if (c.m || c.n) {
+      var v = rows.reduce(function (s, x) {
+        return s + (c.calc ? (x[c.calc[0]] - x[c.calc[1]]) : (Number(x[i]) || 0));
+      }, 0);
+      out += '<td class="money" style="font-weight:750">' + vnd(v) + '</td>';
+      return;
+    }
+    out += '<td></td>';
+  });
+  return out + '</tr>';
+}
 
-  if (Array.isArray(cell) && cell[0] === 'bar') {
-    var v = cell[1];
+/* Một ô có thể là chữ, tên kèm mã, nội dung hai dòng, tiền, số đếm, nhãn hoặc thanh tỷ lệ */
+function td(cell, c, pctPair) {
+  if (c.pct) {
+    var a = pctPair ? pctPair[0] : cell.paid, b = pctPair ? pctPair[1] : cell.due;
+    var v = b ? a / b * 100 : 0;
     return '<td class="r"><div class="bar"><div class="track"><div class="fill' + (v < 60 ? ' low' : '') +
-      '" style="width:' + v + '%"></div></div><span class="num">' + String(v).replace('.', ',') + '%</span></div></td>';
+      '" style="width:' + v.toFixed(1) + '%"></div></div><span class="num">' +
+      v.toFixed(1).replace('.', ',') + '%</span></div></td>';
   }
+  if (c.m || c.n) return '<td class="money">' + vnd(cell) + '</td>';
   if (typeof cell === 'string' && cell.indexOf('badge|') === 0) {
     var p = cell.split('|');
     return '<td><span class="bg ' + p[1] + '">' + p[2] + '</span></td>';
@@ -405,19 +624,86 @@ function td(cell, align, bold) {
     var q = cell.split('|');
     return '<td><div class="t-main">' + q[0] + '</div><div class="t-sub">' + q[1] + '</div></td>';
   }
-  if (align === 'r' && /^[\d.,]+$/.test(cell)) {
-    return '<td class="money"' + (bold ? ' style="font-weight:750"' : '') + '>' + cell + '</td>';
-  }
-  return '<td' + cls + '>' + cell + '</td>';
+  return '<td' + (c.a === 'r' ? ' class="r"' : '') + '>' + cell + '</td>';
 }
 
-function pick(id) { current = id; render(); }
+/* Cột tỷ lệ không có sẵn trong dòng, phải tính từ hai cột tiền */
+function sortRows(rows, s, cols) {
+  var c = cols[s.col];
+  return rows.slice().sort(function (x, y) {
+    var a, b;
+    if (c && c.pct) { a = x[c.pct[0]] / x[c.pct[1]]; b = y[c.pct[0]] / y[c.pct[1]]; }
+    else { a = x[s.col]; b = y[s.col]; }
+    if (typeof a === 'number' && typeof b === 'number') return (a - b) * s.dir;
+    return String(a).localeCompare(String(b), 'vi') * s.dir;
+  });
+}
+function doSort(i) {
+  var r = cur();
+  if (r.sort && r.sort.col === i) r.sort.dir = -r.sort.dir;
+  else r.sort = { col: i, dir: 1 };
+  render();
+}
+
+function dmy(s) {
+  var p = String(s || '').split('/');
+  return p.length === 3 ? p[2] + p[1].padStart(2, '0') + p[0].padStart(2, '0') : '';
+}
+
+function pick(id) { current = id; buildFilters(); render(); }
 
 function exportReport(kind) {
-  var r = REPORTS.filter(function (x) { return x.id === current; })[0];
-  toast('Đang tạo bản ' + kind + ' của báo cáo ' + r.name + '.', 'ok');
+  toast('Đang tạo bản ' + kind + ' của báo cáo ' + cur().name + ', số liệu tính đến 25/09/2026 08:16.', 'ok');
 }
 
+/* ---------------- Hộp thoại gửi ---------------- */
+function openSend() {
+  var r = cur();
+  document.getElementById('sd-title').textContent = r.share.title;
+  document.getElementById('sd-name').textContent = r.name + ', số liệu tính đến 25/09/2026 08:16';
+  document.getElementById('sd-subject').value = r.share.subject;
+  document.getElementById('sd-body').value = r.share.body;
+
+  var to = document.getElementById('sd-to');
+  if (r.share.kind === 'khoa') {
+    to.innerHTML = ['<option>Tất cả các khoa, mỗi khoa nhận phần của khoa mình</option>']
+      .concat(KHOA.map(function (k) { return '<option>' + k + '</option>'; })).join('');
+    var f = r.filters.indexOf('fac') >= 0 ? val('fac') : '';
+    if (f && f !== 'Tất cả khoa') to.value = f;
+  } else {
+    to.innerHTML = '<option>Phòng Đào tạo và Công tác người học</option>' +
+                   '<option>Trung tâm Quản trị đại học số</option>';
+  }
+  updSend();
+  openModal('m-send');
+}
+
+function updSend() {
+  var r = cur(), to = document.getElementById('sd-to').value, rows;
+  if (r.share.kind === 'khoa') {
+    if (to.indexOf('Tất cả') === 0) {
+      rows = KHOA.map(function (k) { return [k, EMAIL[k], NO_DU[k] + ' sinh viên']; });
+    } else {
+      rows = [[to, EMAIL[to], NO_DU[to] + ' sinh viên']];
+    }
+  } else {
+    rows = [[to, to.indexOf('Trung tâm') === 0 ? 'qtdhs@vnu.edu.vn' : 'daotao@ulis.vnu.edu.vn', '252 sinh viên']];
+  }
+  document.getElementById('sd-preview').innerHTML =
+    '<tr><th>Người nhận</th><th>Địa chỉ email</th><th class="r">Nội dung tệp</th></tr>' +
+    rows.map(function (x) {
+      return '<tr><td>' + x[0] + '</td><td>' + x[1] + '</td><td class="r">' + x[2] + '</td></tr>';
+    }).join('') +
+    '<tr style="background:var(--surface-2)"><td colspan="2"><b>Sẽ gửi ' + rows.length + ' email</b></td>' +
+    '<td class="r"><b>' + rows.reduce(function (s, x) { return s + parseInt(x[2], 10); }, 0) + ' sinh viên</b></td></tr>';
+
+  document.getElementById('sd-go').onclick = function () {
+    closeModal('m-send');
+    toast('Đã gửi ' + rows.length + ' email, mỗi đơn vị nhận phần của đơn vị mình.', 'ok');
+  };
+}
+
+buildFilters();
 render();
 </script>
 </body>

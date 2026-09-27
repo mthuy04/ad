@@ -173,6 +173,8 @@ table{border-collapse:collapse;width:100%}
 .f-3{grid-template-columns:2.2fr 1fr 1fr auto}
 .f-4{grid-template-columns:2fr 1fr 1fr 1fr auto}
 .f-4x{grid-template-columns:2fr 1fr 1fr 1fr}
+.f-3x{grid-template-columns:2fr 1fr 1fr}
+.f-2x{grid-template-columns:2fr 1fr}
 .field label{display:block;margin-bottom:5px;font-size:11.5px;font-weight:650;color:var(--text-2)}
 .inp,.sel{
   width:100%;height:34px;padding:0 11px;border:1px solid var(--border-2);
@@ -466,16 +468,18 @@ table.mini td.r{text-align:right;font-variant-numeric:tabular-nums;font-weight:6
 @media (max-width:1240px){
   .f-4{grid-template-columns:1.8fr 1fr 1fr 1fr auto}
   .f-4x{grid-template-columns:1.8fr 1fr 1fr 1fr}
+  .f-3x{grid-template-columns:1.8fr 1fr 1fr}
+  .f-2x{grid-template-columns:1.8fr 1fr}
 }
 @media (max-width:1040px){
   #sidebar{display:none}
   .kpis{grid-template-columns:1fr 1fr}
-  .f-3,.f-4,.f-4x{grid-template-columns:1fr 1fr}
+  .f-3,.f-4,.f-4x,.f-3x,.f-2x{grid-template-columns:1fr 1fr}
   .money3{grid-template-columns:1fr}
   .grid2,.grid3{grid-template-columns:1fr}
 }
 @media (max-width:720px){
   .wrap{padding:16px 14px 36px}
   .kpis{grid-template-columns:1fr}
-  .f-3,.f-4,.f-4x{grid-template-columns:1fr}
+  .f-3,.f-4,.f-4x,.f-3x,.f-2x{grid-template-columns:1fr}
 }
