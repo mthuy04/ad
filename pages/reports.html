@@ -383,6 +383,23 @@ var REPORTS = [
       'Tiền gốc đã trừ vào học phí và phần thừa đã chuyển sang kỳ sau, nếu đảo tự động thì số dư của sinh viên sẽ bị âm. Xem chi tiết ở màn Giao dịch.'],
     foot:'Bảng hiển thị đủ 3 giao dịch bị đảo trong khoảng đang chọn.' },
 
+  { id:'r12', name:'Tổng hợp yêu cầu thanh toán',
+    short:'Bao nhiêu mã thanh toán được tạo và bao nhiêu nộp thành công',
+    desc:'Dùng để theo dõi sinh viên có nộp được qua cổng không, tỷ lệ thấp là dấu hiệu cổng hoặc ngân hàng có trục trặc',
+    src:'Yêu cầu thanh toán sinh viên tạo trên cổng sinh viên',
+    filters:['range','period'],
+    cols:[{t:'Ngày'},{t:'Mã đã tạo',a:'r',n:1},{t:'Đã nộp xong',a:'r',n:1},
+          {t:'Hết hạn hoặc bị hủy',a:'r',n:1},{t:'Tỷ lệ nộp thành công',a:'r',pct:[2,1]}],
+    rows:[
+      ['24/09/2026',305,280,25],
+      ['23/09/2026',330,303,27],
+      ['22/09/2026',360,330,30],
+      ['21/09/2026',316,290,26],
+      ['20/09/2026',292,268,24],
+      ['19/09/2026',322,295,27]],
+    total:'auto', totalLabel:'Tổng 6 ngày',
+    foot:'Ngày 25/09 chưa vào bảng vì trong ngày vẫn còn mã đang chờ sinh viên nộp. Số Đã nộp xong khớp với phần nộp bằng mã thanh toán ở báo cáo tiền về theo ngày.' },
+
   { g:'Chất lượng dữ liệu' },
 
   { id:'r9', name:'Danh sách cần bổ sung',
@@ -419,6 +436,24 @@ var REPORTS = [
     foot:'Đổi mã sinh viên ở ô bên trên để xem sinh viên khác.' },
 
   { g:'Quản trị' },
+
+  { id:'r13', name:'Đối chiếu tiền đã phân bổ',
+    short:'Một khoản tiền về đã trừ vào khoản thu nào của sinh viên nào',
+    desc:'Dùng khi cần truy lại đường đi của một khoản tiền, phục vụ kiểm tra và giải trình với sinh viên',
+    src:'Bút toán phân bổ tiền vào khoản phải thu',
+    filters:['student','range'],
+    cols:[{t:'Thời điểm ghi nhận'},{t:'Tiền về theo cách nào'},{t:'Sinh viên'},
+          {t:'Khoản được trừ'},{t:'Số tiền trừ vào khoản (đ)',a:'r',m:1},{t:'Tình trạng'}],
+    rows:[
+      ['25/09/2026 09:12','Nộp bằng mã thanh toán','Lê Hoàng Nam|22041877','Học phí chính quy học kỳ 1',17500000,'badge|ok|Đã ghi nhận'],
+      ['25/09/2026 08:47','Chuyển khoản trực tiếp','Phạm Thu Hà|23040912','Học phí chính quy học kỳ 1',10000000,'badge|ok|Đã ghi nhận'],
+      ['22/09/2026 08:13','Nộp bằng mã thanh toán','Đinh Thùy Dương|23041766','Học phí chính quy học kỳ 1',11550000,'badge|ok|Đã ghi nhận'],
+      ['21/09/2026 16:58','Ngân hàng thu hồi giao dịch','Hoàng Anh Tuấn|23040544','Học phí chính quy học kỳ 1',-17500000,'badge|warn|Đã đảo, chờ xử lý thủ công'],
+      ['18/09/2026 10:31','Nộp bằng mã thanh toán','Nguyễn Hải Yến|22041002','Học phí chính quy học kỳ 1',11550000,'badge|ok|Đã ghi nhận']],
+    sample:{ n:5874, sum:'5.874 lượt phân bổ, tổng 97.388.000.000 đ' },
+    note:['info','Số tổng ở đây bằng đúng cột Đã thu của báo cáo tình hình thu theo khoa',
+      'Nếu hai số này lệch nhau thì có tiền đã về mà chưa vào công nợ, hoặc có bút toán bị ghi hai lần.'],
+    foot:'Bảng hiển thị 5 lượt gần nhất. Đổi mã sinh viên ở ô bên trên để xem đường đi tiền của một sinh viên cụ thể.' },
 
   { id:'r11', name:'Nhật ký thao tác của cán bộ',
     short:'Ai làm gì, lúc nào, trên đối tượng nào',
